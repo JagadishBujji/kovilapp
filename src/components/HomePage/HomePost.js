@@ -11,6 +11,7 @@ import HomeSearch from "./HomeSearch";
 import HomeCard from "./HomeCard";
 import { useSelector } from "react-redux"; 
 import HomeItem from "./HomeItem";
+import HomeTabs from "../../Reuseable/Tabs/HomeTabs";
 
 const HomePost = () => {
   const [jobs, setJobs] = useState([]);
@@ -31,6 +32,7 @@ const HomePost = () => {
 
   return (
     <>
+   <HomeTabs/>
       {/* <div className="row">
         <div className="col-md-3 jobsearch">
           <Profile />

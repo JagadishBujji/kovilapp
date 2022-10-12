@@ -16,7 +16,7 @@ const Navbar = () => {
   return (
     <>
       <header>
-        <nav className="navbar navbar-expand-lg navbar-light fixed-top py-4 ">
+        <nav className="navbar navbar-expand-lg navbar-light fixed-top py-2 ">
           {/* <button className="btn-primary" onClick={open}>
             ☰
           </button> */}
@@ -24,7 +24,7 @@ const Navbar = () => {
           <a className="navbar-brand" href="#/">
             {/* <img src="images/logo.png" alt="" className="Logo-img"  /> */}
             <h1>
-              <b>Kovil App</b>
+              Kovil App
             </h1>
           </a>
 
@@ -50,7 +50,8 @@ const Navbar = () => {
                 }
                 to="/recruiter/home-post"
               >
-                <i className="fas fa-briefcase mr-3"></i>
+                {/* <i className="fas fa-briefcase mr-3"></i> */}
+                <i class="fas fa-th-large mr-3"></i>
                 <b>Dashboard</b>
               </NavLink>
 
@@ -60,7 +61,8 @@ const Navbar = () => {
                 }
                 to="/recruiter/job-post"
               >
-                <i className="fas fa-briefcase mr-3 "></i>
+                {/* <i className="fas fa-briefcase mr-3 "></i> */}
+                <i class="fas fa-user-friends mr-3"></i>
                 <b>Users</b>
               </NavLink>
 
@@ -70,7 +72,8 @@ const Navbar = () => {
                 }
                 to="/recruiter/event-post"
               >
-                <i className="fas fa-calendar mr-3"></i>
+                {/* <i className="fas fa-calendar mr-3"></i> */}
+                <i class="fas fa-ticket-alt mr-3"></i>
                 <b>Tickets</b>
               </NavLink>
 

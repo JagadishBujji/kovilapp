@@ -28,9 +28,7 @@ export default function App() {
         <Route path="home-post" element={ user?  <HomePost /> :<Navigate to="/login"/>} />
           <Route path="job-post" element={ user?  <JobPosts /> :<Navigate to="/login"/>} />
           <Route path="event-post" element={ user? <EventPosts /> : <Navigate to="/login"/>} />
-          <Route path="user-profile" element={ user? <UserProfile /> :<Navigate to="/login"/>} />
-          <Route path="networking" element={ user? <NetWorking /> : <Navigate to="/login"/>} />
-          <Route path="chats" element={ user? <Chats /> : <Navigate to="/login"/>} />
+          
         </Route>
       </Routes>
     </div>
