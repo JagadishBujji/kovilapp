@@ -1,23 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Applicant from "../../Reuseable/Applicant";
-import Experience from "../../Reuseable/Experience";
-import JobFilter from "../../Reuseable/JobFilter";
-import JobLocation from "../../Reuseable/JobLocation";
-import JobType from "../../Reuseable/JobType";
-import Profile from "../../Reuseable/profile/Profile";
-import WorkExperience from "../../Reuseable/profile/WorkExperience";
-import Search from "../../Reuseable/Search/Search";
-import JobPostCard from "./JobPostCard";
-import { useSelector } from "react-redux"; 
+
+import { useSelector } from "react-redux";
 
 const JobPosts = () => {
   const [jobs, setJobs] = useState([]);
-  const [showSavedJobs,setShowSavedJobs]=useState(false);
-   
-    const savedJobes=useSelector((state)=>state.savedJobs.savedJobs);
-    
-    console.log(savedJobes); 
+  const [showSavedJobs, setShowSavedJobs] = useState(false);
+
+  const savedJobes = useSelector((state) => state.savedJobs.savedJobs);
+
+  console.log(savedJobes);
   useEffect(() => {
     axios
       .get("https://ideez.herokuapp.com/api/jobs")
