@@ -1,0 +1,40 @@
+.Item_job {
+    padding: 20px 50px;
+    margin: 0 145px;
+  }
+  .sub_Item {
+    background-color: #daebec;
+    border-radius: 20px;
+    position: relative;
+  }
+  .Item_inner {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+  }
+  .sub_Item::after {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: "";
+  
+    border-radius: 20px;
+    box-shadow: 5px 5px #81b4b0;
+  }
+  #Item_dept{
+    background: #81b4b0;
+    border-radius: 5px;
+    color: #fff;
+    text-align: center;
+    margin-right: 25px;
+    font-size: 16px;
+    width: 50%;
+    padding: 10px;
+  }
+  
