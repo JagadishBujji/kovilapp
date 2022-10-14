@@ -48,7 +48,7 @@ const Navbar = () => {
                 className={({ isActive }) =>
                   isActive ? "activelink" : "nav-link"
                 }
-                to="/recruiter/home-post"
+                to="/kovil/home-post"
               >
                 {/* <i className="fas fa-briefcase mr-3"></i> */}
                 <i class="fas fa-th-large mr-3"></i>
@@ -59,7 +59,7 @@ const Navbar = () => {
                 className={({ isActive }) =>
                   isActive ? "activelink" : "nav-link"
                 }
-                to="/recruiter/job-post"
+                to="/kovil/user-post"
               >
                 {/* <i className="fas fa-briefcase mr-3 "></i> */}
                 <i class="fas fa-user-friends mr-3"></i>
@@ -70,7 +70,7 @@ const Navbar = () => {
                 className={({ isActive }) =>
                   isActive ? "activelink" : "nav-link "
                 }
-                to="/recruiter/event-post"
+                to="/kovil/tickets"
               >
                 {/* <i className="fas fa-calendar mr-3"></i> */}
                 <i class="fas fa-ticket-alt mr-3"></i>

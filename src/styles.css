@@ -139,7 +139,8 @@ a {
 }
 
 .out {
-  padding-top: 50px;
+  padding-top: 100px;
+  background: #f2f2f2;
 }
 
 .card {
@@ -167,18 +168,35 @@ a {
   font-weight: 900;
 }
 
-.count{
+.count {
   font-size: large;
   font-weight: 900;
-
 }
 
+.user-tabs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
 
+.picture{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+}
+
+.okbutton{
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
 
 @media only screen and (max-width: 700px) {
-  html {
+  /* html {
     font-size: 54.5%;
-  }
+  } */
   .ass {
     width: 45%;
   }
@@ -200,9 +218,9 @@ a {
 }
 
 @media only screen and (max-width: 400px) {
-  html {
+  /* html {
     font-size: 48.5%;
-  }
+  } */
 
   .input-text:not(:placeholder-shown) + .label,
   .input-text:focus + .label {
@@ -252,6 +270,7 @@ a {
   }
   .out {
     padding-top: 110px;
+    background: #f2f2f2;
   }
   .ass {
     width: 10%;
