@@ -200,10 +200,37 @@ a {
   margin-bottom: 20px;
 }
 
+.picture1 {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  margin-bottom: 20px;
+}
+
 .okbutton {
   display: flex;
   justify-content: end;
   align-items: center;
+}
+
+/* .temple{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+} */
+
+
+.temple1{
+  margin-left: 10px;
+}
+
+.img-upload{
+  margin: 5px;
+  border-radius: 10px;
+}
+
+.fa-microphone{
+  font-size: 32px;
 }
 
 @media only screen and (max-width: 700px) {

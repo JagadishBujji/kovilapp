@@ -2,7 +2,7 @@
 import * as React from "react";
 
 import Card from "@mui/material/Card";
-import TicketTabs from "../../../Reuseable/Tabs/TicketTabs";
+import TicketTabs from "../../Reuseable/Tabs/TicketTabs";
 
 const Tickets = () => {
   return (

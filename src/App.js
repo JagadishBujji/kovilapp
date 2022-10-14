@@ -9,9 +9,10 @@ import Home from "./pages/Home";
 import HomePost from "./components/HomePage/HomePost";
 
 import UserPosts from "./components/Userpost/UserPosts";
-import Tickets from "./components/HomePage/Tickets/Tickets";
+import Tickets from "./components/Tickets/Tickets";
 import AddUser from "./pages/AddUser";
 import UserDetails from "./pages/UserDetails";
+import TicketsDetails from "./pages/TicketDetails";
 // import EventPosts from "./components/EventPost/EventPosts";
 
 export default function App() {
@@ -54,6 +55,10 @@ export default function App() {
           <Route
             path="tickets"
             element={user ? <Tickets /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="ticketsdetails"
+            element={user ? <TicketsDetails /> : <Navigate to="/login" />}
           />
           {/* <Route path="event-post" element={ user? <EventPosts /> : <Navigate to="/login"/>} /> */}
         </Route>

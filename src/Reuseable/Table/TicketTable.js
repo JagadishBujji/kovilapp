@@ -7,6 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import { useNavigate } from "react-router-dom";
 
 const columns = [
   { id: "id", label: "ID", minWidth: 170 },
@@ -79,6 +80,7 @@ const rows = [
 ];
 
 export default function TicketTable() {
+  const navigate = useNavigate();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -121,7 +123,7 @@ export default function TicketTable() {
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align}>
+                        <TableCell key={column.id} align={column.align} onClick={() => navigate("/kovil/ticketsdetails")}>
                           {column.format && typeof value === "number"
                             ? column.format(value)
                             : value}
