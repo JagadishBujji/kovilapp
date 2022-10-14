@@ -11,6 +11,7 @@ import HomePost from "./components/HomePage/HomePost";
 import UserPosts from "./components/Userpost/UserPosts";
 import Tickets from "./components/HomePage/Tickets/Tickets";
 import AddUser from "./pages/AddUser";
+import UserDetails from "./pages/UserDetails";
 // import EventPosts from "./components/EventPost/EventPosts";
 
 export default function App() {
@@ -45,6 +46,10 @@ export default function App() {
           <Route
             path="adduser"
             element={user ? <AddUser /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="userdetails"
+            element={user ? <UserDetails /> : <Navigate to="/login" />}
           />
           <Route
             path="tickets"

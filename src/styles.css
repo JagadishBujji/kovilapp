@@ -180,14 +180,27 @@ a {
   padding: 20px;
 }
 
-.picture{
+.user-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Userdetails {
+  padding: 18px;
+  display: flex;
+  justify-content: space-between;
+  font-size: smaller;
+  align-items: center;
+}
+.picture {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   margin-bottom: 20px;
 }
 
-.okbutton{
+.okbutton {
   display: flex;
   justify-content: end;
   align-items: center;

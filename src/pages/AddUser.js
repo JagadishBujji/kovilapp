@@ -5,6 +5,8 @@ import Button from "@mui/material/Button";
 import SelectField from "../Reuseable/SelectField/SelectField";
 import TextField from "@mui/material/TextField";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import StateSelect from "../Reuseable/SelectField/StateSelect";
+import DistrictSelect from "../Reuseable/SelectField/DistrictSelect";
 
 const AddUser = () => {
   return (
@@ -96,8 +98,34 @@ const AddUser = () => {
                   />
                 </div>
               </div>
+              <div className="row">
+                <div className="col-md-6 picture">
+                  <StateSelect />
+                </div>
+                <div className="col-md-6 picture">
+                  <DistrictSelect />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6 picture">
+                <TextField
+                    id="outlined-basic"
+                    label="ZipCode"
+                    variant="outlined"
+                    fullWidth
+                    type="tel"
+                  />
+                </div>
+                <div className="col-md-6 picture1">
+                <Button variant="text" sx={{ mr: 2 }}>
+                  + Add
+                </Button>
+                </div>
+              </div>
               <div className="row okbutton">
-                <Button variant="text" sx={{mr: 2}}>Cancel</Button>
+                <Button variant="text" sx={{ mr: 2 }}>
+                  Cancel
+                </Button>
                 <Button variant="text">Add User</Button>
               </div>
             </Box>
