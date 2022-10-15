@@ -1,21 +1,10 @@
 import { Stack, Box, Card, Button, Avatar,} from "@mui/material";
-import VerticalLinearStepper from "../Reuseable/Stepper/VerticalLinearStepper";
-import { useState } from "react";
-import TicketsBack from "../Reuseable/TicketsBack";
-import TicketsModalBox from "../Reuseable/TicketsModalBox";
-import { useNavigate } from "react-router-dom";
+import BasicSelect from "../Reuseable/SelectField/SelectField";
 
 
-const TicketsDetails = () => {
-    const navigate = useNavigate();
-    const [openModal,setOpenModal] = useState(false);
-
-  const handleModal = () => {
-    setOpenModal(true);
-  }
-  const deleteBack = () => {
-    setOpenModal(false);
-  }
+const AssignTicket = () => {
+    
+    
   return (
     <>
       <Stack>
@@ -155,21 +144,23 @@ const TicketsDetails = () => {
                 </div>
               </Card>
               <Card sx={{ mt: 5, p: 2 }}>
-                <VerticalLinearStepper/>
-                <div className="row user-tabs">
-                <Button variant="outlined" onClick={handleModal}>Add Feedback</Button>
-                <Button variant="contained" onClick={() => navigate("/kovil/assigntickets")}>Assign Tickets</Button>
-                </div>
+               <div>
+                <p>Admin</p>
+                <h6><b>#KATU09 SriVatsava N</b></h6>
+               </div>
+               <div>
+               <BasicSelect />
+               </div>
+               <div>
                 
+               </div>
               </Card>
             </div>
           </div>
         </Box>
       </Stack>
-      {openModal && <TicketsModalBox onCancel = {deleteBack}/>}
-      {openModal && <TicketsBack onCancel = {deleteBack}/>}
     </>
   );
 };
 
-export default TicketsDetails;
+export default AssignTicket;

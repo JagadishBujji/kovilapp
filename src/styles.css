@@ -176,8 +176,14 @@ a {
   margin-bottom: 20px;
 }
 /* Textfield modal */
-.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
-  height:100px;
+.ticketsInput{
+  padding: 10px;
+}
+label[data-shrink=false]+.MuiInputBase-formControl .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+  height: 210px;
+}
+.FeedBtn{
+  background-color: #ff6000;
 }
 .open {
   color: green;
@@ -245,10 +251,7 @@ a {
   align-items: center;
   margin: 10px;
 }
-.FeedBtn{
-  background-color: #ff6000;
-  color: #fff;
-}
+
 /* .temple{
   display: flex;
   justify-content: space-between;

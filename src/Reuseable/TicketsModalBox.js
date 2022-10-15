@@ -10,18 +10,13 @@ const TicketsModalBox = (props) => {
             <b>Add Feedback</b>
           </h5>
         </div>
-
-        <TextField
-          id="outlined-basic"
-          label="Add Your FeedBack"
-          variant="outlined"
-          fullWidth
-        />
+        <textarea rows="10" cols="55" placeholder="Add Feedback" className="ticketsInput"></textarea>
         <div className="row Textbtn">
           <Button
             variant="contained"
             onClick={props.onCancel}
             className="FeedBtn"
+            sx={{background:"#ff6000"}}
           >
             Submit FeedBack
           </Button>
