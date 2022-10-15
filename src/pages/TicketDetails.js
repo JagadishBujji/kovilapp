@@ -1,9 +1,18 @@
-import { Stack, Box, Card, Button, Avatar } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import Stepper from "../Reuseable/Stepper/VerticalLinearStepper";
+import { Stack, Box, Card, Button, Avatar,} from "@mui/material";
 import VerticalLinearStepper from "../Reuseable/Stepper/VerticalLinearStepper";
+import { useState } from "react";
+import TicketsBack from "../Reuseable/TicketsBack";
+import TicketsModalBox from "../Reuseable/TicketsModalBox";
 
 const TicketsDetails = () => {
+    const [openModal,setOpenModal] = useState(false);
+
+  const handleModal = () => {
+    setOpenModal(true);
+  }
+  const deleteBack = () => {
+    setOpenModal(false);
+  }
   return (
     <>
       <Stack>
@@ -89,7 +98,6 @@ const TicketsDetails = () => {
                 </div>
               </Card>
             </div>
-
             <div className="col-md-7">
               <Card sx={{ p: 2 }}>
                 <div>
@@ -145,11 +153,18 @@ const TicketsDetails = () => {
               </Card>
               <Card sx={{ mt: 5, p: 2 }}>
                 <VerticalLinearStepper/>
+                <div className="row user-tabs">
+                <Button variant="outlined" onClick={handleModal}>Add Feedback</Button>
+                <Button variant="contained" >Assign Tickets</Button>
+                </div>
+                
               </Card>
             </div>
           </div>
         </Box>
       </Stack>
+      {openModal && <TicketsModalBox onCancel = {deleteBack}/>}
+      {openModal && <TicketsBack onCancel = {deleteBack}/>}
     </>
   );
 };
