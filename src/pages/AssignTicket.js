@@ -1,10 +1,8 @@
-import { Stack, Box, Card, Button, Avatar,} from "@mui/material";
-import BasicSelect from "../Reuseable/SelectField/SelectField";
-
+import { Stack, Box, Card, Button, Avatar } from "@mui/material";
+import AssignSelect from "../Reuseable/SelectField/AssignSelect";
+import TextField from "@mui/material/TextField";
 
 const AssignTicket = () => {
-    
-    
   return (
     <>
       <Stack>
@@ -144,16 +142,29 @@ const AssignTicket = () => {
                 </div>
               </Card>
               <Card sx={{ mt: 5, p: 2 }}>
-               <div>
-                <p>Admin</p>
-                <h6><b>#KATU09 SriVatsava N</b></h6>
-               </div>
-               <div>
-               <BasicSelect />
-               </div>
-               <div>
-                
-               </div>
+                <div>
+                  <p>Admin</p>
+                  <h6>
+                    <b>#KATU09 SriVatsava N</b>
+                  </h6>
+                </div>
+                <div>
+                  <AssignSelect />
+                </div>
+
+                <div>
+                  {" "}
+                  <TextField
+                    id="outlined-basic"
+                    label="Date Of Birth"
+                    variant="outlined"
+                    type="date"
+                    sx={{width:"300px",mt: 5}}
+                  />
+                </div>
+                <div>
+                <Button variant="contained" sx={{mt:3,ml:13,background:"#ff6000"}}>Assign To Sub-Admin</Button>
+                </div>
               </Card>
             </div>
           </div>

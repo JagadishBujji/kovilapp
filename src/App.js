@@ -26,11 +26,11 @@ export default function App() {
         <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
         <Route
           path="/login"
-          element={user ? <Navigate to="/recruiter" /> : <Login />}
+          element={user ? <Navigate to="/kovil" /> : <Login />}
         />
         <Route
           path="/signup"
-          element={user ? <Navigate to="/recruiter" /> : <Signup />}
+          element={user ? <Navigate to="/kovil" /> : <Signup />}
         />
         {/* <Route path="welcome" element={ user?  <Welcome /> :<Navigate to="/login"/>} /> */}
         <Route

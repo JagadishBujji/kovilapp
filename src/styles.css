@@ -179,9 +179,9 @@ a {
 .ticketsInput{
   padding: 10px;
 }
-label[data-shrink=false]+.MuiInputBase-formControl .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+/* label[data-shrink=false]+.MuiInputBase-formControl .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
   height: 210px;
-}
+} */
 .FeedBtn{
   background-color: #ff6000;
 }
