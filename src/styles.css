@@ -28,6 +28,43 @@ a {
   --secondary: #f8fafc;
 }
 
+.loginmainbanner {
+  min-height: 100vh;
+  padding: 50px 0px;
+}
+
+.google-img {
+  width: 50px;
+  height: 50px;
+}
+
+.login {
+  text-align: center;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 10px;
+  background: #f2f1fa;
+  border: none;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.login-btn:focus {
+  outline: 2px solid #ccc;
+}
+
+.kovil-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-img {
+  width: 100%;
+}
+
 .navbar {
   position: fixed;
   top: 0;
@@ -138,7 +175,6 @@ a {
   left: calc(50% - 15rem);
 }
 
-
 .backdrop {
   position: fixed;
   z-index: 1;
@@ -176,13 +212,13 @@ a {
   margin-bottom: 20px;
 }
 /* Textfield modal */
-.ticketsInput{
+.ticketsInput {
   padding: 10px;
 }
-label[data-shrink=false]+.MuiInputBase-formControl .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+/* label[data-shrink=false]+.MuiInputBase-formControl .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
   height: 210px;
-}
-.FeedBtn{
+} */
+.FeedBtn {
   background-color: #ff6000;
 }
 .open {
@@ -245,7 +281,7 @@ label[data-shrink=false]+.MuiInputBase-formControl .css-1t8l2tu-MuiInputBase-inp
   justify-content: end;
   align-items: center;
 }
-.Textbtn{
+.Textbtn {
   display: flex;
   justify-content: end;
   align-items: center;
@@ -258,20 +294,18 @@ label[data-shrink=false]+.MuiInputBase-formControl .css-1t8l2tu-MuiInputBase-inp
   align-items: center;
 } */
 
-
-.temple1{
+.temple1 {
   margin-left: 10px;
 }
 
-.img-upload{
+.img-upload {
   margin: 5px;
   border-radius: 10px;
 }
 
-.fa-microphone{
+.fa-microphone {
   font-size: 32px;
 }
-
 
 @media only screen and (max-width: 700px) {
   /* html {

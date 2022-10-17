@@ -3,6 +3,17 @@
 import React, { useEffect, useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../services/firebase";
+import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+import FormControl from "@mui/material/FormControl";
+import Button from "@mui/material/Button";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { fontSize, width } from "@mui/system";
+
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -49,83 +60,117 @@ const Login = () => {
       };
     }
   }, []);
+  const [values, setValues] = React.useState({
+    amount: "",
+    password: "",
+    weight: "",
+    weightRange: "",
+    showPassword: false,
+  });
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword,
+    });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const login = {
+    background: "#ff6000",
+    width: "100%",
+    mt: 2,
+    color: "#fff",
+    fontSize: "18px",
+    fontWeight: "600",
+    border: "1px solid #ff6000",
+    "&:hover": {
+      backgroundColor: "#ff6000",
+      border: "1px solid #ff6000",
+    },
+  };
 
   return (
     <>
-      <div class="container row m-auto">
-        <div className="col-md-12 ">
-          <main class="signup-container">
-            <h1 class="heading-primary">
-              Log in<span class="span-blue">.</span>
-            </h1>
-            <p class="text-mute">
-              Enter your credentials to access your account.
-            </p>
-            <div class="login-wrapper">
-              <a href="#" class="btn btn-google">
-                <img src="https://img.icons8.com/fluency/48/000000/google-logo.png" />
-                Log In with Google
-              </a>
-              <div class="line-breaker">
-                <span class="line"></span>
-                <span>or</span>
-                <span class="line"></span>
-              </div>
-            </div>
-
-            <form class="signup-form">
-              <label class="inp">
-                <input
-                  type="email"
-                  onChange={(e) => {
-                    setFormData({ ...formData, email: e.target.value });
-                  }}
-                  class="input-text"
-                  placeholder="&nbsp;"
-                />
-                <span class="label">Email</span>
-                <span class="input-icon">
-                  <i class="fas fa-envelope"></i>
-                </span>
-                {error && <p style={{ color: "red" }}>{error}</p>}
-              </label>
-              <label class="inp">
-                <input
-                  onChange={(e) => {
-                    setFormData({ ...formData, password: e.target.value });
-                  }}
-                  type="password"
-                  class="input-text"
-                  placeholder="&nbsp;"
-                  id="password"
-                />
-                <span class="label">Password</span>
-                <span class="input-icon input-icon-password" data-password>
-                  <i class="fas fa-eye"></i>
-                </span>
-                {passwordError && (
-                  <p style={{ color: "red" }}>{passwordError}</p>
-                )}
-              </label>
-              <button type="submit" onClick={handleClick} class="btn btn-login">
-                Login
-              </button>
-            </form>
-            <p class="text-mute">
-              Not a member? <a href="/signup">Sign up</a>
-            </p>
-          </main>
+      <div class="container row m-auto loginmainbanner">
+        <div className="col-md-5 kovil-login">
+          <img src="/images/Picture1.jpg" alt="" className="login-img" />
         </div>
-
-        {/* <div class="welcome-container">
-          <h1 class="heading-secondary">
-            Welcome to <span class="lg">IDEEZ!</span>
-          </h1>
-          <img
-            src="https://png2.cleanpng.com/sh/82506800d9e08bf14cb0a38d53322fea/L0KzQYm3VsI1N6Rug5H0aYP2gLBuTfxieKV0iJ9taYPzfLLCTfRmfppofZ92dXz3eb7shPliNZ1miOZ4cD3wf7TylgAuPZM3fqNsMEC4RIKAUsQvOmU5SaUBMkm0RYOCWME1OGI7S6Y9NT7zfri=/kisspng-laptop-display-device-multimedia-laptop-mockup-5b2f1c00541724.2441362915298140163445.png"
-            alt=""
-          />
-        </div> */}
+        <div className="col-md-7">
+          <div className="container login">
+            <h2>Login</h2>
+            <p>Enter your credentials to access your account</p>
+            {/* <div className="googlelogin">
+              <a href="" className="google-signin">
+                <img src="/images/google.png" alt="" className="google-img" />{" "}
+                Login with Google
+              </a>
+            </div> */}
+            <div className="googlelogin">
+              <button className="login-btn">
+                <img src="/images/google.png" alt="" className="google-img" />{" "}
+                Login with Google
+              </button>
+            </div>
+            <p>(or)</p>
+            <form className="form-group">
+              <TextField
+                fullWidth
+                id="outlined-basic"
+                label="Email id"
+                variant="outlined"
+                className="mb-4"
+                type="email"
+              />
+              {/* <TextField
+                fullWidth
+                id="outlined-basic"
+                label="Password"
+                variant="outlined"
+                className="mb-4"
+                type="password"
+              /> */}
+              <FormControl sx={{ width: "100%" }} variant="outlined">
+                <InputLabel htmlFor="outlined-adornment-password">
+                  Password
+                </InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-password"
+                  type={values.showPassword ? "text" : "password"}
+                  value={values.password}
+                  onChange={handleChange("password")}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {values.showPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Password"
+                />
+              </FormControl>
+              <Button sx={login} variant="outlined">
+                Login
+              </Button>
+            </form>
+          </div>
+        </div>
       </div>
     </>
   );

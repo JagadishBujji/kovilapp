@@ -16,7 +16,7 @@ const UserPosts = () => {
           <h4>
             <b>Users</b>
           </h4>
-          <Button variant="outlined" onClick={() => navigate("/kovil/adduser")}>
+          <Button sx={{background:"#ff6000", color: "#fff"}} variant="outlined" onClick={() => navigate("/kovil/adduser")}>
             + Add User
           </Button>
         </div>

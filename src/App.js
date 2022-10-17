@@ -23,15 +23,9 @@ export default function App() {
     <div className="App">
       <Routes>
         {/* //protected routes */}
-        <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
-        <Route
-          path="/login"
-          element={user ? <Navigate to="/recruiter" /> : <Login />}
-        />
-        <Route
-          path="/signup"
-          element={user ? <Navigate to="/recruiter" /> : <Signup />}
-        />
+        <Route path="/" element={<Login />} />
+
+        <Route path="/signup" element={<Signup />} />
         {/* <Route path="welcome" element={ user?  <Welcome /> :<Navigate to="/login"/>} /> */}
         <Route
           path="/kovil"
@@ -61,9 +55,9 @@ export default function App() {
             path="ticketsdetails"
             element={user ? <TicketsDetails /> : <Navigate to="/login" />}
           />
-           <Route
+          <Route
             path="assigntickets"
-            element={user ? <AssignTicket/> : <Navigate to="/login" />}
+            element={user ? <AssignTicket /> : <Navigate to="/login" />}
           />
           {/* <Route path="event-post" element={ user? <EventPosts /> : <Navigate to="/login"/>} /> */}
         </Route>
