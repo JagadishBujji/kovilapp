@@ -23,14 +23,10 @@ export default function App() {
     <div className="App">
       <Routes>
         {/* //protected routes */}
-        <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
-        <Route
-          path="/login"
-          element={user ? <Navigate to="/kovil" /> : <Login />}
-        />
+        <Route path="/" element={<Login />} />
         <Route
           path="/signup"
-          element={user ? <Navigate to="/kovil" /> : <Signup />}
+          element={<Signup />}
         />
         {/* <Route path="welcome" element={ user?  <Welcome /> :<Navigate to="/login"/>} /> */}
         <Route

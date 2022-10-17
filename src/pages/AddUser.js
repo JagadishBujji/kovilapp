@@ -91,7 +91,7 @@ const AddUser = () => {
                 <div className="col-md-6 picture">
                   <TextField
                     id="outlined-basic"
-                    label="Date Of Birth"
+                    label=""
                     variant="outlined"
                     fullWidth
                     type="date"
