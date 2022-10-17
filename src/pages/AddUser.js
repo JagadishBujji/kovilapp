@@ -4,7 +4,7 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import SelectField from "../Reuseable/SelectField/SelectField";
 import TextField from "@mui/material/TextField";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+// import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import StateSelect from "../Reuseable/SelectField/StateSelect";
 import DistrictSelect from "../Reuseable/SelectField/DistrictSelect";
 
@@ -91,7 +91,7 @@ const AddUser = () => {
                 <div className="col-md-6 picture">
                   <TextField
                     id="outlined-basic"
-                    label="Date Of Birth"
+                    label=""
                     variant="outlined"
                     fullWidth
                     type="date"

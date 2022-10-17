@@ -24,8 +24,15 @@ export default function App() {
       <Routes>
         {/* //protected routes */}
         <Route path="/" element={<Login />} />
+<<<<<<< HEAD
 
         <Route path="/signup" element={<Signup />} />
+=======
+        <Route
+          path="/signup"
+          element={<Signup />}
+        />
+>>>>>>> f84959ea73ec83ffff279506ad9ee3062e76be6e
         {/* <Route path="welcome" element={ user?  <Welcome /> :<Navigate to="/login"/>} /> */}
         <Route
           path="/kovil"
