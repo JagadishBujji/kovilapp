@@ -218,13 +218,7 @@ a {
 /* label[data-shrink=false]+.MuiInputBase-formControl .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
   height: 210px;
 } */
-<<<<<<< HEAD
-.FeedBtn {
-=======
-.FeedBtn{
->>>>>>> f84959ea73ec83ffff279506ad9ee3062e76be6e
-  background-color: #ff6000;
-}
+
 .open {
   color: green;
   font-size: x-large;
@@ -251,6 +245,12 @@ a {
   justify-content: space-between;
   align-items: center;
   padding: 20px;
+}
+
+.login-from{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .user-name {

@@ -1,11 +1,10 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import TicketTable from '../Table/TicketTable';
-
+import * as React from "react";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import TicketTable from "../Table/TicketTable";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -36,11 +35,11 @@ TabPanel.propTypes = {
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
-export default function TicketTabs() {
+export default function TicketTabs({ tickets }) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -48,27 +47,40 @@ export default function TicketTabs() {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Open [200]" {...a11yProps(0)} />
+    <Box sx={{ width: "100%" }}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+        >
+          <Tab
+            label={`Open [${tickets ? tickets.open.length : 0}]`}
+            {...a11yProps(0)}
+          />
           <Tab label="In-Progress [20]" {...a11yProps(1)} />
           <Tab label="closed [400]" {...a11yProps(2)} />
-          <Tab label="New & Not Assigned[21]" {...a11yProps(2)} />
+          <Tab label="New & Not Assigned[21]" {...a11yProps(3)} />
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0}>
-        <TicketTable />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-      <TicketTable />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-      <TicketTable />
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-      <TicketTable />
-      </TabPanel>
+      {tickets === null ? (
+        <p>Loading!!!</p>
+      ) : (
+        <>
+          <TabPanel value={value} index={0}>
+            <TicketTable tickets={tickets.open} />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <TicketTable tickets={tickets.inProgress} />
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            <TicketTable tickets={tickets.closed} />
+          </TabPanel>
+          <TabPanel value={value} index={3}>
+            <TicketTable tickets={tickets.closed} />
+          </TabPanel>
+        </>
+      )}
     </Box>
   );
 }

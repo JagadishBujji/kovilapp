@@ -27,6 +27,7 @@ const Login = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
+    console.log("formData: ", formData);
     await signInWithEmailAndPassword(auth, formData.email, formData.password)
       .then((res) => {
         const user = res.user;
@@ -38,7 +39,6 @@ const Login = () => {
         console.log(err.code);
         if (err.code === "auth/user-not-found") {
           setError("Email not register, kindly sign up");
-
           setPasswordError("");
         } else if (err.code === "auth/wrong-password") {
           setPasswordError("Wrong password");
@@ -69,7 +69,12 @@ const Login = () => {
   });
 
   const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
+    if (prop === "email") {
+      setFormData({ ...formData, [prop]: event.target.value });
+    } else {
+      setValues({ ...values, [prop]: event.target.value });
+      setFormData({ ...formData, [prop]: event.target.value });
+    }
   };
 
   const handleClickShowPassword = () => {
@@ -81,12 +86,14 @@ const Login = () => {
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
+    // tgsuperadmin123#
+    // tgsuperadmin@gmail.com
   };
 
   const login = {
     background: "#ff6000",
     width: "100%",
-    mt: 2,
+    mt: 3,
     color: "#fff",
     fontSize: "18px",
     fontWeight: "600",
@@ -103,7 +110,7 @@ const Login = () => {
         <div className="col-md-5 kovil-login">
           <img src="/images/Picture1.jpg" alt="" className="login-img" />
         </div>
-        <div className="col-md-7">
+        <div className="col-md-7 login-from">
           <div className="container login">
             <h2>Login</h2>
             <p>Enter your credentials to access your account</p>
@@ -113,13 +120,7 @@ const Login = () => {
                 Login with Google
               </a>
             </div> */}
-            <div className="googlelogin">
-              <button className="login-btn">
-                <img src="/images/google.png" alt="" className="google-img" />{" "}
-                Login with Google
-              </button>
-            </div>
-            <p>(or)</p>
+
             <form className="form-group">
               <TextField
                 fullWidth
@@ -128,6 +129,8 @@ const Login = () => {
                 variant="outlined"
                 className="mb-4"
                 type="email"
+                value={formData.email}
+                onChange={handleChange("email")}
               />
               {/* <TextField
                 fullWidth
@@ -144,7 +147,7 @@ const Login = () => {
                 <OutlinedInput
                   id="outlined-adornment-password"
                   type={values.showPassword ? "text" : "password"}
-                  value={values.password}
+                  value={formData.password}
                   onChange={handleChange("password")}
                   endAdornment={
                     <InputAdornment position="end">
@@ -165,7 +168,7 @@ const Login = () => {
                   label="Password"
                 />
               </FormControl>
-              <Button sx={login} variant="outlined">
+              <Button sx={login} variant="outlined" onClick={handleClick}>
                 Login
               </Button>
             </form>

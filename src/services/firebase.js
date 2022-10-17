@@ -8,15 +8,13 @@ import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDEbwAO_r2pV01Z7YLhEAlSqP1EaJeJ-Ts",
-  authDomain: "medcuore-sparkfun.firebaseapp.com",
-  databaseURL:
-    "https://medcuore-sparkfun-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "medcuore-sparkfun",
-  storageBucket: "medcuore-sparkfun.appspot.com",
-  messagingSenderId: "118335114395",
-  appId: "1:118335114395:web:c247ffd4d0e5303dc54a3e",
-  measurementId: "G-NH1K14D4M5"
+  apiKey: "AIzaSyBWMklfkoB3Kt95_8i4w6XnQ6KscvjLlsY",
+  authDomain: "templegrievance.firebaseapp.com",
+  projectId: "templegrievance",
+  storageBucket: "templegrievance.appspot.com",
+  messagingSenderId: "799795262553",
+  appId: "1:799795262553:web:28d104b3155248941bed48",
+  measurementId: "G-6ZMTZ6X7KN",
 };
 
 // Initialize Firebase

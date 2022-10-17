@@ -23,48 +23,45 @@ export default function App() {
     <div className="App">
       <Routes>
         {/* //protected routes */}
-        <Route path="/" element={<Login />} />
-<<<<<<< HEAD
+        <Route path="/" element={user ? <Home /> : <Login />} />
 
         <Route path="/signup" element={<Signup />} />
-=======
-        <Route
-          path="/signup"
-          element={<Signup />}
-        />
->>>>>>> f84959ea73ec83ffff279506ad9ee3062e76be6e
+
         {/* <Route path="welcome" element={ user?  <Welcome /> :<Navigate to="/login"/>} /> */}
         <Route
           path="/kovil"
-          element={user ? <Home /> : <Navigate to="/login" />}
+          element={user ? <Home /> : <Navigate to="/" />}
+          // element={<Home />}
         >
           <Route
             path="home-post"
-            element={user ? <HomePost /> : <Navigate to="/login" />}
+            element={user ? <HomePost /> : <Navigate to="/" />}
           />
           <Route
             path="user-post"
-            element={user ? <UserPosts /> : <Navigate to="/login" />}
+            element={user ? <UserPosts /> : <Navigate to="/" />}
           />
           <Route
             path="adduser"
-            element={user ? <AddUser /> : <Navigate to="/login" />}
+            element={user ? <AddUser /> : <Navigate to="/" />}
           />
           <Route
             path="userdetails"
-            element={user ? <UserDetails /> : <Navigate to="/login" />}
+            element={user ? <UserDetails /> : <Navigate to="/" />}
           />
           <Route
             path="tickets"
-            element={user ? <Tickets /> : <Navigate to="/login" />}
+            element={user ? <Tickets /> : <Navigate to="/" />}
+            // element={<Tickets />}
           />
           <Route
             path="ticketsdetails"
-            element={user ? <TicketsDetails /> : <Navigate to="/login" />}
+            element={user ? <TicketsDetails /> : <Navigate to="/" />}
+            // element={<TicketsDetails />}
           />
           <Route
             path="assigntickets"
-            element={user ? <AssignTicket /> : <Navigate to="/login" />}
+            element={user ? <AssignTicket /> : <Navigate to="/" />}
           />
           {/* <Route path="event-post" element={ user? <EventPosts /> : <Navigate to="/login"/>} /> */}
         </Route>

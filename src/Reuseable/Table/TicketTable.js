@@ -10,17 +10,17 @@ import TableRow from "@mui/material/TableRow";
 import { useNavigate } from "react-router-dom";
 
 const columns = [
-  { id: "id", label: "ID", minWidth: 170 },
-  { id: "districtname", label: "District Name", minWidth: 100 },
+  { id: "doc_id", label: "ID", minWidth: 170 },
+  { id: "city", label: "District Name", minWidth: 100 },
   {
-    id: "temple",
+    id: "temple_name",
     label: "Temple",
     minWidth: 170,
     align: "right",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "complaint",
+    id: "complaint_type",
     label: "Complaint Type",
     minWidth: 170,
     align: "right",
@@ -41,7 +41,7 @@ const columns = [
     format: (value) => value.toFixed(2),
   },
   {
-    id: "assigned",
+    id: "posted_on",
     label: "Assigned-On",
     minWidth: 170,
     align: "right",
@@ -56,32 +56,95 @@ const columns = [
   },
 ];
 
-function createData(
-    id,
-    districtname,
-    temple,
-    complaint,
-    admin,
-    subadmin,
-    assigned,
-    date
-) {
-  return { id,districtname ,temple, complaint, admin, subadmin,assigned,date };
-}
+// function createData(
+//   id,
+//   districtname,
+//   temple,
+//   complaint,
+//   admin,
+//   subadmin,
+//   assigned,
+//   date
+// ) {
+//   return {
+//     id,
+//     districtname,
+//     temple,
+//     complaint,
+//     admin,
+//     subadmin,
+//     assigned,
+//     date,
+//   };
+// }
 
-const rows = [
-  createData("#KA001", "Srikakulam","SriSuryanaryanaswamy", "Noise", "srivatsava", "Johnny", "23-05-2022", "30-06-2022"),
-  createData("#KA002", "Vishakapatanam","sri Pydi Talli Ammavaru", "Money Collection From public", "srivatsava","Jhonny-absent williams-Reassigned", "23-05-2022", "30-06-2022"),
-  createData("#KA001", "Srikakulam","SriSuryanaryanaswamy", "Noise", "srivatsava", "Johnny", "23-05-2022", "30-06-2022"),
-  createData("#KA002", "Vishakapatanam","sri Pydi Talli Ammavaru", "Money Collection From public", "srivatsava","Jhonny-absent williams-Reassigned", "23-05-2022", "30-06-2022"),
-  createData("#KA001", "Srikakulam","SriSuryanaryanaswamy", "Noise", "srivatsava", "Johnny", "23-05-2022", "30-06-2022"),
-  createData("#KA002", "Vishakapatanam","sri Pydi Talli Ammavaru", "Money Collection From public", "srivatsava","Jhonny-absent williams-Reassigned", "23-05-2022", "30-06-2022"),
-  
-];
+// const rows = [
+//   createData(
+//     "#KA001",
+//     "Srikakulam",
+//     "SriSuryanaryanaswamy",
+//     "Noise",
+//     "srivatsava",
+//     "Johnny",
+//     "23-05-2022",
+//     "30-06-2022"
+//   ),
+//   createData(
+//     "#KA002",
+//     "Vishakapatanam",
+//     "sri Pydi Talli Ammavaru",
+//     "Money Collection From public",
+//     "srivatsava",
+//     "Jhonny-absent williams-Reassigned",
+//     "23-05-2022",
+//     "30-06-2022"
+//   ),
+//   createData(
+//     "#KA001",
+//     "Srikakulam",
+//     "SriSuryanaryanaswamy",
+//     "Noise",
+//     "srivatsava",
+//     "Johnny",
+//     "23-05-2022",
+//     "30-06-2022"
+//   ),
+//   createData(
+//     "#KA002",
+//     "Vishakapatanam",
+//     "sri Pydi Talli Ammavaru",
+//     "Money Collection From public",
+//     "srivatsava",
+//     "Jhonny-absent williams-Reassigned",
+//     "23-05-2022",
+//     "30-06-2022"
+//   ),
+//   createData(
+//     "#KA001",
+//     "Srikakulam",
+//     "SriSuryanaryanaswamy",
+//     "Noise",
+//     "srivatsava",
+//     "Johnny",
+//     "23-05-2022",
+//     "30-06-2022"
+//   ),
+//   createData(
+//     "#KA002",
+//     "Vishakapatanam",
+//     "sri Pydi Talli Ammavaru",
+//     "Money Collection From public",
+//     "srivatsava",
+//     "Jhonny-absent williams-Reassigned",
+//     "23-05-2022",
+//     "30-06-2022"
+//   ),
+// ];
 
-export default function TicketTable() {
+export default function TicketTable({ tickets }) {
   const navigate = useNavigate();
   const [page, setPage] = React.useState(0);
+  const [rows, setRows] = React.useState(tickets);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const handleChangePage = (event, newPage) => {
@@ -107,7 +170,11 @@ export default function TicketTable() {
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
-                  sx={{background: "#ebf2f8", fontSize: "14px", fontWeight: "700"}}
+                  sx={{
+                    background: "#ebf2f8",
+                    fontSize: "14px",
+                    fontWeight: "700",
+                  }}
                 >
                   {column.label}
                 </TableCell>
@@ -119,11 +186,15 @@ export default function TicketTable() {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.doc_id}>
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align} onClick={() => navigate("/kovil/ticketsdetails")}>
+                        <TableCell
+                          key={column.id}
+                          align={column.align}
+                          onClick={() => navigate("/kovil/ticketsdetails")}
+                        >
                           {column.format && typeof value === "number"
                             ? column.format(value)
                             : value}

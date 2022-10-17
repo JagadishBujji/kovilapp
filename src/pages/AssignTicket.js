@@ -156,7 +156,7 @@ const AssignTicket = () => {
                   {" "}
                   <TextField
                     id="outlined-basic"
-                    label="Date Of Birth"
+                    label=""
                     variant="outlined"
                     type="date"
                     sx={{width:"300px",mt: 5}}

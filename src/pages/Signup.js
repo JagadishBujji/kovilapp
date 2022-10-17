@@ -1,19 +1,52 @@
-import React, { useEffect ,useState} from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-// import {auth  } from '../firebase-config'
-import {auth} from '../services/firebase'
-const Signup = () => {
+// import $ from "jquery";
+
+import React, { useEffect, useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../services/firebase";
+import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+import FormControl from "@mui/material/FormControl";
+import Button from "@mui/material/Button";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { fontSize, width } from "@mui/system";
+
+const Login = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState();
+  const [passwordError, setPasswordError] = useState();
+
   const eyeClick = document.querySelector("[data-password]");
   const password_elem = document.getElementById("password");
-  const [error,setError]=useState()
-  const [passwordError,setPasswordError]=useState();
 
-  const [formData,setFormData]=useState({
-    firstName:"",
-    lastName:"",
-    email:"",
-    password:"",
-  })
+  const handleClick = async (e) => {
+    e.preventDefault();
+    await signInWithEmailAndPassword(auth, formData.email, formData.password)
+      .then((res) => {
+        const user = res.user;
+        console.log(user);
+        localStorage.setItem("user", JSON.stringify(user));
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err.code);
+        if (err.code === "auth/user-not-found") {
+          setError("Email not register, kindly sign up");
+
+          setPasswordError("");
+        } else if (err.code === "auth/wrong-password") {
+          setPasswordError("Wrong password");
+          setError("");
+        }
+      });
+  };
+
   useEffect(() => {
     if (eyeClick !== null) {
       eyeClick.onClick = () => {
@@ -27,131 +60,158 @@ const Signup = () => {
       };
     }
   }, []);
-const handleClick=async(e)=>{
-  e.preventDefault();
-  console.log(formData)
-  await createUserWithEmailAndPassword(auth,formData.email,formData.password)
-  .then((res)=>{
-    console.log(res)
-    const user=res.user; 
-    localStorage.setItem("user", JSON.stringify(user));
-    window.location.reload();
+  const [values, setValues] = React.useState({
+    amount: "",
+    password: "",
+    weight: "",
+    weightRange: "",
+    showPassword: false,
+  });
 
-  }).catch((err)=>{
-    console.log(err.code);
-    if(err.code==="auth/missing-email")
-    {
-      setError("Kindly enter email addresss")
-      setPasswordError("")
-    }
-    else if(err.code==="auth/invalid-email")
-    {
-      setError("Enter a valid email")
-      setPasswordError("")
-    }
-    else if(err.code==="auth/email-already-in-use")
-    {
-      setError("Email already registered kindly login")
-      setPasswordError("")
-    }
-    
-    else if(err.code==="auth/internal-error")
-    {
-      setError("")
-      setPasswordError("Enter password")
-    }
-    
-     else if(err.code==="auth/weak-password")
-    {
-      setError("")
-      setPasswordError("weak password")
-    }
-  })
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
 
-}
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword,
+    });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const login = {
+    background: "#ff6000",
+    width: "100%",
+    mt: 3,
+    color: "#fff",
+    fontSize: "18px",
+    fontWeight: "600",
+    border: "1px solid #ff6000",
+    "&:hover": {
+      backgroundColor: "#ff6000",
+      border: "1px solid #ff6000",
+    },
+  };
+
   return (
     <>
-      <div class="container row m-auto">
-        <div className="col-md-12 ">
-          <main class="signup-container row">
-            <p class="text-mute">START FOR FREE</p>
-            <h1 class="heading-primary">
-              Create new account<span class="custom-dot">.</span>
-            </h1>
-            <p class="text-mute">
-              Already A Member? <a href="/">Log in</a>
-            </p>
-            <form class="signup-form">
-              <div class="row input-wrapper">
-                <label class="inp">
-                  <input type="text" onChange={(e)=>{
-                    setFormData({...formData,firstName:e.target.value})
-                  }} class="input-text" placeholder="&nbsp;" />
-                  <span class="label">First name</span>
-                  <span class="input-icon">
-                    <i class="fas fa-address-card"></i>
-                  </span>
-                </label>
-                <label class="inp mt-4">
-                  <input type="text" onChange={(e)=>{
-                    setFormData({...formData,lastName:e.target.value})
-                  }}  class="input-text" placeholder="&nbsp;" />
-                  <span class="label">Last name</span>
-                  <span class="input-icon">
-                    <i class="fas fa-address-card"></i>
-                  </span>
-                </label>
-                <label class="inp mt-4">
-                  <input type="email" required onChange={(e)=>{
-                    setFormData({...formData,email:e.target.value})
-                  }}  class="input-text" placeholder="&nbsp;" 
-                 />
-                  <span class="label">Email</span>
-                  <span class="input-icon">
-                    <i class="far fa-envelope"></i>
-                  </span>
-                { error && <p style={{color:"red"}}>{error}</p>}
-
-                </label>
-                <label class="inp mt-4">
-                  <input required
-                    type="password"
-                    class="input-text"
-                    placeholder="&nbsp;"
-                    onChange={(e)=>{
-                      setFormData({...formData,password:e.target.value})
-                    }} 
-                    id="password"
-                  />
-                  <span class="label">Password</span>
-                  <span class="input-icon input-icon-password" data-password>
-                    <i class="fas fa-eye"></i>
-                  </span>
-                { passwordError && <p style={{color:"red"}}>{passwordError}</p>}
-
-                </label>
-                <button type="submit" onClick={handleClick} class="btn btn-signup w-100 mt-4">
-                  Create account
-                </button>
-              </div>
-            </form>
-          </main>
+      <div class="container row m-auto loginmainbanner">
+        <div className="col-md-5 kovil-login">
+          <img src="/images/Picture1.jpg" alt="" className="login-img" />
         </div>
-        {/* <div className="col-md-6"></div> */}
-
-        {/* <div class="welcome-container">
-          <h1 class="heading-secondary">
-            Welcome to <span class="lg">IDEEZ!</span>
-          </h1>
-          <img
-            src="https://png2.cleanpng.com/sh/82506800d9e08bf14cb0a38d53322fea/L0KzQYm3VsI1N6Rug5H0aYP2gLBuTfxieKV0iJ9taYPzfLLCTfRmfppofZ92dXz3eb7shPliNZ1miOZ4cD3wf7TylgAuPZM3fqNsMEC4RIKAUsQvOmU5SaUBMkm0RYOCWME1OGI7S6Y9NT7zfri=/kisspng-laptop-display-device-multimedia-laptop-mockup-5b2f1c00541724.2441362915298140163445.png"
-            alt=""
-          />
-        </div> */}
+        <div className="col-md-7 login-from">
+          <div className="container login">
+            <h2>Signup</h2>
+            <p>Enter your credentials to access your account</p>
+            {/* <div className="googlelogin">
+              <a href="" className="google-signin">
+                <img src="/images/google.png" alt="" className="google-img" />{" "}
+                Login with Google
+              </a>
+            </div> */}
+            {/* <div className="googlelogin">
+              <button className="login-btn">
+                <img src="/images/google.png" alt="" className="google-img" />{" "}
+                Login with Google
+              </button>
+            </div> */}
+            {/* <p>(or)</p> */}
+            <div className="row">
+              <div className="col-md-6">
+                <form className="form-group">
+                  <TextField
+                    fullWidth
+                    id="outlined-basic"
+                    label="First Name"
+                    variant="outlined"
+                    className="mb-4"
+                    type="text"
+                  />
+                </form>
+              </div>{" "}
+              <div className="col-md-6">
+                <form className="form-group">
+                  <TextField
+                    fullWidth
+                    id="outlined-basic"
+                    label="Last Name"
+                    variant="outlined"
+                    className="mb-4"
+                    type="email"
+                  />
+                </form>
+              </div>{" "}
+            </div>
+            <div className="row">
+              <div className="col-md-6">
+                <form className="form-group">
+                  <TextField
+                    fullWidth
+                    id="outlined-basic"
+                    label="Phone"
+                    variant="outlined"
+                    className="mb-4"
+                    type="tel"
+                  />
+                </form>
+              </div>{" "}
+              <div className="col-md-6">
+                <form className="form-group">
+                  <TextField
+                    fullWidth
+                    id="outlined-basic"
+                    label="email"
+                    variant="outlined"
+                    className="mb-4"
+                    type="email"
+                  />
+                </form>
+              </div>{" "}
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <FormControl sx={{ width: "100%" }} variant="outlined">
+                  <InputLabel htmlFor="outlined-adornment-password">
+                    Password
+                  </InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-password"
+                    type={values.showPassword ? "text" : "password"}
+                    value={values.password}
+                    onChange={handleChange("password")}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {values.showPassword ? (
+                            <VisibilityOff />
+                          ) : (
+                            <Visibility />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                  />
+                </FormControl>
+                <Button sx={login} variant="outlined">
+                  Sign up
+                </Button>
+              </div>{" "}
+            </div>
+          </div>
+        </div>
       </div>
-      ;
     </>
   );
 };
 
-export default Signup;
+export default Login;
