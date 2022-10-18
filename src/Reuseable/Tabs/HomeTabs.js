@@ -48,8 +48,12 @@ export default function HomeTabs() {
     setValue(newValue);
   };
 
-  // const Complaint = {
-  //   fontFamily: "sans-serif",
+  // const tab = {
+  //   fontWeight: "700",
+  // background: "#ff6000",
+  // color: "#fff !important",
+  // outline: "none",
+  // borderRadius: "20px"
   // }
 
   return (
@@ -59,12 +63,13 @@ export default function HomeTabs() {
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
+         
         >
-          <Tab className="tab" label="District Wise" {...a11yProps(0)} />
+          <Tab  label="District Wise" {...a11yProps(0)} />
           <Tab label="Compliants Type" {...a11yProps(1)} />
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0}>
+      <TabPanel   value={value} index={0}>
         <div className="row">
           <div className="col-sm-12 col-md-3 col-lg-2">
             <div className="card">
