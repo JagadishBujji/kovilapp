@@ -50,9 +50,29 @@ export default function ComplaintTypeTabs() {
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Open[200]" {...a11yProps(0)} />
-          <Tab label="In-Progress[20]" {...a11yProps(1)} />
-          <Tab label="Closed[400]" {...a11yProps(2)} />
+          <Tab label="Open[200]" {...a11yProps(0)}  sx={{
+                    background: "#ebf2f8",
+                    fontSize: "16px",
+                    fontWeight: "700",
+                    fontFamily: "serif",
+                  }}/>
+          <Tab label="In-Progress[20]" {...a11yProps(1)} 
+          sx={{
+            background: "#ebf2f8",
+            fontSize: "16px",
+            fontWeight: "700",
+            fontFamily: "serif",
+          }}
+          />
+          <Tab label="Closed[400]" {...a11yProps(2)} 
+          sx={{
+            background: "#ebf2f8",
+            fontSize: "16px",
+            fontWeight: "700",
+            fontFamily: "serif",
+          }}
+          
+          />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>

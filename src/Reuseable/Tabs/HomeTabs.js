@@ -63,13 +63,30 @@ export default function HomeTabs() {
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
-         
         >
-          <Tab  label="District Wise" {...a11yProps(0)} />
-          <Tab label="Compliants Type" {...a11yProps(1)} />
+          <Tab
+            label="District Wise"
+            {...a11yProps(0)}
+            sx={{
+              background: "#ebf2f8",
+              fontSize: "16px",
+              fontWeight: "700",
+              fontFamily: "serif",
+            }}
+          />
+          <Tab
+            label="Compliants Type"
+            {...a11yProps(1)}
+            sx={{
+              background: "#ebf2f8",
+              fontSize: "16px",
+              fontWeight: "700",
+              fontFamily: "serif",
+            }}
+          />
         </Tabs>
       </Box>
-      <TabPanel   value={value} index={0}>
+      <TabPanel value={value} index={0}>
         <div className="row">
           <div className="col-sm-12 col-md-3 col-lg-2">
             <div className="card">

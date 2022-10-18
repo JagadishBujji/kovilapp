@@ -21,7 +21,7 @@ const columns = [
   },
   {
     id: "size",
-    label: "In-Size",
+    label: "In-Progress",
     minWidth: 170,
     align: "right",
     format: (value) => value.toLocaleString("en-US"),
@@ -31,28 +31,28 @@ const columns = [
     label: "Closed",
     minWidth: 170,
     align: "right",
-    format: (value) => value.toFixed(2),
+    format: (value) =>  value.toLocaleString("en-US"),
   },
   {
     id: "Total",
     label: "Total",
     minWidth: 170,
     align: "right",
-    format: (value) => value.toFixed(2),
+    format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "Admins",
     label: "Admins",
     minWidth: 170,
     align: "right",
-    format: (value) => value.toFixed(2),
+    format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "Subadmins",
     label: "Sub-Admins",
     minWidth: 170,
     align: "right",
-    format: (value) => value.toFixed(2),
+    format: (value) => value.toLocaleString("en-US"),
   },
 ];
 

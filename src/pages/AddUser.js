@@ -1,4 +1,4 @@
-import { Avatar, Box, Card, Grid } from "@mui/material";
+import { Alert, Avatar, Box, Card, Grid } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import * as React from "react";
 import Button from "@mui/material/Button";
@@ -7,8 +7,25 @@ import TextField from "@mui/material/TextField";
 // import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import StateSelect from "../Reuseable/SelectField/StateSelect";
 import DistrictSelect from "../Reuseable/SelectField/DistrictSelect";
+import { useState } from "react";
+import UserModal from "../Reuseable/UserModal/UserModal";
+import TicketsBack from "../Reuseable/TicketsBack";
+import { useNavigate } from "react-router-dom";
 
 const AddUser = () => {
+ 
+       const [showModal,setShowModal] = useState(false);
+       const navigate = useNavigate();
+
+       const handleClick = () => {
+        setShowModal(true)
+       }
+       const handleCancel = () => {
+        setShowModal(false)
+       }
+       const deleteHandle = () => {
+          navigate("/kovil/user-post")
+       }
   return (
     <>
       <Stack>
@@ -38,6 +55,11 @@ const AddUser = () => {
                     variant="outlined"
                     fullWidth
                     type="text"
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "900",
+                      fontFamily: "sans-serif"
+                    }}
                   />
                 </div>
                 <div className="col-md-6 picture">
@@ -47,6 +69,11 @@ const AddUser = () => {
                     variant="outlined"
                     fullWidth
                     type="text"
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "900",
+                      fontFamily: "sans-serif"
+                    }}
                   />
                 </div>
               </div>
@@ -58,6 +85,11 @@ const AddUser = () => {
                     variant="outlined"
                     fullWidth
                     type="tel"
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "900",
+                      fontFamily: "sans-serif"
+                    }}
                   />
                 </div>
                 <div className="col-md-6 picture">
@@ -76,7 +108,12 @@ const AddUser = () => {
                 variant="outlined"
                 fullWidth
                 type="email"
-                sx={{ mb: 2 }}
+                sx={{
+                  mb: 2 ,
+                  fontSize: "14px",
+                  fontWeight: "900",
+                  fontFamily: "sans-serif"
+                }}
               />
               <div className="row">
                 <div className="col-md-6 picture">
@@ -86,6 +123,11 @@ const AddUser = () => {
                     variant="outlined"
                     fullWidth
                     type="tel"
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "900",
+                      fontFamily: "sans-serif"
+                    }}
                   />
                 </div>
                 <div className="col-md-6 picture">
@@ -95,6 +137,11 @@ const AddUser = () => {
                     variant="outlined"
                     fullWidth
                     type="date"
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "900",
+                      fontFamily: "sans-serif"
+                    }}
                   />
                 </div>
               </div>
@@ -114,6 +161,11 @@ const AddUser = () => {
                     variant="outlined"
                     fullWidth
                     type="tel"
+                    sx={{
+                      fontSize: "14px",
+                      fontWeight: "900",
+                      fontFamily: "sans-serif"
+                    }}
                   />
                 </div>
                 <div className="col-md-6 picture1">
@@ -123,11 +175,13 @@ const AddUser = () => {
                 </div>
               </div>
               <div className="row okbutton">
-                <Button variant="text" sx={{ mr: 2 }}>
+                <Button variant="outlined" sx={{ mr: 2 }} onClick={handleClick}>
                   Cancel
                 </Button>
-                <Button variant="text">Add User</Button>
+                <Button variant="contained">Add User</Button>
               </div>
+              {showModal && <UserModal onConfirm = {deleteHandle} onCancel = {handleCancel}/>}
+              {showModal && <TicketsBack  />}
             </Box>
           </Card>
         </Box>
