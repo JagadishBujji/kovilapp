@@ -167,6 +167,7 @@ export default function UserTable() {
                     background: "#ebf2f8",
                     fontSize: "14px",
                     fontWeight: "700",
+                    fontFamily: "sans-erif"
                   }}
                 >
                   {column.label}
@@ -183,7 +184,7 @@ export default function UserTable() {
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align}  onClick={() => navigate("/kovil/userdetails")}>
+                        <TableCell key={column.id} align={column.align}  onClick={() => navigate("/kovil/userdetails")} sx={{fontFamily: "sans-serif"}}>
                           {column.format && typeof value === "number"
                             ? column.format(value)
                             : value}

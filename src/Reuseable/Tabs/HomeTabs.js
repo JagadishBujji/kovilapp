@@ -48,6 +48,14 @@ export default function HomeTabs() {
     setValue(newValue);
   };
 
+  // const tab = {
+  //   fontWeight: "700",
+  // background: "#ff6000",
+  // color: "#fff !important",
+  // outline: "none",
+  // borderRadius: "20px"
+  // }
+
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -55,12 +63,13 @@ export default function HomeTabs() {
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
+         
         >
-          <Tab className="tab" label="District Wise" {...a11yProps(0)} />
+          <Tab  label="District Wise" {...a11yProps(0)} />
           <Tab label="Compliants Type" {...a11yProps(1)} />
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0}>
+      <TabPanel   value={value} index={0}>
         <div className="row">
           <div className="col-sm-12 col-md-3 col-lg-2">
             <div className="card">
@@ -91,7 +100,7 @@ export default function HomeTabs() {
         <StickyHeadTable />
       </TabPanel>
       <TabPanel value={value} index={1}>
-      <div className="row">
+        <div className="row">
           <div className="col-sm-12 col-md-3 col-lg-2">
             <div className="card">
               <p className="count">Open Ticket</p>
@@ -117,7 +126,7 @@ export default function HomeTabs() {
             </div>
           </div>
         </div>
-        < ComplaintTypeTabs />
+        <ComplaintTypeTabs />
       </TabPanel>
     </Box>
   );

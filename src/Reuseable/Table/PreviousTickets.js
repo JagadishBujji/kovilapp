@@ -74,6 +74,7 @@ export default function PreviousTickets() {
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
+                  sx={{fontFamily: "serif"}}
                 >
                   {column.label}
                 </TableCell>
@@ -89,7 +90,7 @@ export default function PreviousTickets() {
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align}>
+                        <TableCell key={column.id} align={column.align} sx={{fontFamily: "serif"}}>
                           {column.format && typeof value === 'number'
                             ? column.format(value)
                             : value}
