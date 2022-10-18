@@ -172,8 +172,8 @@ export default function TicketTable({ tickets }) {
                   style={{ minWidth: column.minWidth }}
                   sx={{
                     background: "#ebf2f8",
-                    fontSize: "14px",
-                    fontWeight: "700",
+                    fontSize: "16px",
+                    fontWeight: "900",
                     fontFamily: "sans-serif"
                   }}
                 >

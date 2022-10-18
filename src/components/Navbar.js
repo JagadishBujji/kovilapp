@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+
 // import ChatIcon from "@mui/icons-material/Chat";
 // import AccountMenu from "../.././src/Reuseable/AccountMenu";
 
@@ -75,8 +76,18 @@ const Navbar = () => {
                 {/* <i className="fas fa-calendar mr-3"></i> */}
                 <i class="fas fa-ticket-alt mr-3"></i>
                 <b>Tickets</b>
-              </NavLink>
-
+              </NavLink>  
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? "activelink" : "nav-link "
+                }
+                to="/kovil/tickets"
+              >
+                {/* <i className="fas fa-calendar mr-3"></i> */}
+                <i class="fa-duotone fa-arrow-right-from-bracket mr-3"></i>
+                <b onClick={handleClick}>LogOut</b>
+              </NavLink>  
+              
               {/* <li className="nav-item">
                 <Link className="nav-link   px-4" to="user-profile">
                   <i className="fas fa-user mr-3"></i>
