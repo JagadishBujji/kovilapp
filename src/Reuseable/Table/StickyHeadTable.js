@@ -7,6 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import StateOption from "../SelectField/StateOptions";
 
 const columns = [
   { id: "name", label: "District Code", minWidth: 170 },
@@ -93,10 +94,14 @@ export default function StickyHeadTable() {
   };
 
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden", padding: "10px" }}>
-      <h1>
-        <b>AndraPradesh District Wise Tickets</b>
-      </h1>
+    <Paper sx={{ width: "100%", overflow: "hidden", padding: "13px" }}>
+      <div className="statewise">
+        <StateOption />
+        <h1 className="district-title">
+          <b>District Wise Tickets</b>
+        </h1>
+      </div>
+
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -106,7 +111,12 @@ export default function StickyHeadTable() {
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
-                  sx={{background: "#ebf2f8", fontSize: "14px", fontWeight: "700", fontFamily: "serif"}}
+                  sx={{
+                    background: "#ebf2f8",
+                    fontSize: "14px",
+                    fontWeight: "700",
+                    fontFamily: "serif",
+                  }}
                 >
                   {column.label}
                 </TableCell>
@@ -122,7 +132,11 @@ export default function StickyHeadTable() {
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align} sx={{fontFamily: "serif"}}>
+                        <TableCell
+                          key={column.id}
+                          align={column.align}
+                          sx={{ fontFamily: "serif" }}
+                        >
                           {column.format && typeof value === "number"
                             ? column.format(value)
                             : value}

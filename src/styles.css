@@ -220,6 +220,17 @@ a {
   font-size: 14px;
 } */
 
+.statewise{
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 10px;
+}
+
+.district-title{
+  margin-left: 10px;
+}
+
 
 
 .css-1aquho2-MuiTabs-indicator {
