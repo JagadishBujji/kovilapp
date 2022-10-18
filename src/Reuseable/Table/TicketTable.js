@@ -174,6 +174,7 @@ export default function TicketTable({ tickets }) {
                     background: "#ebf2f8",
                     fontSize: "14px",
                     fontWeight: "700",
+                    fontFamily: "sans-serif"
                   }}
                 >
                   {column.label}
@@ -194,6 +195,7 @@ export default function TicketTable({ tickets }) {
                           key={column.id}
                           align={column.align}
                           onClick={() => navigate("/kovil/ticketsdetails")}
+                          sx={{fontFamily: "sans-serif"}}
                         >
                           {column.format && typeof value === "number"
                             ? column.format(value)

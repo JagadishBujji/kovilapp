@@ -106,7 +106,7 @@ export default function StickyHeadTable() {
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
-                  sx={{background: "#ebf2f8", fontSize: "14px", fontWeight: "700"}}
+                  sx={{background: "#ebf2f8", fontSize: "14px", fontWeight: "700", fontFamily: "serif"}}
                 >
                   {column.label}
                 </TableCell>
@@ -122,7 +122,7 @@ export default function StickyHeadTable() {
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align}>
+                        <TableCell key={column.id} align={column.align} sx={{fontFamily: "serif"}}>
                           {column.format && typeof value === "number"
                             ? column.format(value)
                             : value}

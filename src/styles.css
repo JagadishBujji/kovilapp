@@ -192,7 +192,11 @@ a {
   color: #fff !important;
   outline: none;
   border-radius: 20px;
+  font-family: sans-serif;
+    font-size: 14px;
 }
+
+
 
 .css-1aquho2-MuiTabs-indicator {
   background: #fff;
@@ -310,6 +314,10 @@ a {
 
 .fa-microphone {
   font-size: 32px;
+}
+
+.css-1ex1afd-MuiTableCell-root{
+  font-family: "sans-serif";
 }
 
 @media only screen and (max-width: 700px) {
