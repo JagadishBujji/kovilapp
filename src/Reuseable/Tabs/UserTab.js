@@ -45,7 +45,19 @@ export default function UserTab() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  const tab = {
+    background: "#fff",
+    outline: "none",
+    color: "#000",
+    "&.Mui-selected": {
+      fontWeight: "700",
+      color: "#ff6000",
+      borderBottom: "2px solid #ff6000",
+    },
+    "&:focus": {
+      outline: "none",
+    },
+  };
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -54,9 +66,9 @@ export default function UserTab() {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="All [200]" {...a11yProps(0)} />
-          <Tab label="Admin [20]" {...a11yProps(1)} />
-          <Tab label="Sub-Admin [400]" {...a11yProps(2)} />
+          <Tab sx={tab} label="All [200]" {...a11yProps(0)} />
+          <Tab sx={tab} label="Admin [20]" {...a11yProps(1)} />
+          <Tab sx={tab} label="Sub-Admin [400]" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>

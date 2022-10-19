@@ -65,7 +65,7 @@ export default function HomeTabs() {
   const tab = {
     background: "#fff",
     outline: "none",
-    color: "#f17116",
+    color: "#000",
     borderRadius: "5px",
     "&.Mui-selected": {
       fontWeight: "700",
@@ -91,7 +91,7 @@ export default function HomeTabs() {
           aria-label="basic tabs example"
         >
           <Tab sx={tab} label="District Wise" {...a11yProps(0)} />
-          <Tab sx={tab} label="Compliants Type" {...a11yProps(1)} />
+          <Tab sx={tab} label="Compliant Type" {...a11yProps(1)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>

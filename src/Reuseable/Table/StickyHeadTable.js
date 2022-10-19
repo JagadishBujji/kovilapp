@@ -13,28 +13,28 @@ const columns = [
   { id: "name", label: "District Code", minWidth: 170 },
   { id: "code", label: "District Name", minWidth: 100 },
   {
-    id: "population",
-    label: "open",
+    id: "open",
+    label: "Open",
     minWidth: 170,
     align: "right",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "size",
+    id: "inProgress",
     label: "In-Progress",
     minWidth: 170,
     align: "right",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "density",
+    id: "closed",
     label: "Closed",
     minWidth: 170,
     align: "right",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "Total",
+    id: "total",
     label: "Total",
     minWidth: 170,
     align: "right",
@@ -59,14 +59,14 @@ const columns = [
 function createData(
   name,
   code,
-  population,
-  size,
-  density,
-  Total,
+  open,
+  inProgress,
+  closed,
+  total,
   Admins,
   Subadmins
 ) {
-  return { name, code, population, size, density, Total, Admins, Subadmins };
+  return { name, code, open, inProgress, closed, total, Admins, Subadmins };
 }
 
 const rows = [
@@ -144,9 +144,34 @@ export default function StickyHeadTable() {
                           align={column.align}
                           sx={stickybody}
                         >
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
+                          <span
+                            style={{
+                              backgroundColor:
+                                column.id === "open"
+                                  ? "#DAE5D1"
+                                  : column.id === "inProgress"
+                                  ? "#D1E9F7"
+                                  : column.id === "closed"
+                                  ? "#FFD8D8"
+                                  : column.id === "total"
+                                  ? "#D5DADD"
+                                  : "",
+                              color:
+                                column.id === "open"
+                                  ? "#7C8F33"
+                                  : column.id === "inProgress"
+                                  ? "#ACB1DB"
+                                  : column.id === "closed"
+                                  ? "#FF0C76"
+                                  : column.id === "total"
+                                  ? "#659FCA"
+                                  : "",
+                            }}
+                          >
+                            {column.format && typeof value === "number"
+                              ? column.format(value)
+                              : value}
+                          </span>
                         </TableCell>
                       );
                     })}
