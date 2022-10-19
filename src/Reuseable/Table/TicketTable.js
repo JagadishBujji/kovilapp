@@ -158,9 +158,17 @@ export default function TicketTable({ tickets }) {
 
   const Ticket = {
     background: "#F2F4F8",
-    fontSize: "15px",
+    fontSize: "16px",
+    fontWeight: "600",
+    color: "#1E3849",
+    textAlign: "left"
+  
+  };
+  const Ticketbody = {
+    fontSize: "14px",
     fontWeight: "500",
-    color: "#1E3849"
+    color: "#1E3849",
+    textAlign: "left"
   
   };
 
@@ -203,7 +211,7 @@ export default function TicketTable({ tickets }) {
                           key={column.id}
                           align={column.align}
                           onClick={() => navigate("/kovil/ticketsdetails")}
-                          sx={{ fontFamily: "sans-serif" }}
+                          sx={Ticketbody}
                         >
                           {column.format && typeof value === "number"
                             ? column.format(value)

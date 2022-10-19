@@ -31,7 +31,7 @@ const columns = [
     label: "Closed",
     minWidth: 170,
     align: "right",
-    format: (value) =>  value.toLocaleString("en-US"),
+    format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "Total",
@@ -93,13 +93,25 @@ export default function StickyHeadTable() {
     setPage(0);
   };
 
+  const stickyhead = {
+    background: "#F2F4F8",
+    fontSize: "16px",
+    fontWeight: "600",
+    color: "#1E3849",
+    textAlign: "left",
+  };
+  const stickybody = {
+    fontSize: "14px",
+    fontWeight: "500",
+    color: "#1E3849",
+    textAlign: "left",
+  };
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", padding: "13px" }}>
       <div className="statewise">
         <StateOption />
-        <h1 className="district-title">
-          District Wise Tickets
-        </h1>
+        <h1 className="district-title">District Wise Tickets</h1>
       </div>
 
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -111,12 +123,7 @@ export default function StickyHeadTable() {
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
-                  sx={{
-                    background: "#F2F4F8",
-                    fontSize: "14px",
-                    fontWeight: "600",
-                    fontFamily: "serif",
-                  }}
+                  sx={stickyhead}
                 >
                   {column.label}
                 </TableCell>
@@ -135,7 +142,7 @@ export default function StickyHeadTable() {
                         <TableCell
                           key={column.id}
                           align={column.align}
-                          sx={{ fontFamily: "serif" }}
+                          sx={stickybody}
                         >
                           {column.format && typeof value === "number"
                             ? column.format(value)

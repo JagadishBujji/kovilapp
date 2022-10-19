@@ -50,7 +50,21 @@ export default function ComplaintTypeTabs() {
     width: "100%",
     background: "#FFFFFF",
     boxShadow: "0px 2px 10px rgb(0 0 0 / 10%)",
-    fontFamily: "Roboto"
+    fontFamily: "Roboto",
+  };
+
+  const tab = {
+    background: "#fff",
+    outline: "none",
+    color: "#000",
+    "&.Mui-selected": {
+      fontWeight: "700",
+      color: "#ff6000",
+      borderBottom: "2px solid #ff6000",
+    },
+    "&:focus": {
+      outline: "none",
+    },
   };
 
   return (
@@ -61,9 +75,9 @@ export default function ComplaintTypeTabs() {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="Open[200]" {...a11yProps(0)} />
-          <Tab label="In-Progress[20]" {...a11yProps(1)} />
-          <Tab label="Closed[400]" {...a11yProps(2)} />
+          <Tab sx={tab} label="Open [200]" {...a11yProps(0)} />
+          <Tab sx={tab} label="In-Progress [20]" {...a11yProps(1)} />
+          <Tab sx={tab} label="Closed [400]" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>

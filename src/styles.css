@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Aladin&family=Roboto&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -12,7 +14,6 @@ body {
   font-family: "Roboto", sans-serif;
   line-height: 1.6;
   color: #1a1a1a;
-
   overflow-x: hidden;
 }
 
@@ -21,10 +22,10 @@ a {
   text-decoration: none;
 }
 
-@font-face {
+/* @font-face {
   font-family: "Roboto";
   src: url(Roboto/Roboto-Regular.ttf);
-}
+} */
 
 :root {
   --primay: #f17116;
@@ -156,7 +157,6 @@ a {
   background: #f17116;
 }
 
-
 .Ticketsbox {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   border-radius: 6px;
@@ -205,7 +205,9 @@ a {
   font-size: 14px;
 } */
 
-
+.MuiTableCell-root {
+  min-width: 150px;
+}
 
 .statewise {
   display: flex;
@@ -221,9 +223,7 @@ a {
   font-weight: 600;
 }
 
-
-
-.css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
+/* .css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
   color: #f17116 !important;
   outline: none;
   font-family: "Roboto", sans-serif;
@@ -233,12 +233,17 @@ a {
 
 .MuiButtonBase-root {
   text-transform: capitalize !important;
-}
+} */
 
-.css-1aquho2-MuiTabs-indicator {
-  background: #f17116 !important;
+/* .indicator {
+  background: none !important;
+  border-bottom: none;
   border-bottom: 3px solid #f17116;
   font-family: "Roboto", sans-serif;
+} */
+
+.css-1aquho2-MuiTabs-indicator {
+  background: none !important;
 }
 
 .out {

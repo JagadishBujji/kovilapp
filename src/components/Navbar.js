@@ -22,11 +22,13 @@ const Navbar = () => {
             ☰
           </button> */}
 
-          <a className="navbar-brand" href="#/">
+          <a
+            className="navbar-brand"
+            style={{ fontFamily: "Aladin" }}
+            href="#/"
+          >
             {/* <img src="images/logo.png" alt="" className="Logo-img"  /> */}
-            <h1>
-              Kovil App
-            </h1>
+            <h1>Kovil App</h1>
           </a>
 
           <button
@@ -76,7 +78,8 @@ const Navbar = () => {
                 {/* <i className="fas fa-calendar mr-3"></i> */}
                 <i class="fas fa-ticket-alt mr-3"></i>
                 Tickets
-              </NavLink>  
+              </NavLink>
+
               <NavLink
                 className={({ isActive }) =>
                   isActive ? "activelink" : "nav-link "
@@ -86,8 +89,8 @@ const Navbar = () => {
                 {/* <i className="fas fa-calendar mr-3"></i> */}
                 <i class="fa-duotone fa-arrow-right-from-bracket mr-3"></i>
                 <b onClick={handleClick}>LogOut</b>
-              </NavLink>  
-              
+              </NavLink>
+
               {/* <li className="nav-item">
                 <Link className="nav-link   px-4" to="user-profile">
                   <i className="fas fa-user mr-3"></i>

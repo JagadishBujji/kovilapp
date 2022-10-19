@@ -56,14 +56,30 @@ export default function HomeTabs() {
   // borderRadius: "20px"
   // }
 
+  // const styles = (theme) => ({
+  //   bigIndicator: {
+  //     height: 5,
+  //   },
+  // });
+
   const tab = {
     background: "#fff",
     outline: "none",
     color: "#f17116",
     borderRadius: "5px",
-    "&:focus": {
+    "&.Mui-selected": {
+      fontWeight: "700",
+      background: "#ff6000",
+      color: "#fff",
       outline: "none",
+      borderRadius: "5px",
+      fontFamily: "sans-serif",
+      fontSize: "14px",
+      borderBottom: "none",
     },
+    // "&.css-1aquho2-MuiTabs-indicator": {
+    //   background: "none!important",
+    // },
   };
 
   return (
