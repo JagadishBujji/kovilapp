@@ -98,7 +98,7 @@ export default function StickyHeadTable() {
       <div className="statewise">
         <StateOption />
         <h1 className="district-title">
-          <b>District Wise Tickets</b>
+          District Wise Tickets
         </h1>
       </div>
 

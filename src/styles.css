@@ -124,19 +124,12 @@ a {
 
 .navbar-light .navbar-nav .nav-link:hover {
   color: #f17116;
-  /* background: var(--primay); */
   border-radius: 50px;
   text-decoration: none;
 }
-/* 
-.navbar-light .navbar-nav .nav-item {
-  margin: 0 20px;
-  padding: 10px;
-} */
 
 .activelink {
   color: #f17116;
-  /* background: var(--primay); */
   border-radius: 50px;
   padding: 10px;
   margin: 0 15px;
@@ -163,18 +156,7 @@ a {
   background: #f17116;
 }
 
-/* 
-.fa-briefcase,
-.fa-calendar,
-.fa-user {
-  color: #000;
-} */
 
-/* .fa-briefcase,
-.fa-calendar,
-.fa-user:hover {
-  color: #ff6000;
-} */
 .Ticketsbox {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   border-radius: 6px;
@@ -189,7 +171,7 @@ a {
   left: calc(50% - 15rem);
 }
 
-.Minimodal{
+.Minimodal {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   border-radius: 6px;
   background-color: white;
@@ -223,15 +205,7 @@ a {
   font-size: 14px;
 } */
 
-/* .MuiButtonBase-root{
-  font-weight: 700;
-  background: #ff6000;
-  color: #fff !important;
-  outline: none;
-  border-radius: 20px;
-  font-family: sans-serif;
-  font-size: 14px;
-} */
+
 
 .statewise {
   display: flex;
@@ -242,11 +216,12 @@ a {
 
 .district-title {
   margin-left: 10px;
+  color: #0f212d;
+  font-size: 18px;
+  font-weight: 600;
 }
 
-/* .css-1aquho2-MuiTabs-indicator{
-  background-color: #F17116;
-} */
+
 
 .css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
   color: #f17116 !important;
@@ -258,9 +233,7 @@ a {
 
 .MuiButtonBase-root {
   text-transform: capitalize !important;
-
 }
-
 
 .css-1aquho2-MuiTabs-indicator {
   background: #f17116 !important;
@@ -283,10 +256,8 @@ a {
 .ticketsInput {
   padding: 10px;
 }
-/* label[data-shrink=false]+.MuiInputBase-formControl .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
-  height: 210px;
-} */
-.CloseButton{
+
+.CloseButton {
   cursor: pointer;
   margin: 5px;
 }
@@ -401,7 +372,6 @@ a {
   background-color: #ff6000;
   border-color: #ff6000;
 }
-
 
 @media only screen and (max-width: 700px) {
   /* html {

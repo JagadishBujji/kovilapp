@@ -58,37 +58,16 @@ export default function TicketTabs({ tickets }) {
             label={`Open [${tickets ? tickets.open.length : 0}]`}
             {...a11yProps(0)}
 
-            sx={{
-              background: "#ebf2f8",
-              fontSize: "16px",
-              fontWeight: "700",
-              fontFamily: "serif",
-            }}
           />
           <Tab label={`In-Progress [${tickets ? tickets.inProgress.length : 1}]`} {...a11yProps(1)}
-          sx={{
-            background: "#ebf2f8",
-            fontSize: "16px",
-            fontWeight: "700",
-            fontFamily: "serif",
-          }}
+          
           />
           <Tab label= {`In-Progress [${tickets ? tickets.closed.length : 2}]`} {...a11yProps(2)} 
-          sx={{
-            background: "#ebf2f8",
-            fontSize: "16px",
-            fontWeight: "700",
-            fontFamily: "serif",
-          }}
+          
           
           />
           <Tab label= {`In-Progress [${tickets ? tickets.closed.length : 3}]`}{...a11yProps(3)} 
-          sx={{
-            background: "#ebf2f8",
-            fontSize: "16px",
-            fontWeight: "700",
-            fontFamily: "serif",
-          }}
+          
           />
         </Tabs>
       </Box>
