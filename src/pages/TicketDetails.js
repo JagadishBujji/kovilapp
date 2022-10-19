@@ -30,7 +30,7 @@ const TicketsDetails = () => {
               <Card sx={{ p: 2 }}>
                 <div className="row user-tabs">
                   <h5>#KA001</h5>
-                  <Button variant="outlined">In Progress</Button>
+                  <Button variant="outlined">open</Button>
                 </div>
                 {/* <div className="row  user-tabs">
                 <div className="row user-name">

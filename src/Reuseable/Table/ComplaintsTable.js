@@ -30,7 +30,7 @@ const columns = [
     label: "Sub Admins",
     minWidth: 170,
     align: "right",
-    format: (value) => value.toFixed(2),
+    format: (value) => value.toLocaleString("en-US"),
   },
 ];
 
