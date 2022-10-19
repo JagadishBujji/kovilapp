@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+import NavDropdown from "../Reuseable/NavDropdown/NavDropdown";
 
 // import ChatIcon from "@mui/icons-material/Chat";
 // import AccountMenu from "../.././src/Reuseable/AccountMenu";
@@ -8,12 +9,6 @@ const Navbar = () => {
   function open() {
     document.getElementById("mySidebar").style.display = "block";
   }
-
-  const handleClick = () => {
-    // alert("hello")
-    localStorage.removeItem("user");
-    window.location.reload();
-  };
   return (
     <>
       <header>
@@ -85,7 +80,7 @@ const Navbar = () => {
               >
                 {/* <i className="fas fa-calendar mr-3"></i> */}
                 <i class="fa-duotone fa-arrow-right-from-bracket mr-3"></i>
-                <b onClick={handleClick}>LogOut</b>
+               <NavDropdown />
               </NavLink>  
               
               {/* <li className="nav-item">
