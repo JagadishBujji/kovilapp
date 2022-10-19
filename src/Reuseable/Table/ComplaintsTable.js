@@ -65,9 +65,18 @@ export default function ComplaintsTable() {
 
   const Complaint = {
     background: "#F2F4F8",
-    fontSize: "15px",
+    fontSize: "16px",
+    fontWeight: "600",
+    color: "#1E3849",
+    textAlign: "left"
+    
+  }
+
+  const Complaintbody = {
+    fontSize: "14px",
     fontWeight: "500",
-    color: "#1E3849"
+    color: "#1E3849",
+    textAlign: "left"
   }
 
   return (
@@ -97,7 +106,7 @@ export default function ComplaintsTable() {
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align} sx={{fontFamily: "sans-serif"}}>
+                        <TableCell key={column.id} align={column.align}  sx={Complaintbody}>
                           {column.format && typeof value === "number"
                             ? column.format(value)
                             : value}

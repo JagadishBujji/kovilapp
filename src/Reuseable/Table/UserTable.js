@@ -149,6 +149,22 @@ export default function UserTable() {
     setPage(0);
   };
 
+  const tablehead = {
+    background: "#F2F4F8",
+    fontSize: "16px",
+    fontWeight: "600",
+    color: "#1E3849",
+    textAlign: "left"
+ 
+  }
+  const tablebody = {
+    fontSize: "14px",
+    fontWeight: "500",
+    color: "#1E3849",
+    textAlign: "left"
+ 
+  }
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       {/* <h1>
@@ -163,12 +179,7 @@ export default function UserTable() {
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
-                  sx={{
-                    background: "#F2F4F8",
-                    fontSize: "14px",
-                    fontWeight: "700",
-                    fontFamily: "sans-erif"
-                  }}
+                  sx={tablehead}
                 >
                   {column.label}
                 </TableCell>
@@ -184,7 +195,7 @@ export default function UserTable() {
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align}  onClick={() => navigate("/kovil/userdetails")} sx={{fontFamily: "sans-serif"}}>
+                        <TableCell key={column.id} align={column.align}  onClick={() => navigate("/kovil/userdetails")} sx={tablebody}>
                           {column.format && typeof value === "number"
                             ? column.format(value)
                             : value}

@@ -45,7 +45,19 @@ export default function TicketTabs({ tickets }) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  const tab = {
+    background: "#fff",
+    outline: "none",
+    color: "#000",
+    "&.Mui-selected": {
+      fontWeight: "700",
+      color: "#ff6000",
+      borderBottom: "2px solid #ff6000",
+    },
+    "&:focus": {
+      outline: "none",
+    },
+  };
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -54,12 +66,12 @@ export default function TicketTabs({ tickets }) {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab
+          <Tab sx={tab}
             label={`Open [${tickets ? tickets.open.length : 0}]`}
             {...a11yProps(0)}
 
           />
-          <Tab label={`In-Progress [${tickets ? tickets.inProgress.length : 1}]`} {...a11yProps(1)}
+          <Tab sx={tab} label={`In-Progress [${tickets ? tickets.inProgress.length : 1}]`} {...a11yProps(1)}
           
           />
           <Tab label= {`Closed [${tickets ? tickets.closed.length : 2}]`} {...a11yProps(2)} 
