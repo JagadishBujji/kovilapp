@@ -53,7 +53,7 @@ const Navbar = () => {
               >
                 {/* <i className="fas fa-briefcase mr-3"></i> */}
                 <i class="fas fa-th-large mr-3"></i>
-                <b>Dashboard</b>
+                Dashboard
               </NavLink>
 
               <NavLink
@@ -64,7 +64,7 @@ const Navbar = () => {
               >
                 {/* <i className="fas fa-briefcase mr-3 "></i> */}
                 <i class="fas fa-user-friends mr-3"></i>
-                <b>Users</b>
+                Users
               </NavLink>
 
               <NavLink
@@ -75,7 +75,7 @@ const Navbar = () => {
               >
                 {/* <i className="fas fa-calendar mr-3"></i> */}
                 <i class="fas fa-ticket-alt mr-3"></i>
-                <b>Tickets</b>
+                Tickets
               </NavLink>  
               <NavLink
                 className={({ isActive }) =>

@@ -20,7 +20,7 @@ export default function App() {
   const user = JSON.parse(localStorage.getItem("user"));
   console.log("app page", user);
   return (
-    <div className="App">
+    <div className="App" >
       <Routes>
         {/* //protected routes */}
         <Route path="/" element={user ? <Home /> : <Login />} />

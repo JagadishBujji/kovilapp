@@ -56,6 +56,16 @@ export default function HomeTabs() {
   // borderRadius: "20px"
   // }
 
+  const tab = {
+    background: "#fff",
+    outline: "none",
+    color: "#f17116",
+    borderRadius: "5px",
+    '&:focus': {
+      outline: "none",
+   },
+  }
+
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -63,10 +73,10 @@ export default function HomeTabs() {
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
-         
+        
         >
-          <Tab  label="District Wise" {...a11yProps(0)} />
-          <Tab label="Compliants Type" {...a11yProps(1)} />
+          <Tab  sx={tab}  label="District Wise" {...a11yProps(0)} />
+          <Tab  sx={tab} label="Compliants Type" {...a11yProps(1)} />
         </Tabs>
       </Box>
       <TabPanel   value={value} index={0}>

@@ -9,24 +9,35 @@ h1 {
 }
 
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: "Roboto", sans-serif;
   line-height: 1.6;
   color: #1a1a1a;
 
   overflow-x: hidden;
 }
 
-
 a {
   /* color: #c26dbc; */
   text-decoration: none;
 }
 
+@font-face {
+  font-family: "Roboto";
+  src: url(Roboto/Roboto-Regular.ttf);
+}
+
 :root {
-  --primay: #eeb5eb;
-  --secondary: #c26dbc;
-  --icon: #00ead9;
-  --secondary: #f8fafc;
+  --primay: #f17116;
+  --secondary: #f5f5f5;
+}
+
+.App {
+  background: #f5f5f5;
+}
+
+.css-1gsv261 {
+  border-bottom: none !important;
+  padding: 0 25px;
 }
 
 .loginmainbanner {
@@ -105,12 +116,14 @@ a {
 
 .navbar-light .navbar-nav .nav-link {
   color: #000;
-  margin: 0 20px;
+  margin: 0 10px;
   padding: 10px;
+  font-size: 16px;
+  font-weight: 400;
 }
 
 .navbar-light .navbar-nav .nav-link:hover {
-  color: #ff6000;
+  color: #f17116;
   /* background: var(--primay); */
   border-radius: 50px;
   text-decoration: none;
@@ -122,14 +135,14 @@ a {
 } */
 
 .activelink {
-  color: #ff6000;
+  color: #f17116;
   /* background: var(--primay); */
   border-radius: 50px;
   padding: 10px;
-  margin: 0 25px;
+  margin: 0 15px;
 }
 .activelink:hover {
-  color: #ff6000;
+  color: #f17116;
   text-decoration: none;
 }
 
@@ -147,7 +160,7 @@ a {
 .nav-link:hover::after,
 .nav-link.active-nav::after {
   width: 100%;
-  background: #ff6000;
+  background: #f17116;
 }
 
 /* 
@@ -186,7 +199,7 @@ a {
   left: 0;
 }
 
-.css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
+/* .css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
   font-weight: 700;
   background: #ff6000;
   color: #fff !important;
@@ -194,7 +207,7 @@ a {
   border-radius: 20px;
   font-family: sans-serif;
   font-size: 14px;
-}
+} */
 
 /* .MuiButtonBase-root{
   font-weight: 700;
@@ -206,33 +219,48 @@ a {
   font-size: 14px;
 } */
 
-.statewise{
+.statewise {
   display: flex;
   justify-content: start;
   align-items: center;
   padding: 10px;
 }
 
-.district-title{
+.district-title {
   margin-left: 10px;
 }
 
+/* .css-1aquho2-MuiTabs-indicator{
+  background-color: #F17116;
+} */
+
+.css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
+  color: #f17116 !important;
+  outline: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 1000;
+  text-transform: capitalize;
+}
+
+.MuiButtonBase-root {
+  text-transform: capitalize !important;
+
+}
 
 
 .css-1aquho2-MuiTabs-indicator {
-  background: #fff;
-  height: 0 !important;
+  background: #f17116 !important;
+  border-bottom: 3px solid #f17116;
+  font-family: "Roboto", sans-serif;
 }
 
 .out {
   padding-top: 100px;
-  background: #f2f2f2;
+  background: #f5f5f5;
 }
 
 .card {
-  box-shadow: 8px 10px 20px -2px rgba(0, 0, 0, 0.75);
-  -webkit-box-shadow: 8px 5px 10px -5px rgb(0 0 0 / 75%);
-  -moz-box-shadow: 8px 10px 20px -2px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 2px 10px rgb(0 0 0 / 10%);
   text-align: center;
   padding: 10px;
   margin-bottom: 20px;
@@ -263,7 +291,7 @@ a {
 
 .count {
   font-size: large;
-  font-weight: 900;
+  font-weight: 500;
 }
 
 .user-tabs {
@@ -273,7 +301,7 @@ a {
   padding: 20px;
 }
 
-.login-from{
+.login-from {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -337,7 +365,7 @@ a {
   font-size: 32px;
 }
 
-.css-1ex1afd-MuiTableCell-root{
+.css-1ex1afd-MuiTableCell-root {
   font-family: "sans-serif";
 }
 
@@ -417,8 +445,8 @@ a {
     width: 100%;
   }
   .out {
-    padding-top: 110px;
-    background: #f2f2f2;
+    padding-top: 6rem;
+    background: #f5f5f5;
   }
   .ass {
     width: 10%;

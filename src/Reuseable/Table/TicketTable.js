@@ -156,6 +156,14 @@ export default function TicketTable({ tickets }) {
     setPage(0);
   };
 
+  const Ticket = {
+    background: "#F2F4F8",
+    fontSize: "15px",
+    fontWeight: "500",
+    color: "#1E3849"
+  
+  };
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", padding: "10px" }}>
       <h1>
@@ -170,12 +178,7 @@ export default function TicketTable({ tickets }) {
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
-                  sx={{
-                    background: "#ebf2f8",
-                    fontSize: "16px",
-                    fontWeight: "900",
-                    fontFamily: "sans-serif"
-                  }}
+                  sx={Ticket}
                 >
                   {column.label}
                 </TableCell>
@@ -187,7 +190,12 @@ export default function TicketTable({ tickets }) {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.doc_id}>
+                  <TableRow
+                    hover
+                    role="checkbox"
+                    tabIndex={-1}
+                    key={row.doc_id}
+                  >
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
@@ -195,7 +203,7 @@ export default function TicketTable({ tickets }) {
                           key={column.id}
                           align={column.align}
                           onClick={() => navigate("/kovil/ticketsdetails")}
-                          sx={{fontFamily: "sans-serif"}}
+                          sx={{ fontFamily: "sans-serif" }}
                         >
                           {column.format && typeof value === "number"
                             ? column.format(value)

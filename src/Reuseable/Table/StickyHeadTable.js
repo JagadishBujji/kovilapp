@@ -112,9 +112,9 @@ export default function StickyHeadTable() {
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
                   sx={{
-                    background: "#ebf2f8",
+                    background: "#F2F4F8",
                     fontSize: "14px",
-                    fontWeight: "700",
+                    fontWeight: "600",
                     fontFamily: "serif",
                   }}
                 >

@@ -12,7 +12,7 @@ const Home = () => {
     <>
       <Navbar />
       {/* <Sidebar /> */}
-      <div className="out container-fluid">
+      <div className="out container">
         <Outlet />
       </div>
     </>

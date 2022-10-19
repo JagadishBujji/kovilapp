@@ -74,7 +74,7 @@ export default function PreviousTickets() {
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
-                  sx={{fontFamily: "serif"}}
+                 
                 >
                   {column.label}
                 </TableCell>
