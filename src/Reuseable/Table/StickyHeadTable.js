@@ -156,6 +156,7 @@ export default function StickyHeadTable() {
                                   : column.id === "total"
                                   ? "#D5DADD"
                                   : "",
+                                  
                               color:
                                 column.id === "open"
                                   ? "#7C8F33"
@@ -165,6 +166,26 @@ export default function StickyHeadTable() {
                                   ? "#FF0C76"
                                   : column.id === "total"
                                   ? "#659FCA"
+                                  : "",
+                                borderRadius:
+                                column.id === "open"
+                                  ? "3px"
+                                  : column.id === "inProgress"
+                                  ? "3px"
+                                  : column.id === "closed"
+                                  ? "3px"
+                                  : column.id === "total"
+                                  ? "3px"
+                                  : "",
+                                  padding:
+                                  column.id === "open"
+                                  ? "3px"
+                                  : column.id === "inProgress"
+                                  ? "3px"
+                                  : column.id === "closed"
+                                  ? "3px"
+                                  : column.id === "total"
+                                  ? "3px"
                                   : "",
                             }}
                           >
