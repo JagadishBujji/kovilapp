@@ -11,9 +11,11 @@ import { useNavigate } from "react-router-dom";
 
 const columns = [
   { id: "id", label: "ID", minWidth: 170 },
-  { id: "user", label: "User", minWidth: 100, align: "left"},
+  { id: "first_name", label: "First name", minWidth: 100, align: "left"},
+  { id: "last_name", label: "Last name", minWidth: 100, align: "left"},
+
   {
-    id: "number",
+    id: "phone_number",
     label: "Mobile Number",
     minWidth: 170,
     align: "left",
@@ -77,66 +79,67 @@ function createData(
   return { id, user, number, role, assigned, open, close, progress, more };
 }
 
-const rows = [
-  createData(
-    "001",
-    "Jagadish Kumar",
-    1234567890,
-    "Admin",
-    3125,
-    350,
-    250,
-    2515,
-    ":"
-  ),
-  createData(
-    "001",
-    "Jagadish Kumar",
-    1234567890,
-    "Admin",
-    3125,
-    350,
-    250,
-    2515,
-    ":"
-  ),
-  createData(
-    "001",
-    "Jagadish Kumar",
-    1234567890,
-    "Admin",
-    3125,
-    350,
-    250,
-    2515,
-    ":"
-  ),
-  createData(
-    "001",
-    "Jagadish Kumar",
-    1234567890,
-    "Admin",
-    3125,
-    350,
-    250,
-    2515,
-    ":"
-  ),
-  createData(
-    "001",
-    "Jagadish Kumar",
-    1234567890,
-    "Admin",
-    3125,
-    350,
-    250,
-    2515,
-    ":"
-  ),
-];
+// const rows = [
+//   createData(
+//     "001",
+//     "Jagadish Kumar",
+//     1234567890,
+//     "Admin",
+//     3125,
+//     350,
+//     250,
+//     2515,
+//     ":"
+//   ),
+//   createData(
+//     "001",
+//     "Jagadish Kumar",
+//     1234567890,
+//     "Admin",
+//     3125,
+//     350,
+//     250,
+//     2515,
+//     ":"
+//   ),
+//   createData(
+//     "001",
+//     "Jagadish Kumar",
+//     1234567890,
+//     "Admin",
+//     3125,
+//     350,
+//     250,
+//     2515,
+//     ":"
+//   ),
+//   createData(
+//     "001",
+//     "Jagadish Kumar",
+//     1234567890,
+//     "Admin",
+//     3125,
+//     350,
+//     250,
+//     2515,
+//     ":"
+//   ),
+//   createData(
+//     "001",
+//     "Jagadish Kumar",
+//     1234567890,
+//     "Admin",
+//     3125,
+//     350,
+//     250,
+//     2515,
+//     ":"
+//   ),
+// ];
 
-export default function UserTable() {
+export default function UserTable({allData}) {
   const navigate = useNavigate();
+  const [rows, setRows] = React.useState(allData);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -187,7 +190,7 @@ export default function UserTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
+            {/* {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
@@ -196,6 +199,24 @@ export default function UserTable() {
                       const value = row[column.id];
                       return (
                         <TableCell key={column.id} align={column.align}  onClick={() => navigate("/kovil/userdetails")} sx={tablebody}>
+                          {column.format && typeof value === "number"
+                            ? column.format(value)
+                            : value}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                );
+              })} */}
+                 {rows
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row) => {
+                return (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                    {columns.map((column) => {
+                      const value = row[column.id];
+                      return (
+                        <TableCell key={column.id} align={column.align}  onClick={() => navigate(`/kovil/userdetails/${row.id}`)} sx={tablebody}>
                           {column.format && typeof value === "number"
                             ? column.format(value)
                             : value}

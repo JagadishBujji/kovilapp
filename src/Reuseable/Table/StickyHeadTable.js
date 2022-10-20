@@ -74,13 +74,20 @@ const rows = [
   createData("002", "Vishakapatanam", 362, 452, 544, 1358, 8, 40),
   createData("003", "Vizaiangaram", 362, 452, 544, 1358, 8, 40),
   createData("004", "East Godavari", 362, 452, 544, 1358, 8, 40),
-  createData("005", "West Godavari", 362, 452, 544, 1358, 8, 40),
-  createData("005", "West Godavari", 362, 452, 544, 1358, 8, 40),
-  createData("005", "West Godavari", 362, 452, 544, 1358, 8, 40),
-  createData("005", "West Godavari", 362, 452, 544, 1358, 8, 40),
+  createData("005", "West Godaari", 362, 452, 544, 1358, 8, 40),
+  createData("005", "West Godvari", 362, 452, 544, 1358, 8, 40),
+  createData("005", "West Goavari", 362, 452, 544, 1358, 8, 40),
+  createData("005", "West Gdavari", 362, 452, 544, 1358, 8, 40),
 ];
 
-export default function StickyHeadTable() {
+export default function StickyHeadTable({allTickets}) {
+  console.log(allTickets)
+  let districts = new Set();
+  allTickets?.forEach(element => {
+    // console.log(element.city)
+    districts.add(element.city) 
+  });
+  console.log(districts);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 

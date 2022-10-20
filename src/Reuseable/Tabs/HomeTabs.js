@@ -1,4 +1,4 @@
-import * as React from "react";
+import {useState,useEffect} from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -7,8 +7,12 @@ import Box from "@mui/material/Box";
 import ComplaintsTable from "../Table/ComplaintsTable";
 import StickyHeadTable from "../Table/StickyHeadTable";
 import ComplaintTypeTabs from "./ComplaintTypeTabs";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../services/firebase";
 
 function TabPanel(props) {
+
+
   const { children, value, index, ...other } = props;
 
   return (
@@ -42,8 +46,44 @@ function a11yProps(index) {
 }
 
 export default function HomeTabs() {
-  const [value, setValue] = React.useState(0);
-
+  const [tickets,setTickets]=useState();
+  const [allTickets,setAllTickets]=useState();
+  const compliants=[]
+  useEffect(() => {
+    console.log("useEffe")
+    const fetchData=async()=>{
+      
+    await getDocs(collection(db, "Complaints"))
+      .then((querySnapshot) => {
+        let arr = {
+          open: [],
+          inProgress: [],
+          closed: [],
+        };
+        let allTic=[]
+        querySnapshot.forEach((doc) => {
+          console.log(doc);
+          let data = doc.data();
+          allTic.push(data)
+          if (data.status === "Open") {
+            arr.open.push(data);
+          } else if (data.status === "In-Progress") {
+            arr.inProgress.push(data);
+          } else if (data.status === "Closed") {
+            arr.closed.push(data);
+          }
+        });
+        setTickets(arr);
+        setAllTickets(allTic);
+      })
+      .catch((e) => console.log(e));
+    }
+    fetchData()
+  }, []);
+  const openTickets=tickets?.open
+  const inProgress=tickets?.inProgress;
+  const closed=tickets?.closed 
+  const [value, setValue] = useState(0); 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -100,7 +140,7 @@ export default function HomeTabs() {
             <div className="card">
               <p className="count">Open Ticket</p>
               <p className="open">
-                <b>3620</b>
+                <b>{openTickets?.length}</b>
               </p>
             </div>
           </div>
@@ -108,7 +148,7 @@ export default function HomeTabs() {
             <div className="card">
               <p className="count">In Progress</p>
               <p className="Progress">
-                <b>3620</b>
+                <b>{inProgress?.length}</b>
               </p>
             </div>
           </div>
@@ -116,13 +156,13 @@ export default function HomeTabs() {
             <div className="card">
               <p className="count"> Closed Tickets</p>
               <p className="Closed">
-                <b>3620</b>
+                <b>{closed?.length}</b>
               </p>
             </div>
           </div>
         </div>
 
-        <StickyHeadTable />
+        <StickyHeadTable allTickets={allTickets}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <div className="row">
@@ -130,7 +170,7 @@ export default function HomeTabs() {
             <div className="card">
               <p className="count">Open Ticket</p>
               <p className="open">
-                <b>3623</b>
+                <b>{openTickets?.length}</b>
               </p>
             </div>
           </div>
@@ -138,7 +178,7 @@ export default function HomeTabs() {
             <div className="card">
               <p className="count">In Progress</p>
               <p className="Progress">
-                <b>4525</b>
+                <b>{inProgress?.length}</b>
               </p>
             </div>
           </div>
@@ -146,7 +186,7 @@ export default function HomeTabs() {
             <div className="card">
               <p className="count"> Closed Tickets</p>
               <p className="Closed">
-                <b>5448</b>
+                <b>{closed?.length}</b>
               </p>
             </div>
           </div>

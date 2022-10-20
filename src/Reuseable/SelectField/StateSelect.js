@@ -27,8 +27,8 @@ export default function StateSelect({formData,setFormData}) {
         label="State"
         onChange={handleChange}
       >
-        <MenuItem value={"Admin"}>Tamil Nadu</MenuItem>
-        <MenuItem value={"Sub-Admin"}>kerala</MenuItem>
+        <MenuItem value={"Tamil-nadu"}>Tamil Nadu</MenuItem>
+        <MenuItem value={"kerala"}>kerala</MenuItem>
       </Select>
     </FormControl>
   );

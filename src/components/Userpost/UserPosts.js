@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const UserPosts = () => {
   const navigate = useNavigate();
- 
+   
   return (
     <>
       <Card sx={{ padding: "20px" }} variant="outlined">

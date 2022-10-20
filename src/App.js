@@ -47,7 +47,7 @@ export default function App() {
             element={user ? <AddUser /> : <Navigate to="/" />}
           />
           <Route
-            path="userdetails"
+            path="userdetails/:id"
             element={user ? <UserDetails /> : <Navigate to="/" />}
           />
           <Route

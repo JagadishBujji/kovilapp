@@ -27,8 +27,8 @@ export default function DistrictSelect({formData,setFormData}) {
         label="State"
         onChange={handleChange}
       >
-        <MenuItem value={"Admin"}>Vellore</MenuItem>
-        <MenuItem value={"Sub-Admin"}>Chennai</MenuItem>
+        <MenuItem value={"Vellore"}>Vellore</MenuItem>
+        <MenuItem value={"Chennai"}>Chennai</MenuItem>
       </Select>
     </FormControl>
   );

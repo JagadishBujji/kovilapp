@@ -9,7 +9,11 @@ const MiniModal = (props) => {
     const month = new Date().getMonth();
     const year = new Date().getFullYear();
     const currentDate = `${date}-${month}-${year}`;
-    const newFeedBack = `${currentDate} , ${props.feedBack}`
+    // const newFeedBack = `${currentDate} , ${props.feedBack}`
+    const newFeedBack={
+        date:currentDate,
+        msg:props.feedBack
+    }
     console.log(newFeedBack) 
     const handleClick=async()=>{
         const docRef=doc(db,"Complaints",props.data.doc_id)

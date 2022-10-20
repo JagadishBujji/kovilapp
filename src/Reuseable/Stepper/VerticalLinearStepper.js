@@ -32,20 +32,13 @@ import { useEffect } from 'react';
 // ];
 
 export default function VerticalLinearStepper({allFeedbacks}) {
-  console.log(allFeedbacks)
+  // console.log(allFeedbacks)
   const steps=[]
  
 
   // console.log(fbs)
-  allFeedbacks?.map((fb)=>{
-    const arr=fb.split(",")
-    // console.log(arr);
-    const obj={
-      label:arr[0],
-      description:arr[1]
-    } 
-    // console.log(obj);
-    steps.push(obj)
+  allFeedbacks?.map((fb)=>{ 
+    steps.push(fb)
   })  
    
   const [activeStep, setActiveStep] = React.useState(0);
@@ -75,10 +68,10 @@ export default function VerticalLinearStepper({allFeedbacks}) {
               //   ) : null
               // }
             >
-              {step.label}
+              {step.date}
             </StepLabel>
             <StepContent>
-              <Typography>{step.description}</Typography>
+              <Typography>{step.msg}</Typography>
               <Box sx={{ mb: 2 }}>
                 <div>
                   <Button

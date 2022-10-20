@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import TicketsBack from "../Reuseable/TicketsBack";
 import TicketsModalBox from "../Reuseable/TicketsModalBox";
 import { useNavigate, useParams } from "react-router-dom";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../services/firebase";
 import AssignSelect from "../Reuseable/SelectField/AssignSelect";
 
@@ -16,6 +16,8 @@ const TicketsDetails = () => {
   const [openModal, setOpenModal] = useState(false);
   const [count,setCount]=useState(0)
   const [showAdmin,setShowAdmin]=useState(false);
+  const [assignDate,setAssignDate]=useState()
+  const [selectedSubAdmin,setSelectedSubAdmin]=useState();
   useEffect(() => {
     const getDetails = async () => {
       const docRef = doc(db, "Complaints", docId)
@@ -28,14 +30,82 @@ const TicketsDetails = () => {
         console.log(err)
       }
     }
+
+
     getDetails();
   }, [count]);
-  console.log(data);
+  // console.log(data);
+  const [subAdmins,setSubAdmins]=useState();  
+  useEffect(() => { 
+    const fetchData=async()=>{
+      
+    await getDocs(collection(db, "userProfile"))
+      .then((querySnapshot) => {  
+        let subAd=[]
+        querySnapshot.forEach((doc) => { 
+          let data = doc.data();
+          const rl=data.role 
+          const nD={
+            id:doc.id,
+            ...data
+          }
+          if (rl?.toLowerCase() === "sub-admin") {
+            subAd.push(nD)
+          }  
+        });
+        setSubAdmins(subAd); 
+      })
+      .catch((e) => console.log(e));
+    }
+    fetchData()
+  }, []);
+  // console.log(subAdmins);
   const handleModal = () => {
     setOpenModal(true);
   }
   const deleteBack = () => {
     setOpenModal(false);
+  }
+
+  const handleFormSubmit=async(e)=>{
+    e.preventDefault();
+    console.log(selectedSubAdmin,assignDate,data.doc_id)
+    const docRef=doc(db,"Complaints",data.doc_id) 
+    const docRef2=doc(db,"userProfile",selectedSubAdmin.id) 
+
+        try{
+            await  updateDoc(docRef,{
+                status:"In-Progress",
+                sub_admin_uid:selectedSubAdmin.id,
+                assinged_date:assignDate
+            }) 
+            if(selectedSubAdmin.current_ticket)
+            {
+              const newSCT=[...selectedSubAdmin.current_ticket,
+              data
+              ]
+              await  updateDoc(docRef2,{
+                current_ticket:newSCT
+              }) 
+              alert("Sub admin has been assigned successfully") 
+              navigate('/kovil/tickets')
+            }
+            else{
+              const newSCT=[data]
+              await  updateDoc(docRef2,{
+                current_ticket:newSCT
+              }) 
+              alert("Sub admin has been assigned successfully") 
+              navigate('/kovil/tickets')
+            }
+            // await  updateDoc(docRef2,{
+            //   current_ticket:data.doc_id
+            // }) 
+            // alert("Sub admin has been assigned successfully") 
+            // navigate('/kovil/tickets')
+        }catch(err){ 
+            alert("error occured") 
+        }
   }
   return (
     <>
@@ -50,7 +120,7 @@ const TicketsDetails = () => {
             <div className="col-md-5">
               <Card sx={{ p: 2 }}>
                 <div className="row user-tabs">
-                  <h5>#KA001</h5>
+                  <h5>{data?.doc_id}</h5>
                   <Button variant="outlined">open</Button>
                 </div>
                 {/* <div className="row  user-tabs">
@@ -193,7 +263,11 @@ const TicketsDetails = () => {
                 <div className="row user-tabs">
                   <Button variant="outlined" onClick={handleModal}>Add Feedback</Button>
                   {/* <Button variant="contained" onClick={() => navigate("/kovil/assigntickets")}>Assign Tickets</Button> */}
-                  <Button variant="contained" onClick={()=>setShowAdmin(!showAdmin)}>Assign Tickets</Button>
+                 
+                 {data?.sub_admin_uid?
+                 <Button variant="contained" disabled>Ticket is already assigned</Button>
+                  :
+                  <Button variant="contained" onClick={()=>setShowAdmin(!showAdmin)}>Assign Tickets</Button>}
                   
                 
 
@@ -203,6 +277,7 @@ const TicketsDetails = () => {
               
               {showAdmin && 
               <div className="col-md-7">
+                <form onSubmit={handleFormSubmit}>
               <Card sx={{ mt: 5, p: 2 }}>
                 <div>
                   <p>Admin</p>
@@ -211,7 +286,7 @@ const TicketsDetails = () => {
                   </h6>
                 </div>
                 <div>
-                  <AssignSelect />
+                 {subAdmins && <AssignSelect setSelectedSubAdmin={setSelectedSubAdmin}   subAdmins={subAdmins} />}
                 </div>
 
                 <div>
@@ -219,15 +294,20 @@ const TicketsDetails = () => {
                   <TextField
                     id="outlined-basic"
                     label=""
+                    required
                     variant="outlined"
+                    onChange={(e)=>{
+                      setAssignDate(e.target.value)
+                    }}
                     type="date"
                     sx={{width:"300px",mt: 5}}
                   />
                 </div>
                 <div>
-                <Button variant="contained" sx={{mt:3,ml:13,background:"#ff6000"}}>Assign To Sub-Admin</Button>
+                <Button type="submit" variant="contained" sx={{mt:3,ml:13,background:"#ff6000"}}>Assign To Sub-Admin</Button>
                 </div>
               </Card>
+              </form>
               </div>}
 
             </div>

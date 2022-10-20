@@ -5,6 +5,9 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import UserTable from "../Table/UserTable";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../services/firebase";
+import { SafetyDividerOutlined } from "@mui/icons-material";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -41,7 +44,48 @@ function a11yProps(index) {
 
 export default function UserTab() {
   const [value, setValue] = React.useState(0);
+  const [allData,setAllData]=React.useState()
+  const [adminData,setAdminData]=React.useState();
+  const [subAdmin,setSubAdmin]=React.useState();
+   React.useEffect(() => {
+    const fetchData = async () => {
 
+      const querySnapshot = await getDocs(collection(db, "userProfile"));
+      let all=[]
+      let ad=[]
+        let sad=[]
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        // console.log(doc.id, " => ", doc.data());
+        let data=doc.data()
+        // console.log(doc.id)
+        const nD={
+          id:doc.id,
+          ...data
+        }
+        // console.log(nD)
+        all.push(nD)
+        
+        const rl=doc.data().role;
+        // console.log(rl?.toLowerCase())
+        if(rl?.toLowerCase()==="admin")
+        {
+            ad.push(nD)
+        }
+        else if(rl?.toLowerCase()==="sub-admin")
+        {
+          sad.push(nD);
+        }
+      });
+      setAllData(all);
+      setAdminData(ad)
+      setSubAdmin(sad)
+    }
+    fetchData()
+    // console.log(allData);
+  }, [])
+  // console.log(subAdmin)
+  // console.log(adminData);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -66,19 +110,19 @@ export default function UserTab() {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab sx={tab} label="All [200]" {...a11yProps(0)} />
-          <Tab sx={tab} label="Admin [20]" {...a11yProps(1)} />
-          <Tab sx={tab} label="Sub-Admin [400]" {...a11yProps(2)} />
+          <Tab sx={tab} label={`All-${allData?.length}`} {...a11yProps(0)} />
+          <Tab sx={tab} label={`Admin-${adminData?.length}`} {...a11yProps(1)} />
+          <Tab sx={tab} label={`SubAdmin-${subAdmin?.length}`} {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <UserTable />
+     { allData &&  <UserTable allData={allData} />}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <UserTable />
+      {adminData &&  <UserTable allData={adminData} />}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <UserTable />
+        {subAdmin && <UserTable allData={subAdmin} />}
       </TabPanel>
     </Box>
   );
