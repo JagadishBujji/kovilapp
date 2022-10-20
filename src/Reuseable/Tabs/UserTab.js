@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import UserTable from "../Table/UserTable";
 import { db } from "../../services/firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -61,7 +62,7 @@ export default function UserTab() {
             arr.closed.push(data);
           }
         });
-        setTickets(arr);
+        // setTickets(arr);
       })
       .catch((e) => console.log(e));
   }, []);

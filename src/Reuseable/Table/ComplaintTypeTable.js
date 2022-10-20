@@ -12,6 +12,8 @@ import { Card } from "@mui/material";
 import { useState } from "react";
 import ComplaintsField from "../../pages/ComplaintsField";
 import TicketsBack from "../TicketsBack";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../services/firebase";
 
 const columns = [
   { id: "sno", label: "Sl.No", minWidth: 170 },
