@@ -5,6 +5,7 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import UserTable from "../Table/UserTable";
+import { db } from "../../services/firebase";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -42,9 +43,33 @@ function a11yProps(index) {
 export default function UserTab() {
   const [value, setValue] = React.useState(0);
 
+  React.useEffect(() => {
+    getDocs(collection(db, "Complaints"))
+      .then((querySnapshot) => {
+        let arr = {
+          open: [],
+          inProgress: [],
+          closed: [],
+        };
+        querySnapshot.forEach((doc) => {
+          let data = doc.data();
+          if (data.status === "Open") {
+            arr.open.push(data);
+          } else if (data.status === "In-Progress") {
+            arr.inProgress.push(data);
+          } else if (data.status === "Closed") {
+            arr.closed.push(data);
+          }
+        });
+        setTickets(arr);
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   const tab = {
     background: "#fff",
     outline: "none",
