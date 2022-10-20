@@ -81,7 +81,11 @@ const AddUser = () => {
               <div className="row">
                 <div className="col-md-6 picture">
                   <Avatar sx={{ width: 56, height: 56 }} />{" "}
-                  <span>Upload Profile Picture</span>
+                  <span>
+                    <form action="/action_page.php">
+                      <input type="file" id="myFile" name="filename" />
+                    </form>
+                  </span>
                 </div>
                 <div className="col-md-6">
                   <SelectField  formData={formData} setFormData={setFormData}/>
@@ -105,7 +109,7 @@ const AddUser = () => {
                     sx={{
                       fontSize: "14px",
                       fontWeight: "900",
-                      fontFamily: "sans-serif"
+                      fontFamily: "sans-serif",
                     }}
                   />
                 </div>
@@ -127,7 +131,7 @@ const AddUser = () => {
                     sx={{
                       fontSize: "14px",
                       fontWeight: "900",
-                      fontFamily: "sans-serif"
+                      fontFamily: "sans-serif",
                     }}
                   />
                 </div>
@@ -152,7 +156,7 @@ const AddUser = () => {
                     sx={{
                       fontSize: "14px",
                       fontWeight: "900",
-                      fontFamily: "sans-serif"
+                      fontFamily: "sans-serif",
                     }}
                   />
                 </div>
@@ -189,10 +193,10 @@ const AddUser = () => {
                   })
                 }}
                 sx={{
-                  mb: 2 ,
+                  mb: 2,
                   fontSize: "14px",
                   fontWeight: "900",
-                  fontFamily: "sans-serif"
+                  fontFamily: "sans-serif",
                 }}
               />
               <div className="row">
@@ -214,7 +218,7 @@ const AddUser = () => {
                     sx={{
                       fontSize: "14px",
                       fontWeight: "900",
-                      fontFamily: "sans-serif"
+                      fontFamily: "sans-serif",
                     }}
                   />
                 </div>
@@ -236,7 +240,7 @@ const AddUser = () => {
                     sx={{
                       fontSize: "14px",
                       fontWeight: "900",
-                      fontFamily: "sans-serif"
+                      fontFamily: "sans-serif",
                     }}
                   />
                 </div>
@@ -251,7 +255,7 @@ const AddUser = () => {
               </div>
               <div className="row">
                 <div className="col-md-6 picture">
-                <TextField
+                  <TextField
                     id="outlined-basic"
                     label="ZipCode"
                     variant="outlined"
@@ -268,24 +272,29 @@ const AddUser = () => {
                     sx={{
                       fontSize: "14px",
                       fontWeight: "900",
-                      fontFamily: "sans-serif"
+                      fontFamily: "sans-serif",
                     }}
                   />
                 </div>
                 <div className="col-md-6 picture1">
-                <Button variant="text" sx={{ mr: 2 }}>
-                  + Add
-                </Button>
+                  <Button
+                    variant="contained"
+                    sx={{ backgroundColor: "#198754", color: "#fff", mr: 2 }}
+                  >
+                    + Add
+                  </Button>
                 </div>
               </div>
               <div className="row okbutton">
-                <Button variant="outlined" sx={{ mr: 2 }} onClick={handleClick}>
+                <Button variant="text" sx={{ mr: 2 }} onClick={handleClick}>
                   Cancel
                 </Button>
                 <Button type="submit" variant="contained">Add User</Button>
               </div>
-              {showModal && <UserModal onConfirm = {deleteHandle} onCancel = {handleCancel}/>}
-              {showModal && <TicketsBack  />}
+              {showModal && (
+                <UserModal onConfirm={deleteHandle} onCancel={handleCancel} />
+              )}
+              {showModal && <TicketsBack />}
             </Box>
           </Card>
         </Box>

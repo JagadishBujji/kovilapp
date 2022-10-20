@@ -56,6 +56,32 @@ export default function HomeTabs() {
   // borderRadius: "20px"
   // }
 
+  // const styles = (theme) => ({
+  //   bigIndicator: {
+  //     height: 5,
+  //   },
+  // });
+
+  const tab = {
+    background: "#fff",
+    outline: "none",
+    color: "#000",
+    borderRadius: "5px",
+    "&.Mui-selected": {
+      fontWeight: "700",
+      background: "#ff6000",
+      color: "#fff",
+      outline: "none",
+      borderRadius: "5px",
+      fontFamily: "sans-serif",
+      fontSize: "14px",
+      borderBottom: "none",
+    },
+    // "&.css-1aquho2-MuiTabs-indicator": {
+    //   background: "none!important",
+    // },
+  };
+
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -64,26 +90,8 @@ export default function HomeTabs() {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab
-            label="District Wise"
-            {...a11yProps(0)}
-            sx={{
-              background: "#ebf2f8",
-              fontSize: "16px",
-              fontWeight: "700",
-              fontFamily: "serif",
-            }}
-          />
-          <Tab
-            label="Compliants Type"
-            {...a11yProps(1)}
-            sx={{
-              background: "#ebf2f8",
-              fontSize: "16px",
-              fontWeight: "700",
-              fontFamily: "serif",
-            }}
-          />
+          <Tab sx={tab} label="District Wise" {...a11yProps(0)} />
+          <Tab sx={tab} label="Compliant Type" {...a11yProps(1)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>

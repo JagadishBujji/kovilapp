@@ -13,28 +13,28 @@ const columns = [
   { id: "name", label: "District Code", minWidth: 170 },
   { id: "code", label: "District Name", minWidth: 100 },
   {
-    id: "population",
-    label: "open",
+    id: "open",
+    label: "Open",
     minWidth: 170,
     align: "right",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "size",
+    id: "inProgress",
     label: "In-Progress",
     minWidth: 170,
     align: "right",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "density",
+    id: "closed",
     label: "Closed",
     minWidth: 170,
     align: "right",
-    format: (value) =>  value.toLocaleString("en-US"),
+    format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "Total",
+    id: "total",
     label: "Total",
     minWidth: 170,
     align: "right",
@@ -59,14 +59,14 @@ const columns = [
 function createData(
   name,
   code,
-  population,
-  size,
-  density,
-  Total,
+  open,
+  inProgress,
+  closed,
+  total,
   Admins,
   Subadmins
 ) {
-  return { name, code, population, size, density, Total, Admins, Subadmins };
+  return { name, code, open, inProgress, closed, total, Admins, Subadmins };
 }
 
 const rows = [
@@ -93,13 +93,25 @@ export default function StickyHeadTable() {
     setPage(0);
   };
 
+  const stickyhead = {
+    background: "#F2F4F8",
+    fontSize: "16px",
+    fontWeight: "600",
+    color: "#1E3849",
+    textAlign: "left",
+  };
+  const stickybody = {
+    fontSize: "14px",
+    fontWeight: "500",
+    color: "#1E3849",
+    textAlign: "left",
+  };
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", padding: "13px" }}>
       <div className="statewise">
         <StateOption />
-        <h1 className="district-title">
-          <b>District Wise Tickets</b>
-        </h1>
+        <h1 className="district-title">District Wise Tickets</h1>
       </div>
 
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -111,12 +123,7 @@ export default function StickyHeadTable() {
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
-                  sx={{
-                    background: "#ebf2f8",
-                    fontSize: "14px",
-                    fontWeight: "700",
-                    fontFamily: "serif",
-                  }}
+                  sx={stickyhead}
                 >
                   {column.label}
                 </TableCell>
@@ -135,11 +142,57 @@ export default function StickyHeadTable() {
                         <TableCell
                           key={column.id}
                           align={column.align}
-                          sx={{ fontFamily: "serif" }}
+                          sx={stickybody}
                         >
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
+                          <span
+                            style={{
+                              backgroundColor:
+                                column.id === "open"
+                                  ? "#DAE5D1"
+                                  : column.id === "inProgress"
+                                  ? "#D1E9F7"
+                                  : column.id === "closed"
+                                  ? "#FFD8D8"
+                                  : column.id === "total"
+                                  ? "#D5DADD"
+                                  : "",
+                                  
+                              color:
+                                column.id === "open"
+                                  ? "#7C8F33"
+                                  : column.id === "inProgress"
+                                  ? "#ACB1DB"
+                                  : column.id === "closed"
+                                  ? "#FF0C76"
+                                  : column.id === "total"
+                                  ? "#659FCA"
+                                  : "",
+                                borderRadius:
+                                column.id === "open"
+                                  ? "3px"
+                                  : column.id === "inProgress"
+                                  ? "3px"
+                                  : column.id === "closed"
+                                  ? "3px"
+                                  : column.id === "total"
+                                  ? "3px"
+                                  : "",
+                                  padding:
+                                  column.id === "open"
+                                  ? "3px"
+                                  : column.id === "inProgress"
+                                  ? "3px"
+                                  : column.id === "closed"
+                                  ? "3px"
+                                  : column.id === "total"
+                                  ? "3px"
+                                  : "",
+                            }}
+                          >
+                            {column.format && typeof value === "number"
+                              ? column.format(value)
+                              : value}
+                          </span>
                         </TableCell>
                       );
                     })}

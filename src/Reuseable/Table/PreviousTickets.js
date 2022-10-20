@@ -1,52 +1,50 @@
-import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
+import * as React from "react";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
 
 const columns = [
-  { id: 'name', label: 'ID', minWidth: 170 },
-  { id: 'code', label: 'Admin', minWidth: 100 },
+  { id: "name", label: "ID", minWidth: 170 },
+  { id: "code", label: "Admin", minWidth: 100 },
   {
-    id: 'population',
-    label: 'Assigned On',
+    id: "population",
+    label: "Assigned On",
     minWidth: 170,
-    align: 'right',
-    format: (value) => value.toLocaleString('en-US'),
+    align: "right",
+    format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: 'size',
-    label: 'Due Date',
+    id: "size",
+    label: "Due Date",
     minWidth: 170,
-    align: 'right',
-    format: (value) => value.toLocaleString('en-US'),
+    align: "right",
+    format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: 'density',
-    label: 'Status',
+    id: "status",
+    label: "Status",
     minWidth: 170,
-    align: 'right',
+    align: "right",
     format: (value) => value.toFixed(2),
   },
 ];
 
-function createData(name, code, population, size, density) {
-  
-  return { name, code, population, size, density };
+function createData(name, code, population, size, status) {
+  return { name, code, population, size, status };
 }
 
 const rows = [
-  createData('#KAT01', 'Jagadish', "23-05-2022", "01-02-2022", "Closed On"),
-  createData('#KAT01', 'Jagadish', "23-05-2022", "01-02-2022", "Closed On"),
-  createData('#KAT01', 'Jagadish', "23-05-2022", "01-02-2022", "Closed On"),
-  createData('#KAT01', 'Jagadish', "23-05-2022", "01-02-2022", "Closed On"),
-  createData('#KAT01', 'Jagadish', "23-05-2022", "01-02-2022", "Closed On"),
-  createData('#KAT01', 'Jagadish', "23-05-2022", "01-02-2022", "Re-assigned"),
- 
+  createData("#KAT01", "Jagadish", "23-05-2022", "01-02-2022", "Closed On"),
+  createData("#KAT01", "Jagadish", "23-05-2022", "01-02-2022", "Closed On"),
+  createData("#KAT01", "Jagadish", "23-05-2022", "01-02-2022", "Closed On"),
+  createData("#KAT01", "Jagadish", "23-05-2022", "01-02-2022", "Closed On"),
+  createData("#KAT01", "Jagadish", "23-05-2022", "01-02-2022", "Closed On"),
+  createData("#KAT01", "Jagadish", "23-05-2022", "01-02-2022", "Re-assigned"),
 ];
 
 export default function PreviousTickets() {
@@ -63,8 +61,10 @@ export default function PreviousTickets() {
   };
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden', p: 2 }}>
-      <h1><b>Previous Tickets</b></h1>
+    <Paper sx={{ width: "100%", overflow: "hidden", p: 2 }}>
+      <h1>
+        <b>Previous Tickets</b>
+      </h1>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -74,7 +74,6 @@ export default function PreviousTickets() {
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
-                  sx={{fontFamily: "serif"}}
                 >
                   {column.label}
                 </TableCell>
@@ -90,10 +89,27 @@ export default function PreviousTickets() {
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align} sx={{fontFamily: "serif"}}>
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}
+                        <TableCell
+                          key={column.id}
+                          align={column.align}
+                          sx={{ fontFamily: "serif" }}
+                        >
+                          <span
+                            style={{
+                              color:
+                                column.id === "name"
+                                  ? "#2D9CDB"
+                                  : value === "Closed On"
+                                  ? "green"
+                                  : value === "Re-assigned"
+                                  ? "red"
+                                  : "",
+                            }}
+                          >
+                            {column.format && typeof value === "number"
+                              ? column.format(value)
+                              : value}
+                          </span>
                         </TableCell>
                       );
                     })}

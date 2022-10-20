@@ -14,13 +14,14 @@ import AddUser from "./pages/AddUser";
 import UserDetails from "./pages/UserDetails";
 import TicketsDetails from "./pages/TicketDetails";
 import AssignTicket from "./pages/AssignTicket";
+import NewsTable from "./Reuseable/Table/NewsTable";
 // import EventPosts from "./components/EventPost/EventPosts";
 
 export default function App() {
   const user = JSON.parse(localStorage.getItem("user"));
   console.log("app page", user);
   return (
-    <div className="App">
+    <div className="App" >
       <Routes>
         {/* //protected routes */}
         <Route path="/" element={user ? <Home /> : <Login />} />
@@ -62,6 +63,10 @@ export default function App() {
           <Route
             path="assigntickets"
             element={user ? <AssignTicket /> : <Navigate to="/" />}
+          />
+           <Route
+            path="newstable"
+            element={user ? <NewsTable /> : <Navigate to="/" />}
           />
           {/* <Route path="event-post" element={ user? <EventPosts /> : <Navigate to="/login"/>} /> */}
         </Route>

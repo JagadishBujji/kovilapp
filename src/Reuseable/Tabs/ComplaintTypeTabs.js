@@ -1,10 +1,10 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import ComplaintsTable from '../Table/ComplaintsTable';
+import * as React from "react";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import ComplaintsTable from "../Table/ComplaintsTable";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -35,7 +35,7 @@ TabPanel.propTypes = {
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
@@ -46,37 +46,42 @@ export default function ComplaintTypeTabs() {
     setValue(newValue);
   };
 
+  const table = {
+    width: "100%",
+    background: "#FFFFFF",
+    boxShadow: "0px 2px 10px rgb(0 0 0 / 10%)",
+    fontFamily: "Roboto",
+  };
+
+  const tab = {
+    background: "#fff",
+    outline: "none",
+    color: "#000",
+    "&.Mui-selected": {
+      fontWeight: "700",
+      color: "#ff6000",
+      borderBottom: "2px solid #ff6000",
+    },
+    "&:focus": {
+      outline: "none",
+    },
+  };
+
   return (
-    <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Open[200]" {...a11yProps(0)}  sx={{
-                    background: "#ebf2f8",
-                    fontSize: "16px",
-                    fontWeight: "700",
-                    fontFamily: "serif",
-                  }}/>
-          <Tab label="In-Progress[20]" {...a11yProps(1)} 
-          sx={{
-            background: "#ebf2f8",
-            fontSize: "16px",
-            fontWeight: "700",
-            fontFamily: "serif",
-          }}
-          />
-          <Tab label="Closed[400]" {...a11yProps(2)} 
-          sx={{
-            background: "#ebf2f8",
-            fontSize: "16px",
-            fontWeight: "700",
-            fontFamily: "serif",
-          }}
-          
-          />
+    <Box sx={table}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+        >
+          <Tab sx={tab} label="Open [200]" {...a11yProps(0)} />
+          <Tab sx={tab} label="In-Progress [20]" {...a11yProps(1)} />
+          <Tab sx={tab} label="Closed [400]" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-      < ComplaintsTable />
+        <ComplaintsTable />
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two

@@ -1,5 +1,7 @@
+import { DriveEta } from "@mui/icons-material";
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+
 
 // import ChatIcon from "@mui/icons-material/Chat";
 // import AccountMenu from "../.././src/Reuseable/AccountMenu";
@@ -18,12 +20,12 @@ const Navbar = () => {
     <>
       <header>
         <nav className="navbar navbar-expand-lg navbar-light fixed-top py-2 ">
-          {/* <button className="btn-primary" onClick={open}>
+          {/* <button classNameName="btn-primary" onClick={open}>
             ☰
           </button> */}
 
           <a className="navbar-brand" href="#/">
-            {/* <img src="images/logo.png" alt="" className="Logo-img"  /> */}
+            {/* <img src="images/logo.png" alt="" classNameName="Logo-img"  /> */}
             <h1>
               Kovil App
             </h1>
@@ -51,9 +53,9 @@ const Navbar = () => {
                 }
                 to="/kovil/home-post"
               >
-                {/* <i className="fas fa-briefcase mr-3"></i> */}
-                <i class="fas fa-th-large mr-3"></i>
-                <b>Dashboard</b>
+                {/* <i classNameName="fas fa-briefcase mr-3"></i> */}
+                <i className="fas fa-th-large mr-1"></i>
+                Dashboard
               </NavLink>
 
               <NavLink
@@ -62,9 +64,9 @@ const Navbar = () => {
                 }
                 to="/kovil/user-post"
               >
-                {/* <i className="fas fa-briefcase mr-3 "></i> */}
-                <i class="fas fa-user-friends mr-3"></i>
-                <b>Users</b>
+                {/* <i classNameName="fas fa-briefcase mr-3 "></i> */}
+                <i className="fas fa-user-friends mr-1"></i>
+                Users
               </NavLink>
 
               <NavLink
@@ -73,75 +75,77 @@ const Navbar = () => {
                 }
                 to="/kovil/tickets"
               >
-                {/* <i className="fas fa-calendar mr-3"></i> */}
-                <i class="fas fa-ticket-alt mr-3"></i>
-                <b>Tickets</b>
+                {/* <i classNameName="fas fa-calendar mr-3"></i> */}
+                <i className="fas fa-ticket-alt mr-1"></i>
+                Tickets
               </NavLink>  
               <NavLink
                 className={({ isActive }) =>
                   isActive ? "activelink" : "nav-link "
                 }
-                to="/kovil/tickets"
+                to="/kovil/newstable"
               >
-                {/* <i className="fas fa-calendar mr-3"></i> */}
-                <i class="fa-duotone fa-arrow-right-from-bracket mr-3"></i>
-                <b onClick={handleClick}>LogOut</b>
-              </NavLink>  
+               
+                <i className="fas fa-newspaper mr-1"></i>
+
+                News
+              </NavLink>
               
-              {/* <li className="nav-item">
-                <Link className="nav-link   px-4" to="user-profile">
-                  <i className="fas fa-user mr-3"></i>
+
+              {/* <li classNameName="nav-item">
+                <Link classNameName="nav-link   px-4" to="user-profile">
+                  <i classNameName="fas fa-user mr-3"></i>
                   <b>Profile</b>
                 </Link>
               </li> */}
 
               {/* <NavLink
-                className={({ isActive }) =>
+                classNameName={({ isActive }) =>
                   isActive ? "activelink" : "nav-link "
                 }
                 to="/recruiter/networking"
               >
-                <i className="fas fa-user mr-3"></i>
+                <i classNameName="fas fa-user mr-3"></i>
                 <b>NetWorking</b>
               </NavLink> */}
 
               {/* <NavLink
-                className={({ isActive }) =>
+                classNameName={({ isActive }) =>
                   isActive ? "activelink" : "nav-link "
                 }
                 to="/recruiter/chats"
               >
-                <i className="fas fa-user mr-3"></i>
+                <i classNameName="fas fa-user mr-3"></i>
                 <b>
-                  {/* <img className="chat" src="/images/chat-box.png" /> 
+                  {/* <img classNameName="chat" src="/images/chat-box.png" /> 
                   Chats
                 </b>
               </NavLink> */}
             </ul>
 
-            {/* <div id="panel">
-              <div class="username">
+            <div id="panel">
+              <div className="username">
                 <div id="container-avatar">
-                  <img src="/images/profile.png" />
-                  <span class="entypo-menu"></span>
+                  <img src="/images/prof1.jpg" />
+                  <span className="entypo-menu"></span>
 
-                  <div class="avatar">
+                  <div className="avatar">
                     <ul>
-                      <li>
+                      {/* <li>
                         <a href="user-profile">
-                          <span class="entypo-cog"></span>Profile
+                        <i class="fas fa-user-circle mr-1"></i>Profile
                         </a>
-                      </li>
+                      </li> */}
                       <li>
-                        <button onClick={handleClick}>
-                          <span class="entypo-logout"></span>Logout
+                        <button className="logout" onClick={handleClick}>
+                        <i class="fas fa-sign-out-alt mr-1"></i>Logout
                         </button>
                       </li>
                     </ul>
                   </div>
                 </div>
               </div>
-            </div> */}
+            </div>
           </div>
         </nav>
       </header>

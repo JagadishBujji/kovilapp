@@ -1,10 +1,10 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import UserTable from '../Table/UserTable';
+import * as React from "react";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import UserTable from "../Table/UserTable";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -35,7 +35,7 @@ TabPanel.propTypes = {
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
@@ -45,26 +45,40 @@ export default function UserTab() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  const tab = {
+    background: "#fff",
+    outline: "none",
+    color: "#000",
+    "&.Mui-selected": {
+      fontWeight: "700",
+      color: "#ff6000",
+      borderBottom: "2px solid #ff6000",
+    },
+    "&:focus": {
+      outline: "none",
+    },
+  };
   return (
-    <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example"
-          
+    <Box sx={{ width: "100%" }}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
         >
-          <Tab sx={{background: "#ebf2f8", fontSize: "16px", fontWeight: "700", fontFamily: "serif"}} label="All [200]" {...a11yProps(0)} />
-          <Tab sx={{background: "#ebf2f8", fontSize: "16px", fontWeight: "700", fontFamily: "serif"}}label="Admin [20]" {...a11yProps(1)} />
-          <Tab  sx={{background: "#ebf2f8", fontSize: "16px", fontWeight: "700", fontFamily: "serif"}}label="Sub-Admin [400]" {...a11yProps(2)} />
+          <Tab sx={tab} label="All [200]" {...a11yProps(0)} />
+          <Tab sx={tab} label="Admin [20]" {...a11yProps(1)} />
+          <Tab sx={tab} label="Sub-Admin [400]" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <UserTable/>
+        <UserTable />
       </TabPanel>
       <TabPanel value={value} index={1}>
-      <UserTable/>
+        <UserTable />
       </TabPanel>
       <TabPanel value={value} index={2}>
-      <UserTable/>
+        <UserTable />
       </TabPanel>
     </Box>
   );

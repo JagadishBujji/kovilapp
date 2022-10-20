@@ -63,8 +63,24 @@ export default function ComplaintsTable() {
     setPage(0);
   };
 
+  const Complaint = {
+    background: "#F2F4F8",
+    fontSize: "16px",
+    fontWeight: "600",
+    color: "#1E3849",
+    textAlign: "left"
+    
+  }
+
+  const Complaintbody = {
+    fontSize: "14px",
+    fontWeight: "500",
+    color: "#1E3849",
+    textAlign: "left"
+  }
+
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden", padding: "10px" }}>
+    <Paper sx={{ width: "100%" }}>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -74,7 +90,7 @@ export default function ComplaintsTable() {
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
-                  sx={{background: "#ebf2f8", fontSize: "14px", fontWeight: "700", fontFamily: "sans-serif"}}
+                  sx={Complaint}
                 >
                   {column.label}
                 </TableCell>
@@ -90,7 +106,7 @@ export default function ComplaintsTable() {
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align} sx={{fontFamily: "sans-serif"}}>
+                        <TableCell key={column.id} align={column.align}  sx={Complaintbody}>
                           {column.format && typeof value === "number"
                             ? column.format(value)
                             : value}

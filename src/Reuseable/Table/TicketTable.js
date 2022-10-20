@@ -16,42 +16,49 @@ const columns = [
     id: "temple_name",
     label: "Temple",
     minWidth: 170,
-    align: "right",
+    align: "left",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "complaint_type",
     label: "Complaint Type",
     minWidth: 170,
-    align: "right",
+    align: "left",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "admin",
     label: "Admin",
     minWidth: 170,
-    align: "right",
+    align: "left",
     format: (value) => value.toFixed(2),
   },
   {
     id: "subadmin",
     label: "Sub-Admins",
     minWidth: 170,
-    align: "right",
+    align: "left",
     format: (value) => value.toFixed(2),
   },
   {
     id: "posted_on",
     label: "Assigned-On",
     minWidth: 170,
-    align: "right",
+    align: "left",
     format: (value) => value.toFixed(2),
   },
   {
     id: "date",
     label: "Due-Date",
     minWidth: 170,
-    align: "right",
+    align: "left",
+    format: (value) => value.toFixed(2),
+  },
+  {
+    id: "actions",
+    label: "Actions",
+    minWidth: 170,
+    align: "left",
     format: (value) => value.toFixed(2),
   },
 ];
@@ -156,6 +163,22 @@ export default function TicketTable({ tickets }) {
     setPage(0);
   };
 
+  const Ticket = {
+    background: "#F2F4F8",
+    fontSize: "16px",
+    fontWeight: "600",
+    color: "#1E3849",
+    textAlign: "left"
+  
+  };
+  const Ticketbody = {
+    fontSize: "14px",
+    fontWeight: "500",
+    color: "#1E3849",
+    textAlign: "left"
+  
+  };
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", padding: "10px" }}>
       <h1>
@@ -170,12 +193,7 @@ export default function TicketTable({ tickets }) {
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
-                  sx={{
-                    background: "#ebf2f8",
-                    fontSize: "16px",
-                    fontWeight: "900",
-                    fontFamily: "sans-serif"
-                  }}
+                  sx={Ticket}
                 >
                   {column.label}
                 </TableCell>
@@ -187,7 +205,12 @@ export default function TicketTable({ tickets }) {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.doc_id}>
+                  <TableRow
+                    hover
+                    role="checkbox"
+                    tabIndex={-1}
+                    key={row.doc_id}
+                  >
                     {columns.map((column) => {
                       // console.log(column)
                       const value = row[column.id]; 
