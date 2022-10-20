@@ -26,7 +26,7 @@ const Navbar = () => {
 
           <a className="navbar-brand" href="#/">
             {/* <img src="images/logo.png" alt="" classNameName="Logo-img"  /> */}
-            <h1>
+            <h1 style={{fontFamily: "aladin"}}>
               Kovil App
             </h1>
           </a>
