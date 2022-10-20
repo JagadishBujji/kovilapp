@@ -7,7 +7,7 @@ const AuthContext = React.createContext({
   user: {
     id: "",
     name: "",
-    email: ""
+    email: "",
   },
   role: "",
   isLoggedIn: false,
@@ -18,7 +18,7 @@ const AuthContext = React.createContext({
   setUser: (user) => {},
   setRole: (role) => {},
   setIsLoggedIn: () => {},
-  logout: () => {}
+  logout: () => {},
 });
 
 export const AuthContextProvider = (props) => {
@@ -96,7 +96,7 @@ export const AuthContextProvider = (props) => {
         currentUser: currentUser,
         currentDevice: currentDevice,
         setCurrentUser: setMyCurrentUser,
-        setCurrentDevice: setMyCurrentDevice
+        setCurrentDevice: setMyCurrentDevice,
       }}
     >
       {props.children}

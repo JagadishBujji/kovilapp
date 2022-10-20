@@ -14,7 +14,7 @@ const UserPosts = () => {
       <Card sx={{ padding: "20px" }} variant="outlined">
         <div className="row user-tabs">
           <h4>
-            <b>Users</b>
+            <b>User</b>
           </h4>
           <Button sx={{borderColor:"#ff6000", color: "#ff6000"}} variant="outlined" onClick={() => navigate("/kovil/adduser")}>
             + Add User

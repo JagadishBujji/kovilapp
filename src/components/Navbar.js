@@ -26,7 +26,7 @@ const Navbar = () => {
 
           <a className="navbar-brand" href="#/">
             {/* <img src="images/logo.png" alt="" classNameName="Logo-img"  /> */}
-            <h1>
+            <h1 style={{fontFamily: "aladin"}}>
               Kovil App
             </h1>
           </a>
@@ -89,6 +89,18 @@ const Navbar = () => {
                 <i className="fas fa-newspaper mr-1"></i>
 
                 News
+              </NavLink>
+              
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? "activelink" : "nav-link "
+                }
+                to="/kovil/complaintstypetable"
+              >
+               
+               <i class="fas fa-pager mr-1"></i>
+
+                Complaint Type
               </NavLink>
               
 

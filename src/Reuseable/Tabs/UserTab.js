@@ -5,9 +5,14 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import UserTable from "../Table/UserTable";
+<<<<<<< HEAD
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../services/firebase";
 import { SafetyDividerOutlined } from "@mui/icons-material";
+=======
+import { db } from "../../services/firebase";
+import { collection, getDocs } from "firebase/firestore";
+>>>>>>> b035e8b9d9d7644cd24f39f119fa39948085fc3d
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -50,6 +55,7 @@ export default function UserTab() {
    React.useEffect(() => {
     const fetchData = async () => {
 
+<<<<<<< HEAD
       const querySnapshot = await getDocs(collection(db, "userProfile"));
       let all=[]
       let ad=[]
@@ -86,9 +92,35 @@ export default function UserTab() {
   }, [])
   // console.log(subAdmin)
   // console.log(adminData);
+=======
+  React.useEffect(() => {
+    getDocs(collection(db, "Complaints"))
+      .then((querySnapshot) => {
+        let arr = {
+          open: [],
+          inProgress: [],
+          closed: [],
+        };
+        querySnapshot.forEach((doc) => {
+          let data = doc.data();
+          if (data.status === "Open") {
+            arr.open.push(data);
+          } else if (data.status === "In-Progress") {
+            arr.inProgress.push(data);
+          } else if (data.status === "Closed") {
+            arr.closed.push(data);
+          }
+        });
+        // setTickets(arr);
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
+>>>>>>> b035e8b9d9d7644cd24f39f119fa39948085fc3d
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   const tab = {
     background: "#fff",
     outline: "none",

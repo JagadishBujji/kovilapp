@@ -8,6 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useNavigate } from "react-router-dom";
+import DropDownIcon from "../DropDown/DropDownIcon";
 
 const columns = [
   { id: "id", label: "ID", minWidth: 170 },
@@ -79,6 +80,7 @@ function createData(
   return { id, user, number, role, assigned, open, close, progress, more };
 }
 
+<<<<<<< HEAD
 // const rows = [
 //   createData(
 //     "001",
@@ -136,6 +138,67 @@ function createData(
 //     ":"
 //   ),
 // ];
+=======
+const rows = [
+  createData(
+    "001",
+    "Jagadish Kumar",
+    1234567890,
+    "Admin",
+    3125,
+    350,
+    250,
+    2515,
+    < DropDownIcon />
+  ),
+  createData(
+    "001",
+    "Jagadish Kumar",
+    1234567890,
+    "Admin",
+    3125,
+    350,
+    250,
+    2515,
+    < DropDownIcon />
+  ),
+  createData(
+    "001",
+    "Jagadish Kumar",
+    1234567890,
+    "Admin",
+    3125,
+    350,
+    250,
+    2515,
+    
+    < DropDownIcon />
+  ),
+  createData(
+    "001",
+    "Jagadish Kumar",
+    1234567890,
+    "Admin",
+    3125,
+    350,
+    250,
+    2515,
+    
+    < DropDownIcon />
+  ),
+  createData(
+    "001",
+    "Jagadish Kumar",
+    1234567890,
+    "Admin",
+    3125,
+    350,
+    250,
+    2515,
+    < DropDownIcon />
+  ),
+];
+>>>>>>> b035e8b9d9d7644cd24f39f119fa39948085fc3d
 
 export default function UserTable({allData}) {
   const navigate = useNavigate();
@@ -199,9 +262,13 @@ export default function UserTable({allData}) {
                       const value = row[column.id];
                       return (
                         <TableCell key={column.id} align={column.align}  onClick={() => navigate("/kovil/userdetails")} sx={tablebody}>
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
+                            {column.id === "more" ? (
+                            <DropDownIcon />
+                          ) : column.format && typeof value === "number" ? (
+                            column.format(value)
+                          ) : (
+                            value
+                          )}
                         </TableCell>
                       );
                     })}
