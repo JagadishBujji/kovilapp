@@ -5,11 +5,15 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-export default function StateSelect() {
+export default function StateSelect({formData,setFormData}) {
   const [age, setAge] = React.useState("");
 
   const handleChange = (event) => {
     setAge(event.target.value);
+    setFormData({
+      ...formData,
+      state:event.target.value
+    })
   };
 
   return (
@@ -19,6 +23,7 @@ export default function StateSelect() {
         labelId="demo-simple-select-label"
         id="demo-simple-select"
         value={age}
+        required
         label="State"
         onChange={handleChange}
       >

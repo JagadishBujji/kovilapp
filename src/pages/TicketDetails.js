@@ -1,15 +1,36 @@
-import { Stack, Box, Card, Button, Avatar,} from "@mui/material";
+import { Stack, Box, Card, Button, Avatar, TextField, } from "@mui/material";
 import VerticalLinearStepper from "../Reuseable/Stepper/VerticalLinearStepper";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TicketsBack from "../Reuseable/TicketsBack";
 import TicketsModalBox from "../Reuseable/TicketsModalBox";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { db } from "../services/firebase";
+import AssignSelect from "../Reuseable/SelectField/AssignSelect";
 
 
 const TicketsDetails = () => {
-    const navigate = useNavigate();
-    const [openModal,setOpenModal] = useState(false);
-
+  const navigate = useNavigate();
+  const docId = useParams().id;
+  const [data, setData] = useState();
+  const [openModal, setOpenModal] = useState(false);
+  const [count,setCount]=useState(0)
+  const [showAdmin,setShowAdmin]=useState(false);
+  useEffect(() => {
+    const getDetails = async () => {
+      const docRef = doc(db, "Complaints", docId)
+      try {
+        const docSnap = await getDoc(docRef);
+        // console.log(docSnap.data())
+        setData(docSnap.data());
+      } catch (err) {
+        alert("Invalid ticket id")
+        console.log(err)
+      }
+    }
+    getDetails();
+  }, [count]);
+  console.log(data);
   const handleModal = () => {
     setOpenModal(true);
   }
@@ -42,7 +63,7 @@ const TicketsDetails = () => {
                 <div>
                   <p>Complaint</p>
                   <p>
-                    <b>John Doe</b>
+                    <b>{data?.complaint_type}</b>
                   </p>
                 </div>
                 <div>
@@ -54,7 +75,7 @@ const TicketsDetails = () => {
                 <div>
                   <p>Admin</p>
                   <p>
-                    <b>jagadish Kumar</b>
+                    <b>{data?.temple_name}</b>
                   </p>
                 </div>
                 <div>
@@ -78,19 +99,19 @@ const TicketsDetails = () => {
                 <div>
                   <p>Address</p>
                   <p>
-                    <b>xxxx yyyyyyy xxxxxx yyyyyyyyyyy</b>
+                    <b>{data?.address}</b>
                   </p>
                 </div>
                 <div>
                   <p>State</p>
                   <p>
-                    <b>Tamil Nadu</b>
+                    <b>{data?.state}</b>
                   </p>
                 </div>
                 <div>
                   <p>District</p>
                   <p>
-                    <b> Vellore</b>
+                    <b>{data?.city}</b>
                   </p>
                 </div>
                 <div>
@@ -109,7 +130,7 @@ const TicketsDetails = () => {
                   </h6>
                 </div>
                 <div className="row p-3">
-                  <img
+                  {/* <img
                     src="/images/Temples.jpg"
                     alt=""
                     width="80"
@@ -136,7 +157,20 @@ const TicketsDetails = () => {
                     width="80"
                     height="80"
                     className="img-upload"
-                  />
+                  /> */}
+                  {data?.files?.length>0?
+                  data?.files?.map((fs)=>(
+                     <img
+                     src={fs}
+                     alt="compliant image"
+                     width="80"
+                     height="80"
+                     className="img-upload"
+                   />
+                  ))
+                :
+                <p>No image found</p>
+                }
                 </div>
                 <div className="row ">
                   <div className="p-2">
@@ -154,20 +188,54 @@ const TicketsDetails = () => {
                   </div>
                 </div>
               </Card>
-              <Card sx={{ mt: 5, p: 2 }}>
-                <VerticalLinearStepper/>
+              <Card sx={{ mt: 5, p: 2 }}> 
+               {data && <VerticalLinearStepper allFeedbacks={data?.allFeedbacks} />}
                 <div className="row user-tabs">
-                <Button variant="outlined" onClick={handleModal}>Add Feedback</Button>
-                <Button variant="contained" onClick={() => navigate("/kovil/assigntickets")}>Assign Tickets</Button>
-                </div>
+                  <Button variant="outlined" onClick={handleModal}>Add Feedback</Button>
+                  {/* <Button variant="contained" onClick={() => navigate("/kovil/assigntickets")}>Assign Tickets</Button> */}
+                  <Button variant="contained" onClick={()=>setShowAdmin(!showAdmin)}>Assign Tickets</Button>
+                  
                 
+
+                </div>
+
               </Card>
+              
+              {showAdmin && 
+              <div className="col-md-7">
+              <Card sx={{ mt: 5, p: 2 }}>
+                <div>
+                  <p>Admin</p>
+                  <h6>
+                    <b>#KATU09 SriVatsava N</b>
+                  </h6>
+                </div>
+                <div>
+                  <AssignSelect />
+                </div>
+
+                <div>
+                  {" "}
+                  <TextField
+                    id="outlined-basic"
+                    label=""
+                    variant="outlined"
+                    type="date"
+                    sx={{width:"300px",mt: 5}}
+                  />
+                </div>
+                <div>
+                <Button variant="contained" sx={{mt:3,ml:13,background:"#ff6000"}}>Assign To Sub-Admin</Button>
+                </div>
+              </Card>
+              </div>}
+
             </div>
           </div>
         </Box>
       </Stack>
-      {openModal && <TicketsModalBox onCancel = {deleteBack}/>}
-      {openModal && <TicketsBack onCancel = {deleteBack}/>}
+      {openModal && <TicketsModalBox count={count} setCount={setCount} data={data}  onCancel={deleteBack} />}
+      {openModal && <TicketsBack onCancel={deleteBack} />}
     </>
   );
 };
