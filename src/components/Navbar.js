@@ -98,7 +98,7 @@ const Navbar = () => {
                 to="/kovil/complaintstypetable"
               >
                
-               <i class="fas fa-browser mr-3"></i>
+               <i class="fas fa-pager mr-1"></i>
 
                 Complaint Type
               </NavLink>

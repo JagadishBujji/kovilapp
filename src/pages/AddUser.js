@@ -65,6 +65,16 @@ const AddUser = () => {
           alert("error occured") 
       }
        }
+
+       const save = {
+        backgroundColor: "#f17116",
+        color: "#fff",
+        "&:hover": {
+          backgroundColor: "#f17116",
+          color: "#fff",
+        },
+    
+      };
   return (
     <>
       <Stack>
@@ -255,7 +265,15 @@ const AddUser = () => {
               </div>
               <div className="row">
                 <div className="col-md-6 picture">
-                  <TextField
+                  
+                </div>
+                <div className="col-md-6 picture1">
+                  <Button
+                    variant="contained"
+                    sx={{ backgroundColor: "#198754", color: "#fff", mb: 2 }}
+                  >
+                    + Add
+                  </Button><TextField
                     id="outlined-basic"
                     label="ZipCode"
                     variant="outlined"
@@ -275,21 +293,14 @@ const AddUser = () => {
                       fontFamily: "sans-serif",
                     }}
                   />
-                </div>
-                <div className="col-md-6 picture1">
-                  <Button
-                    variant="contained"
-                    sx={{ backgroundColor: "#198754", color: "#fff", mr: 2 }}
-                  >
-                    + Add
-                  </Button>
+
                 </div>
               </div>
               <div className="row okbutton">
                 <Button variant="text" sx={{ mr: 2 }} onClick={handleClick}>
                   Cancel
                 </Button>
-                <Button type="submit" variant="contained">Add User</Button>
+                <Button type="submit" variant="contained" sx={save}>Create User</Button>
               </div>
               {showModal && (
                 <UserModal onConfirm={deleteHandle} onCancel={handleCancel} />

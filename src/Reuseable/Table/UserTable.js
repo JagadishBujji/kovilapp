@@ -8,6 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useNavigate } from "react-router-dom";
+import DropDownIcon from "../DropDown/DropDownIcon";
 
 const columns = [
   { id: "id", label: "ID", minWidth: 170 },
@@ -87,7 +88,7 @@ const rows = [
     350,
     250,
     2515,
-    ":"
+    < DropDownIcon />
   ),
   createData(
     "001",
@@ -98,7 +99,7 @@ const rows = [
     350,
     250,
     2515,
-    ":"
+    < DropDownIcon />
   ),
   createData(
     "001",
@@ -109,7 +110,8 @@ const rows = [
     350,
     250,
     2515,
-    ":"
+    
+    < DropDownIcon />
   ),
   createData(
     "001",
@@ -120,7 +122,8 @@ const rows = [
     350,
     250,
     2515,
-    ":"
+    
+    < DropDownIcon />
   ),
   createData(
     "001",
@@ -131,7 +134,7 @@ const rows = [
     350,
     250,
     2515,
-    ":"
+    < DropDownIcon />
   ),
 ];
 
@@ -196,9 +199,13 @@ export default function UserTable() {
                       const value = row[column.id];
                       return (
                         <TableCell key={column.id} align={column.align}  onClick={() => navigate("/kovil/userdetails")} sx={tablebody}>
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
+                            {column.id === "more" ? (
+                            <DropDownIcon />
+                          ) : column.format && typeof value === "number" ? (
+                            column.format(value)
+                          ) : (
+                            value
+                          )}
                         </TableCell>
                       );
                     })}

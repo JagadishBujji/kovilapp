@@ -1,53 +1,82 @@
-import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
+import * as React from "react";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
+import DropDownIcon from "../DropDown/DropDownIcon";
 
 const columns = [
-  { id: 'id', label: 'id', minWidth: 170 },
-  { id: 'date', label: 'Date', minWidth: 100 },
+  { id: "id", label: "id", minWidth: 170 },
+  { id: "date", label: "Date", minWidth: 100 },
   {
-    id: 'published',
-    label: 'Published By',
+    id: "published",
+    label: "Published By",
     minWidth: 170,
-    align: 'left',
-    format: (value) => value.toLocaleString('en-US'),
+    align: "left",
+    format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: 'article',
-    label: 'Article',
+    id: "article",
+    label: "Article",
     minWidth: 170,
-    align: 'left',
-    format: (value) => value.toLocaleString('en-US'),
+    align: "left",
+    format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: 'more',
-    label: 'More',
+    id: "more",
+    label: "More",
     minWidth: 170,
-    align: 'left',
-    format: (value) => value.toLocaleString('en-US'),
+    align: "left",
+    format: (value) => value.toLocaleString("en-US"),
   },
 ];
 
 function createData(id, date, published, article, more) {
-  
   return { id, date, published, article, more };
 }
 
 const rows = [
-  createData('#06', 'Oct. 11, 2022', "None", "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …", ""),
-  createData('#05', 'Oct. 11, 2022', "None", "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …", ""),
-  createData('#04', 'Oct. 11, 2022', "None", "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …", ""),
-  createData('#03', 'Oct. 11, 2022', "None", "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …", ""),
-  createData('#02', 'Oct. 11, 2022', "None", "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …", ""),
-  createData('#01', 'Oct. 11, 2022', "None", "Happy Dusserra to all", ""),
- 
+  createData(
+    "#06",
+    "Oct. 11, 2022",
+    "None",
+    "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
+    <DropDownIcon />
+  ),
+  createData(
+    "#05",
+    "Oct. 11, 2022",
+    "None",
+    "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
+    <DropDownIcon />
+  ),
+  createData(
+    "#04",
+    "Oct. 11, 2022",
+    "None",
+    "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
+    <DropDownIcon />
+  ),
+  createData(
+    "#03",
+    "Oct. 11, 2022",
+    "None",
+    "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
+    <DropDownIcon />
+  ),
+  createData(
+    "#02",
+    "Oct. 11, 2022",
+    "None",
+    "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
+    <DropDownIcon />
+  ),
+  createData("#01", "Oct. 11, 2022", "None", "Happy Dusserra to all", <DropDownIcon />),
 ];
 
 export default function NewsTable() {
@@ -78,16 +107,19 @@ export default function NewsTable() {
   };
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden', p: 2 }}>
+    <Paper sx={{ width: "100%", overflow: "hidden", p: 2 }}>
       <div className="row user-tabs">
-          <h4>
-            <b>New News</b>
-          </h4>
-          <Button sx={{borderColor:"#ff6000", color: "#ff6000"}} variant="outlined">
-            Create News
-          </Button>
-        </div>
-      <TableContainer sx={{ maxHeight: 440 }}>
+        <h4>
+          <b>New News</b>
+        </h4>
+        <Button
+          sx={{ borderColor: "#ff6000", color: "#ff6000" }}
+          variant="outlined"
+        >
+          Create News
+        </Button>
+      </div>
+      <TableContainer >
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -97,7 +129,6 @@ export default function NewsTable() {
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
                   sx={stickyhead}
-                 
                 >
                   {column.label}
                 </TableCell>
@@ -113,10 +144,18 @@ export default function NewsTable() {
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align} sx={ticketbody}>
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}
+                        <TableCell
+                          key={column.id}
+                          align={column.align}
+                          sx={ticketbody}
+                        >
+                          {column.id === "more" ? (
+                            <DropDownIcon />
+                          ) : column.format && typeof value === "number" ? (
+                            column.format(value)
+                          ) : (
+                            value
+                          )}
                         </TableCell>
                       );
                     })}

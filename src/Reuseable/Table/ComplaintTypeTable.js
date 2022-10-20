@@ -7,7 +7,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { useNavigate } from "react-router-dom";
+import Button from "@mui/material/Button";
+import { Card } from "@mui/material";
+import { useState } from "react";
+import ComplaintsField from "../../pages/ComplaintsField";
+import TicketsBack from "../TicketsBack";
 
 const columns = [
   { id: "sno", label: "Sl.No", minWidth: 170 },
@@ -43,6 +47,7 @@ export default function ComplaintTypeTable() {
     fontWeight: "600",
     color: "#1E3849",
     textAlign: "left",
+    zIndex:"0"
   };
 
   const Complaintbody = {
@@ -51,10 +56,37 @@ export default function ComplaintTypeTable() {
     color: "#1E3849",
     textAlign: "left",
   };
+
+  const save = {
+    backgroundColor: "#f17116",
+    color: "#fff",
+    mr: 2,
+    "&:hover": {
+      backgroundColor: "#f17116",
+      color: "#fff",
+    },
+
+  };
+   
+  const[open,setOpen]=useState(false);
+
+  const handleChange = () => {
+        setOpen(true)
+  }
+  const handleCancel = () => {
+    setOpen(false)
+  }
  
-  const navigate = useNavigate();
   return (
     <Paper sx={{ width: "100%" }}>
+        <Card sx={{p: 3}}>
+        <div className="row addbtn">
+      <Button variant="contained" sx={save} onClick={handleChange}>
+         Add New
+        </Button>
+        {open && <ComplaintsField onCancel={handleCancel}/>}
+        {open && <TicketsBack />}
+        </div>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -84,9 +116,6 @@ export default function ComplaintTypeTable() {
                           key={column.id}
                           align={column.align}
                           sx={Complaintbody}
-                          onClick={() => {
-                            navigate("/kovil/complaintsfield")
-                          }}
                         >
                           {column.format && typeof value === "number"
                             ? column.format(value)
@@ -109,6 +138,7 @@ export default function ComplaintTypeTable() {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+      </Card>
     </Paper>
   );
 }

@@ -98,7 +98,7 @@ export default function HomeTabs() {
         <div className="row">
           <div className="col-sm-12 col-md-3 col-lg-2">
             <div className="card">
-              <p className="count">Open Ticket</p>
+              <p className="count">Open Tickets</p>
               <p className="open">
                 <b>3620</b>
               </p>

@@ -8,6 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useNavigate } from "react-router-dom";
+import TicketsDropDown from "../TicketsDropDown/TicketsDropDown";
 
 const columns = [
   { id: "doc_id", label: "ID", minWidth: 170 },
@@ -35,7 +36,7 @@ const columns = [
   },
   {
     id: "subadmin",
-    label: "Sub-Admins",
+    label: "Sub-Admin",
     minWidth: 170,
     align: "left",
     format: (value) => value.toFixed(2),
@@ -56,7 +57,7 @@ const columns = [
   },
   {
     id: "actions",
-    label: "Actions",
+    label: "Action",
     minWidth: 170,
     align: "left",
     format: (value) => value.toFixed(2),
@@ -222,9 +223,13 @@ export default function TicketTable({ tickets }) {
                           onClick={() => navigate(`/kovil/ticketsdetails/${row.doc_id}`)}
                           sx={{fontFamily: "sans-serif"}}
                         >
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
+                          {column.id === "actions" ? (
+                            <TicketsDropDown />
+                          ) : column.format && typeof value === "number" ? (
+                            column.format(value)
+                          ) : (
+                            value
+                          )}
                         </TableCell>
                       );
                     })}
