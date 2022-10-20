@@ -91,6 +91,18 @@ const Navbar = () => {
                 News
               </NavLink>
               
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? "activelink" : "nav-link "
+                }
+                to="/kovil/complaintstypetable"
+              >
+               
+               <i class="fas fa-browser mr-3"></i>
+
+                Complaint Type
+              </NavLink>
+              
 
               {/* <li classNameName="nav-item">
                 <Link classNameName="nav-link   px-4" to="user-profile">

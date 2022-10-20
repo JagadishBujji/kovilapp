@@ -15,6 +15,8 @@ import UserDetails from "./pages/UserDetails";
 import TicketsDetails from "./pages/TicketDetails";
 import AssignTicket from "./pages/AssignTicket";
 import NewsTable from "./Reuseable/Table/NewsTable";
+import ComplaintTypeTable from "./Reuseable/Table/ComplaintTypeTable";
+import ComplaintsField from "./pages/ComplaintsField";
 // import EventPosts from "./components/EventPost/EventPosts";
 
 export default function App() {
@@ -68,6 +70,15 @@ export default function App() {
             path="newstable"
             element={user ? <NewsTable /> : <Navigate to="/" />}
           />
+           <Route
+            path="complaintstypetable"
+            element={user ? <ComplaintTypeTable /> : <Navigate to="/" />}
+          />
+           <Route
+            path="complaintsfield"
+            element={user ? <ComplaintsField /> : <Navigate to="/" />}
+          />
+          
           {/* <Route path="event-post" element={ user? <EventPosts /> : <Navigate to="/login"/>} /> */}
         </Route>
       </Routes>

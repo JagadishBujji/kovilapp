@@ -91,7 +91,7 @@ export default function HomeTabs() {
           aria-label="basic tabs example"
         >
           <Tab sx={tab} label="District Wise" {...a11yProps(0)} />
-          <Tab sx={tab} label="Compliant Type" {...a11yProps(1)} />
+          <Tab sx={tab} label="Complaint Type Wise" {...a11yProps(1)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
