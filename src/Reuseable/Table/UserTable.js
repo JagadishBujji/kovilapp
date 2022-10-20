@@ -80,7 +80,6 @@ function createData(
   return { id, user, number, role, assigned, open, close, progress, more };
 }
 
-<<<<<<< HEAD
 // const rows = [
 //   createData(
 //     "001",
@@ -138,67 +137,6 @@ function createData(
 //     ":"
 //   ),
 // ];
-=======
-const rows = [
-  createData(
-    "001",
-    "Jagadish Kumar",
-    1234567890,
-    "Admin",
-    3125,
-    350,
-    250,
-    2515,
-    < DropDownIcon />
-  ),
-  createData(
-    "001",
-    "Jagadish Kumar",
-    1234567890,
-    "Admin",
-    3125,
-    350,
-    250,
-    2515,
-    < DropDownIcon />
-  ),
-  createData(
-    "001",
-    "Jagadish Kumar",
-    1234567890,
-    "Admin",
-    3125,
-    350,
-    250,
-    2515,
-    
-    < DropDownIcon />
-  ),
-  createData(
-    "001",
-    "Jagadish Kumar",
-    1234567890,
-    "Admin",
-    3125,
-    350,
-    250,
-    2515,
-    
-    < DropDownIcon />
-  ),
-  createData(
-    "001",
-    "Jagadish Kumar",
-    1234567890,
-    "Admin",
-    3125,
-    350,
-    250,
-    2515,
-    < DropDownIcon />
-  ),
-];
->>>>>>> b035e8b9d9d7644cd24f39f119fa39948085fc3d
 
 export default function UserTable({allData}) {
   const navigate = useNavigate();
