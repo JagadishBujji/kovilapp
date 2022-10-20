@@ -11,9 +11,24 @@ import { useState } from "react";
 import UserModal from "../Reuseable/UserModal/UserModal";
 import TicketsBack from "../Reuseable/TicketsBack";
 import { useNavigate } from "react-router-dom";
+import {doc,addDoc,collection} from 'firebase/firestore'
+import { db } from "../services/firebase";
 
 const AddUser = () => {
- 
+      const [formData,setFormData]=useState({
+        firstName:"",
+      lastName:"",
+      role:"",
+      mobile:"",
+      alternateNumber:"",
+      email:"",
+      aadhar:"",
+      state:"",
+      zipcode:"",
+      dob:"",
+      district:""
+
+      })
        const [showModal,setShowModal] = useState(false);
        const navigate = useNavigate();
 
@@ -26,12 +41,37 @@ const AddUser = () => {
        const deleteHandle = () => {
           navigate("/kovil/user-post")
        }
+       const handleSubmit=async(e)=>{
+        e.preventDefault();
+        try{
+          const docRef = await addDoc(collection(db, "userProfile"), {
+            first_name:formData.firstName,
+            last_name:formData.lastName,
+            role:formData.role,
+            state:formData.state,
+            district:formData.district,
+            phone_number:formData.mobile,
+            alternate_number:formData.alternateNumber,
+            email:formData.email,
+            aadhar:formData.aadhar,
+            dob:formData.dob,
+            zipcode:formData.zipcode       
+          });
+          console.log(docRef.id)
+          alert("user added successfully") 
+          navigate("/kovil/user-post")
+      }catch(err){
+          console.log(err); 
+          alert("error occured") 
+      }
+       }
   return (
     <>
       <Stack>
         <h1>
           Users <i class="fas fa-chevron-right"></i> Add User{" "}
         </h1>
+        <form onSubmit={handleSubmit}>
         <Box>
           <Card sx={{ p: 3 }}>
             <h1>
@@ -44,7 +84,7 @@ const AddUser = () => {
                   <span>Upload Profile Picture</span>
                 </div>
                 <div className="col-md-6">
-                  <SelectField />
+                  <SelectField  formData={formData} setFormData={setFormData}/>
                 </div>
               </div>
               <div className="row">
@@ -52,6 +92,13 @@ const AddUser = () => {
                   <TextField
                     id="outlined-basic"
                     label="Enter First Name"
+                    required
+                    onChange={(e)=>{
+                      setFormData({
+                        ...formData,
+                        firstName:e.target.value
+                      })
+                    }}
                     variant="outlined"
                     fullWidth
                     type="text"
@@ -67,7 +114,15 @@ const AddUser = () => {
                     id="outlined-basic"
                     label="Enter Last Name"
                     variant="outlined"
+                    required
+
                     fullWidth
+                    onChange={(e)=>{
+                      setFormData({
+                        ...formData,
+                        lastName:e.target.value
+                      })
+                    }}
                     type="text"
                     sx={{
                       fontSize: "14px",
@@ -79,12 +134,21 @@ const AddUser = () => {
               </div>
               <div className="row">
                 <div className="col-md-6 picture">
-                  <TextField
+                  <TextField 
                     id="outlined-basic"
                     label="Enter Mobile Number"
                     variant="outlined"
                     fullWidth
-                    type="tel"
+                    required
+
+                    onChange={(e)=>{
+                      setFormData({
+                        ...formData,
+                        mobile:e.target.value
+                      })
+                    }}
+                    type="number"
+                    pattern="[0-9]{10}"
                     sx={{
                       fontSize: "14px",
                       fontWeight: "900",
@@ -97,8 +161,16 @@ const AddUser = () => {
                     id="outlined-basic"
                     label="Enter Alternate Mobile Number"
                     variant="outlined"
+                    required
+                    
                     fullWidth
-                    type="tel"
+                    onChange={(e)=>{
+                      setFormData({
+                        ...formData,
+                        alternateNumber:e.target.value
+                      })
+                    }}
+                    type="number"
                   />
                 </div>
               </div>
@@ -107,7 +179,15 @@ const AddUser = () => {
                 label="Enter Email ID"
                 variant="outlined"
                 fullWidth
+                required
+
                 type="email"
+                onChange={(e)=>{
+                  setFormData({
+                    ...formData,
+                    email:e.target.value
+                  })
+                }}
                 sx={{
                   mb: 2 ,
                   fontSize: "14px",
@@ -122,6 +202,14 @@ const AddUser = () => {
                     label="Enter Aadhar Number"
                     variant="outlined"
                     fullWidth
+                    required
+
+                    onChange={(e)=>{
+                      setFormData({
+                        ...formData,
+                        aadhar:e.target.value
+                      })
+                    }}
                     type="tel"
                     sx={{
                       fontSize: "14px",
@@ -133,9 +221,17 @@ const AddUser = () => {
                 <div className="col-md-6 picture">
                   <TextField
                     id="outlined-basic"
+                    required
+
                     label=""
                     variant="outlined"
                     fullWidth
+                    onChange={(e)=>{
+                      setFormData({
+                        ...formData,
+                        dob:e.target.value
+                      })
+                    }}
                     type="date"
                     sx={{
                       fontSize: "14px",
@@ -147,10 +243,10 @@ const AddUser = () => {
               </div>
               <div className="row">
                 <div className="col-md-6 picture">
-                  <StateSelect />
+                  <StateSelect formData={formData} setFormData={setFormData}/>
                 </div>
                 <div className="col-md-6 picture">
-                  <DistrictSelect />
+                  <DistrictSelect formData={formData} setFormData={setFormData} />
                 </div>
               </div>
               <div className="row">
@@ -160,6 +256,14 @@ const AddUser = () => {
                     label="ZipCode"
                     variant="outlined"
                     fullWidth
+                    required
+                    
+                    onChange={(e)=>{
+                      setFormData({
+                        ...formData,
+                        zipcode:e.target.value
+                      })
+                    }}
                     type="tel"
                     sx={{
                       fontSize: "14px",
@@ -178,13 +282,14 @@ const AddUser = () => {
                 <Button variant="outlined" sx={{ mr: 2 }} onClick={handleClick}>
                   Cancel
                 </Button>
-                <Button variant="contained">Add User</Button>
+                <Button type="submit" variant="contained">Add User</Button>
               </div>
               {showModal && <UserModal onConfirm = {deleteHandle} onCancel = {handleCancel}/>}
               {showModal && <TicketsBack  />}
             </Box>
           </Card>
         </Box>
+        </form>
       </Stack>
     </>
   );

@@ -55,7 +55,7 @@ export default function App() {
             // element={<Tickets />}
           />
           <Route
-            path="ticketsdetails"
+            path="ticketsdetails/:id"
             element={user ? <TicketsDetails /> : <Navigate to="/" />}
             // element={<TicketsDetails />}
           />

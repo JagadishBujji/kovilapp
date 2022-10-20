@@ -5,7 +5,8 @@ import MiniModal from "../Reuseable/MiniModal/Minimodal";
 import TicketsBack from "../Reuseable/TicketsBack";
 
 const TicketsModalBox = (props) => {
-  
+  const [feedBack,setFeedBack]=useState();
+  // console.log(feedBack)
   const [openInModal,setOpenInModal] = useState(false);
 
   const handleMinimodal = () => {
@@ -30,6 +31,9 @@ const TicketsModalBox = (props) => {
         <textarea
           rows="10"
           cols="55"
+          onChange={(e)=>{
+            setFeedBack(e.target.value);
+          }}
           placeholder="Add Feedback"
           className="ticketsInput"
         ></textarea>
@@ -43,7 +47,7 @@ const TicketsModalBox = (props) => {
             Submit FeedBack
           </Button>
         </div>
-        {openInModal && <MiniModal onCancel={deleteMiniModal}/>}
+        {openInModal && <MiniModal setCount={props.setCount} count={props.count} data={props.data} closeAllModal={props.onCancel} feedBack={feedBack} onCancel={deleteMiniModal}/>}
         {openInModal && <TicketsBack />}
       </Card>
     </Box>

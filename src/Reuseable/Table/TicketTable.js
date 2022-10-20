@@ -189,12 +189,14 @@ export default function TicketTable({ tickets }) {
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.doc_id}>
                     {columns.map((column) => {
-                      const value = row[column.id];
+                      // console.log(column)
+                      const value = row[column.id]; 
                       return (
                         <TableCell
                           key={column.id}
                           align={column.align}
-                          onClick={() => navigate("/kovil/ticketsdetails")}
+                          // onClick={() => navigate("/kovil/ticketsdetails")}
+                          onClick={() => navigate(`/kovil/ticketsdetails/${row.doc_id}`)}
                           sx={{fontFamily: "sans-serif"}}
                         >
                           {column.format && typeof value === "number"
