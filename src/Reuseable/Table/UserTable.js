@@ -222,9 +222,13 @@ export default function UserTable({allData}) {
                       const value = row[column.id];
                       return (
                         <TableCell key={column.id} align={column.align}  onClick={() => navigate(`/kovil/userdetails/${row.id}`)} sx={tablebody}>
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
+                          {column.id === "more" ? (
+                            <DropDownIcon />
+                          ) : column.format && typeof value === "number" ? (
+                            column.format(value)
+                          ) : (
+                            value
+                          )}
                         </TableCell>
                       );
                     })}

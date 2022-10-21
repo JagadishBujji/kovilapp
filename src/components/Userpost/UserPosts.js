@@ -8,6 +8,16 @@ import { useNavigate } from "react-router-dom";
 
 const UserPosts = () => {
   const navigate = useNavigate();
+
+  const save = {
+    borderColor: "#f17116",
+    color: "#f17116",
+    "&:hover": {
+      borderColor: "#f17116",
+      color: "#f17116",
+    },
+
+  };
    
   return (
     <>
@@ -16,7 +26,7 @@ const UserPosts = () => {
           <h4>
             <b>User</b>
           </h4>
-          <Button sx={{borderColor:"#ff6000", color: "#ff6000"}} variant="outlined" onClick={() => navigate("/kovil/adduser")}>
+          <Button sx={save} variant="outlined" onClick={() => navigate("/kovil/adduser")}>
             + Add User
           </Button>
         </div>
