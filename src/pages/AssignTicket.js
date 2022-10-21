@@ -94,7 +94,7 @@ const AssignTicket = () => {
   return (
     <>
       <Stack>
-        <h1>
+        <h1 style={{padding: "0 45px"}}>
           <b>
            <span className="navigateArrow" onClick = {() => {
             navigate("/kovil/tickets")

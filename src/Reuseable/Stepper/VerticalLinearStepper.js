@@ -1,14 +1,14 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import StepContent from '@mui/material/StepContent';
-import Button from '@mui/material/Button';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import { Divider, Drawer } from '@mui/material';
-import { useEffect } from 'react';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import StepContent from "@mui/material/StepContent";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import { Divider, Drawer } from "@mui/material";
+import { useEffect } from "react";
 
 // const steps = [
 //   {
@@ -31,16 +31,15 @@ import { useEffect } from 'react';
 //   },
 // ];
 
-export default function VerticalLinearStepper({allFeedbacks}) {
+export default function VerticalLinearStepper({ allFeedbacks }) {
   // console.log(allFeedbacks)
-  const steps=[]
- 
+  const steps = [];
 
   // console.log(fbs)
-  allFeedbacks?.map((fb)=>{ 
-    steps.push(fb)
-  })  
-   
+  allFeedbacks?.map((fb) => {
+    steps.push(fb);
+  });
+
   const [activeStep, setActiveStep] = React.useState(0);
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -54,19 +53,54 @@ export default function VerticalLinearStepper({allFeedbacks}) {
     setActiveStep(0);
   };
 
+  const tab = {
+    background: "#f17116",
+    outline: "none",
+    color: "#fff",
+    mt: 1,
+    mr: 1,
+    "&.Mui-selected": {
+      fontWeight: "700",
+      color: "#fff",
+      borderBottom: "2px solid #f17116",
+    },
+    "&:hover": {
+      outline: "none",
+      background: "#f17116",
+      outline: "none",
+      color: "#fff",
+    },
+  };
+  const tabs = {
+    background: "transparent",
+    outline: "none",
+    color: "#f17116",
+    mt: 1,
+    mr: 1,
+    border: "1px solid #f17116",
+    "&.Mui-selected": {
+      fontWeight: "700",
+      color: "#ff6000",
+      borderBottom: "2px solid #ff6000",
+    },
+    "&:hover": {
+      border: "1px solid #f17116",
+    },
+  };
+
   return (
     <Box sx={{ maxWidth: 400 }}>
       {/* <p>Assigned To #KA001 Franklin on 30-05-2022</p> */}
-      <Divider/>
+      <Divider />
       <Stepper activeStep={activeStep} orientation="vertical">
-        { steps?.map((step, index) => (
-          <Step key={step.label}> 
+        {steps?.map((step, index) => (
+          <Step key={step.label}>
             <StepLabel
-              // optional={
-              //   index === 2 ? (
-              //     <Typography variant="caption">Last step</Typography>
-              //   ) : null
-              // }
+            // optional={
+            //   index === 2 ? (
+            //     <Typography variant="caption">Last step</Typography>
+            //   ) : null
+            // }
             >
               {step.date}
             </StepLabel>
@@ -74,17 +108,14 @@ export default function VerticalLinearStepper({allFeedbacks}) {
               <Typography>{step.msg}</Typography>
               <Box sx={{ mb: 2 }}>
                 <div>
-                  <Button
-                    variant="contained"
-                    onClick={handleNext}
-                    sx={{ mt: 1, mr: 1 }}
-                  >
-                    {index === steps.length - 1 ? 'Finish' : 'Continue'}
+                  <Button variant="contained" onClick={handleNext} sx={tab}>
+                    {index === steps.length - 1 ? "Finish" : "Continue"}
                   </Button>
                   <Button
+                    variant="outlined"
                     disabled={index === 0}
                     onClick={handleBack}
-                    sx={{ mt: 1, mr: 1 }}
+                    sx={tabs}
                   >
                     Back
                   </Button>
@@ -94,7 +125,7 @@ export default function VerticalLinearStepper({allFeedbacks}) {
           </Step>
         ))}
       </Stepper>
-     {/* {activeStep === steps.length && (
+      {/* {activeStep === steps.length && (
         <Paper square elevation={0} sx={{ p: 3 }}>
           <Typography>All steps completed - you&apos;re finished</Typography>
           <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
@@ -102,17 +133,19 @@ export default function VerticalLinearStepper({allFeedbacks}) {
           </Button>
         </Paper>
       )} */}
-      {steps.length===0?
-      <>
-      <p>No feedback added</p>
-      </> :
-      activeStep === steps.length && (
-        <Paper square elevation={0} sx={{ p: 3 }}>
-          <Typography>All steps completed - you&apos;re finished</Typography>
-          <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
-            Reset
-          </Button>
-        </Paper>
+      {steps.length === 0 ? (
+        <>
+          <p>No feedback added</p>
+        </>
+      ) : (
+        activeStep === steps.length && (
+          <Paper square elevation={0} sx={{ p: 3 }}>
+            <Typography>All steps completed - you&apos;re finished</Typography>
+            <Button sx={tabs} onClick={handleReset}>
+              Reset
+            </Button>
+          </Paper>
+        )
       )}
     </Box>
   );

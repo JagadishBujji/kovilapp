@@ -14,7 +14,7 @@ import NewsModal from "../NewsModal/NewsModal";
 import TicketsBack from "../TicketsBack";
 
 const columns = [
-  { id: "id", label: "id", minWidth: 170 },
+  { id: "ID", label: "ID", minWidth: 170 },
   { id: "date", label: "Date", minWidth: 100 },
   {
     id: "published",
@@ -39,8 +39,8 @@ const columns = [
   },
 ];
 
-function createData(id, date, published, article, more) {
-  return { id, date, published, article, more };
+function createData(ID, date, published, article, more) {
+  return { ID, date, published, article, more };
 }
 
 const rows = [

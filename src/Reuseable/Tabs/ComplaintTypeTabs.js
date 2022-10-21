@@ -71,7 +71,7 @@ export default function ComplaintTypeTabs() {
   return (
     <Box sx={table}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-      <h4 sx={{m:3}}>Complaint Type Tickets</h4>
+      <h4 style={{padding: "10px"}}>Complaint Type Tickets</h4>
         <Tabs
           value={value}
           onChange={handleChange}

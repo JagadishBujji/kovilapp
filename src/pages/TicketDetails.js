@@ -1,123 +1,163 @@
-import { Stack, Box, Card, Button, Avatar, TextField, } from "@mui/material";
+import { Stack, Box, Card, Button, Avatar, TextField } from "@mui/material";
 import VerticalLinearStepper from "../Reuseable/Stepper/VerticalLinearStepper";
 import { useEffect, useState } from "react";
 import TicketsBack from "../Reuseable/TicketsBack";
 import TicketsModalBox from "../Reuseable/TicketsModalBox";
 import { useNavigate, useParams } from "react-router-dom";
-import { collection, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../services/firebase";
 import AssignSelect from "../Reuseable/SelectField/AssignSelect";
-
 
 const TicketsDetails = () => {
   const navigate = useNavigate();
   const docId = useParams().id;
   const [data, setData] = useState();
   const [openModal, setOpenModal] = useState(false);
-  const [count,setCount]=useState(0)
-  const [showAdmin,setShowAdmin]=useState(false);
-  const [assignDate,setAssignDate]=useState()
-  const [selectedSubAdmin,setSelectedSubAdmin]=useState();
+  const [count, setCount] = useState(0);
+  const [showAdmin, setShowAdmin] = useState(false);
+  const [assignDate, setAssignDate] = useState();
+  const [selectedSubAdmin, setSelectedSubAdmin] = useState();
   useEffect(() => {
     const getDetails = async () => {
-      const docRef = doc(db, "Complaints", docId)
+      const docRef = doc(db, "Complaints", docId);
       try {
         const docSnap = await getDoc(docRef);
         // console.log(docSnap.data())
         setData(docSnap.data());
       } catch (err) {
-        alert("Invalid ticket id")
-        console.log(err)
+        alert("Invalid ticket id");
+        console.log(err);
       }
-    }
-
+    };
 
     getDetails();
   }, [count]);
   // console.log(data);
-  const [subAdmins,setSubAdmins]=useState();  
-  useEffect(() => { 
-    const fetchData=async()=>{
-      
-    await getDocs(collection(db, "userProfile"))
-      .then((querySnapshot) => {  
-        let subAd=[]
-        querySnapshot.forEach((doc) => { 
-          let data = doc.data();
-          const rl=data.role 
-          const nD={
-            id:doc.id,
-            ...data
-          }
-          if (rl?.toLowerCase() === "sub-admin") {
-            subAd.push(nD)
-          }  
-        });
-        setSubAdmins(subAd); 
-      })
-      .catch((e) => console.log(e));
-    }
-    fetchData()
+  const [subAdmins, setSubAdmins] = useState();
+  useEffect(() => {
+    const fetchData = async () => {
+      await getDocs(collection(db, "userProfile"))
+        .then((querySnapshot) => {
+          let subAd = [];
+          querySnapshot.forEach((doc) => {
+            let data = doc.data();
+            const rl = data.role;
+            const nD = {
+              id: doc.id,
+              ...data,
+            };
+            if (rl?.toLowerCase() === "sub-admin") {
+              subAd.push(nD);
+            }
+          });
+          setSubAdmins(subAd);
+        })
+        .catch((e) => console.log(e));
+    };
+    fetchData();
   }, []);
   // console.log(subAdmins);
   const handleModal = () => {
     setOpenModal(true);
-  }
+  };
   const deleteBack = () => {
     setOpenModal(false);
-  }
+  };
 
-  const handleFormSubmit=async(e)=>{
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log(selectedSubAdmin,assignDate,data.doc_id)
-    const docRef=doc(db,"Complaints",data.doc_id) 
-    const docRef2=doc(db,"userProfile",selectedSubAdmin.id) 
+    console.log(selectedSubAdmin, assignDate, data.doc_id);
+    const docRef = doc(db, "Complaints", data.doc_id);
+    const docRef2 = doc(db, "userProfile", selectedSubAdmin.id);
 
-        try{
-            await  updateDoc(docRef,{
-                status:"In-Progress",
-                sub_admin_uid:selectedSubAdmin.id,
-                assinged_date:assignDate
-            }) 
-            if(selectedSubAdmin.current_ticket)
-            {
-              const newSCT=[...selectedSubAdmin.current_ticket,
-              data
-              ]
-              await  updateDoc(docRef2,{
-                current_ticket:newSCT
-              }) 
-              alert("Sub admin has been assigned successfully") 
-              navigate('/kovil/tickets')
-            }
-            else{
-              const newSCT=[data]
-              await  updateDoc(docRef2,{
-                current_ticket:newSCT
-              }) 
-              alert("Sub admin has been assigned successfully") 
-              navigate('/kovil/tickets')
-            }
-            // await  updateDoc(docRef2,{
-            //   current_ticket:data.doc_id
-            // }) 
-            // alert("Sub admin has been assigned successfully") 
-            // navigate('/kovil/tickets')
-        }catch(err){ 
-            alert("error occured") 
-        }
-  }
- 
+    try {
+      await updateDoc(docRef, {
+        status: "In-Progress",
+        sub_admin_uid: selectedSubAdmin.id,
+        assinged_date: assignDate,
+      });
+      if (selectedSubAdmin.current_ticket) {
+        const newSCT = [...selectedSubAdmin.current_ticket, data];
+        await updateDoc(docRef2, {
+          current_ticket: newSCT,
+        });
+        alert("Sub admin has been assigned successfully");
+        navigate("/kovil/tickets");
+      } else {
+        const newSCT = [data];
+        await updateDoc(docRef2, {
+          current_ticket: newSCT,
+        });
+        alert("Sub admin has been assigned successfully");
+        navigate("/kovil/tickets");
+      }
+      // await  updateDoc(docRef2,{
+      //   current_ticket:data.doc_id
+      // })
+      // alert("Sub admin has been assigned successfully")
+      // navigate('/kovil/tickets')
+    } catch (err) {
+      alert("error occured");
+    }
+  };
+  const save = {
+    backgroundColor: "#f17116",
+    color: "#fff",
+    "&:hover": {
+      backgroundColor: "#f17116",
+      color: "#fff",
+    },
+  };
+
+  const tab = {
+    background: "#f17116",
+    outline: "none",
+    color: "#fff",
+    "&.Mui-selected": {
+      fontWeight: "700",
+      color: "#fff",
+      borderBottom: "2px solid #f17116",
+    },
+    "&:hover": {
+      outline: "none",
+      background: "#f17116",
+      outline: "none",
+      color: "#fff",
+    },
+  };
+  const tabs = {
+    background: "transparent",
+    outline: "none",
+    color: "#f17116",
+    border: "1px solid #f17116",
+    "&.Mui-selected": {
+      fontWeight: "700",
+      color: "#ff6000",
+      borderBottom: "2px solid #ff6000",
+    },
+    "&:hover": {
+      border: "1px solid #f17116",
+    },
+  };
   return (
     <>
       <Stack>
-        <h1>
+        <h1 style={{ padding: "0 45px" }}>
           <b>
             <span
-            className="navigateArrow"
-             onClick={() => {
-              navigate("/kovil/tickets")
-            }}>Tickets</span> <i class="fas fa-chevron-right"></i> Tickets Details
+              onClick={() => {
+                navigate("/kovil/tickets");
+              }}
+            >
+              Tickets
+            </span>{" "}
+            <i class="fas fa-chevron-right"></i> Tickets Details
           </b>
         </h1>
         <Box>
@@ -233,19 +273,19 @@ const TicketsDetails = () => {
                     height="80"
                     className="img-upload"
                   /> */}
-                  {data?.files?.length>0?
-                  data?.files?.map((fs)=>(
-                     <img
-                     src={fs}
-                     alt="compliant image"
-                     width="80"
-                     height="80"
-                     className="img-upload"
-                   />
-                  ))
-                :
-                <p>No image found</p>
-                }
+                  {data?.files?.length > 0 ? (
+                    data?.files?.map((fs) => (
+                      <img
+                        src={fs}
+                        alt="compliant image"
+                        width="80"
+                        height="80"
+                        className="img-upload"
+                      />
+                    ))
+                  ) : (
+                    <p>No image found</p>
+                  )}
                 </div>
                 <div className="row ">
                   <div className="p-2">
@@ -263,63 +303,88 @@ const TicketsDetails = () => {
                   </div>
                 </div>
               </Card>
-              <Card sx={{ mt: 5, p: 2 }}> 
-               {data && <VerticalLinearStepper allFeedbacks={data?.allFeedbacks} />}
+              <Card sx={{ mt: 5, p: 2 }}>
+                {data && (
+                  <VerticalLinearStepper allFeedbacks={data?.allFeedbacks} />
+                )}
                 <div className="row user-tabs">
-                  <Button variant="outlined" onClick={handleModal}>Add Feedback</Button>
-                  <Button variant="contained"  onClick={() => navigate(`/kovil/assigntickets/${docId}`)}>Assign Tickets</Button>
-                 
-                 {/* {data?.sub_admin_uid?
+                  <Button sx={tabs} variant="outlined" onClick={handleModal}>
+                    Add Feedback
+                  </Button>
+                  <Button
+                    sx={tab}
+                    variant="contained"
+                    onClick={() => navigate(`/kovil/assigntickets/${docId}`)}
+                  >
+                    Reassign Tickets
+                  </Button>
+
+                  {/* {data?.sub_admin_uid?
                  <Button variant="contained" disabled>Ticket is already assigned</Button>
                   :
                   <Button variant="contained" onClick={()=>setShowAdmin(!showAdmin)}>Assign Tickets</Button>}
                    */}
-                
-
-                </div>
-
-              </Card>
-              
-              {showAdmin && 
-              <div className="col-md-7">
-                <form onSubmit={handleFormSubmit}>
-              <Card sx={{ mt: 5, p: 2 }}>
-                <div>
-                  <p>Admin</p>
-                  <h6>
-                    <b>#KATU09 SriVatsava N</b>
-                  </h6>
-                </div>
-                <div>
-                 {subAdmins && <AssignSelect setSelectedSubAdmin={setSelectedSubAdmin}   subAdmins={subAdmins} />}
-                </div>
-
-                <div>
-                  {" "}
-                  <TextField
-                    id="outlined-basic"
-                    label=""
-                    required
-                    variant="outlined"
-                    onChange={(e)=>{
-                      setAssignDate(e.target.value)
-                    }}
-                    type="date"
-                    sx={{width:"300px",mt: 5}}
-                  />
-                </div>
-                <div>
-                <Button type="submit" variant="contained" sx={{mt:3,ml:13,background:"#ff6000"}}>Assign To Sub-Admin</Button>
                 </div>
               </Card>
-              </form>
-              </div>}
 
+              {showAdmin && (
+                <div className="col-md-7">
+                  <form onSubmit={handleFormSubmit}>
+                    <Card sx={{ mt: 5, p: 2 }}>
+                      <div>
+                        <p>Admin</p>
+                        <h6>
+                          <b>#KATU09 SriVatsava N</b>
+                        </h6>
+                      </div>
+                      <div>
+                        {subAdmins && (
+                          <AssignSelect
+                            setSelectedSubAdmin={setSelectedSubAdmin}
+                            subAdmins={subAdmins}
+                          />
+                        )}
+                      </div>
+
+                      <div>
+                        {" "}
+                        <TextField
+                          id="outlined-basic"
+                          label=""
+                          required
+                          variant="outlined"
+                          onChange={(e) => {
+                            setAssignDate(e.target.value);
+                          }}
+                          type="date"
+                          sx={{ width: "300px", mt: 5 }}
+                        />
+                      </div>
+                      <div>
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          sx={{ mt: 3, ml: 13, background: "#ff6000" }}
+                        >
+                          Assign To Sub-Admin
+                        </Button>
+                      </div>
+                    </Card>
+                  </form>
+                </div>
+              )}
             </div>
           </div>
         </Box>
       </Stack>
-      {openModal && <TicketsModalBox count={count} setCount={setCount} data={data}  onCancel={deleteBack} />}
+      {openModal && (
+        <TicketsModalBox
+          count={count}
+          setCount={setCount}
+          data={data}
+          onCancel={deleteBack}
+        />
+      )}
       {openModal && <TicketsBack onCancel={deleteBack} />}
     </>
   );
