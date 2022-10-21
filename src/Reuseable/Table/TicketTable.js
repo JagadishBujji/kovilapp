@@ -220,6 +220,16 @@ export default function TicketTable({ tickets }) {
                           // onClick={() => navigate("/kovil/ticketsdetails")}
                           sx={{fontFamily: "sans-serif"}}
                         >
+                          <span
+                        style={{
+                          color:
+                          column.id === "doc_id"
+                            ? "#0D83FE"
+                            : ""
+                        }}
+                        >
+
+                        
                           {column.id === "actions" ? (
                             <TicketsDropDown onPress={() => navigate(`/kovil/ticketsdetails/${row.doc_id}`)} />
                           ) : column.format && typeof value === "number" ? (
@@ -227,6 +237,7 @@ export default function TicketTable({ tickets }) {
                           ) : (
                             value
                           )}
+                          </span>
                         </TableCell>
                       );
                     })}
