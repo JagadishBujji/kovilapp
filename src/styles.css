@@ -489,6 +489,11 @@ a {
   border: none;
   color: #000;
 }
+.logout:focus {
+  background: transparent;
+  border: none;
+  color: #000;
+}
 
 /* .temple{
   display: flex;

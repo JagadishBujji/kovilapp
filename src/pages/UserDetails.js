@@ -42,7 +42,7 @@ const UserDetails = () => {
   const navigate = useNavigate();
   return (
     <Stack>
-      <h1>
+      <h1 style={{padding: "0 45px"}}>
         <b>
         <span onClick={() => {
           navigate("/kovil/user-post")
