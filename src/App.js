@@ -63,7 +63,7 @@ export default function App() {
             // element={<TicketsDetails />}
           />
           <Route
-            path="assigntickets"
+            path="assigntickets/:id"
             element={user ? <AssignTicket /> : <Navigate to="/" />}
           />
            <Route

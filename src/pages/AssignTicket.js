@@ -1,8 +1,96 @@
 import { Stack, Box, Card, Button, Avatar } from "@mui/material";
 import AssignSelect from "../Reuseable/SelectField/AssignSelect";
 import TextField from "@mui/material/TextField";
+import { db } from "../services/firebase";
+import { collection, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const AssignTicket = () => {
+  const docId = useParams().id;
+  const [count,setCount]=useState(0)
+  const  [data,setData]=useState()
+  const [subAdmins,setSubAdmins]=useState();  
+  const [selectedSubAdmin,setSelectedSubAdmin]=useState();
+  const [assignDate,setAssignDate]=useState();
+  useEffect(() => {
+    const getDetails = async () => {
+      const docRef = doc(db, "Complaints", docId)
+      try {
+        const docSnap = await getDoc(docRef);
+        // console.log(docSnap.data())
+        setData(docSnap.data());
+      } catch (err) {
+        alert("Invalid ticket id")
+        console.log(err)
+      }
+    }
+
+
+    getDetails();
+  }, [count]); 
+  const navigate = useNavigate();
+
+  useEffect(() => { 
+    const fetchData=async()=>{
+      
+    await getDocs(collection(db, "userProfile"))
+      .then((querySnapshot) => {  
+        let subAd=[]
+        querySnapshot.forEach((doc) => { 
+          let data = doc.data();
+          const rl=data.role 
+          const nD={
+            id:doc.id,
+            ...data
+          }
+          if (rl?.toLowerCase() === "sub-admin") {
+            subAd.push(nD)
+          }  
+        });
+        setSubAdmins(subAd); 
+      })
+      .catch((e) => console.log(e));
+    }
+    fetchData()
+  }, []);
+  console.log(subAdmins)
+  const handleFormSubmit=async(e)=>{
+    e.preventDefault();
+    console.log(selectedSubAdmin.id,assignDate,data.doc_id)
+    const docRef=doc(db,"Complaints",data.doc_id) 
+    const docRef2=doc(db,"userProfile",selectedSubAdmin.id) 
+
+        try{
+            await  updateDoc(docRef,{
+                status:"In-Progress",
+                sub_admin_uid:selectedSubAdmin.id,
+                assinged_date:assignDate
+            }) 
+            if(selectedSubAdmin.current_ticket)
+            {
+              const newSCT=[...selectedSubAdmin.current_ticket,
+              data
+              ]
+              await  updateDoc(docRef2,{
+                current_ticket:newSCT
+              }) 
+              alert("Sub admin has been assigned successfully") 
+              navigate('/kovil/tickets')
+            }
+            else{
+              const newSCT=[data]
+              await  updateDoc(docRef2,{
+                current_ticket:newSCT
+              }) 
+              alert("Sub admin has been assigned successfully") 
+              navigate('/kovil/tickets')
+            } 
+        }catch(err){ 
+            alert("error occured") 
+        }
+  }
   return (
     <>
       <Stack>
@@ -16,7 +104,9 @@ const AssignTicket = () => {
             <div className="col-md-5">
               <Card sx={{ p: 2 }}>
                 <div className="row user-tabs">
-                  <h5>#KA001</h5>
+                  {/* <h5>#KA001</h5> */}
+                  <h5>{data?.doc_id}</h5>
+
                   <Button variant="outlined">In Progress</Button>
                 </div>
                 {/* <div className="row  user-tabs">
@@ -29,7 +119,8 @@ const AssignTicket = () => {
                 <div>
                   <p>Complaint</p>
                   <p>
-                    <b>John Doe</b>
+                  <b>{data?.complaint_type}</b>
+
                   </p>
                 </div>
                 <div>
@@ -41,7 +132,8 @@ const AssignTicket = () => {
                 <div>
                   <p>Admin</p>
                   <p>
-                    <b>jagadish Kumar</b>
+                  <b>{data?.temple_name}</b>
+
                   </p>
                 </div>
                 <div>
@@ -65,19 +157,21 @@ const AssignTicket = () => {
                 <div>
                   <p>Address</p>
                   <p>
-                    <b>xxxx yyyyyyy xxxxxx yyyyyyyyyyy</b>
+                  <b>{data?.address}</b>
+
                   </p>
                 </div>
                 <div>
                   <p>State</p>
                   <p>
-                    <b>Tamil Nadu</b>
+                  <b>{data?.state}</b>
+
                   </p>
                 </div>
                 <div>
                   <p>District</p>
                   <p>
-                    <b> Vellore</b>
+                  <b>{data?.city}</b>
                   </p>
                 </div>
                 <div>
@@ -96,7 +190,7 @@ const AssignTicket = () => {
                   </h6>
                 </div>
                 <div className="row p-3">
-                  <img
+                  {/* <img
                     src="/images/Temples.jpg"
                     alt=""
                     width="80"
@@ -123,7 +217,20 @@ const AssignTicket = () => {
                     width="80"
                     height="80"
                     className="img-upload"
-                  />
+                  /> */}
+                  {data?.files?.length>0?
+                  data?.files?.map((fs)=>(
+                     <img
+                     src={fs}
+                     alt="compliant image"
+                     width="80"
+                     height="80"
+                     className="img-upload"
+                   />
+                  ))
+                :
+                <p>No image found</p>
+                }
                 </div>
                 <div className="row ">
                   <div className="p-2">
@@ -141,6 +248,7 @@ const AssignTicket = () => {
                   </div>
                 </div>
               </Card>
+              <form onSubmit={handleFormSubmit}>
               <Card sx={{ mt: 5, p: 2 }}>
                 <div>
                   <p>Admin</p>
@@ -149,7 +257,9 @@ const AssignTicket = () => {
                   </h6>
                 </div>
                 <div>
-                  <AssignSelect />
+                  {/* <AssignSelect  /> */}
+                  {subAdmins && <AssignSelect setSelectedSubAdmin={setSelectedSubAdmin}   subAdmins={subAdmins} />}
+               
                 </div>
 
                 <div>
@@ -159,13 +269,21 @@ const AssignTicket = () => {
                     label=""
                     variant="outlined"
                     type="date"
+                    onChange={(e)=>{
+                      setAssignDate(e.target.value)
+                    }}
                     sx={{width:"300px",mt: 5}}
                   />
                 </div>
                 <div>
-                <Button variant="contained" sx={{mt:3,ml:13,background:"#ff6000"}}>Assign To Sub-Admin</Button>
+                {data?.sub_admin_uid?
+                <Button   disabled variant="contained" sx={{mt:3,ml:13,background:"#ff6000"}}>Ticket already assigned</Button>
+                :
+                <Button  type="submit"  variant="contained" sx={{mt:3,ml:13,background:"#ff6000"}}>Assign To Sub-Admin</Button>
+                }
                 </div>
               </Card>
+              </form>
             </div>
           </div>
         </Box>

@@ -262,13 +262,13 @@ const TicketsDetails = () => {
                {data && <VerticalLinearStepper allFeedbacks={data?.allFeedbacks} />}
                 <div className="row user-tabs">
                   <Button variant="outlined" onClick={handleModal}>Add Feedback</Button>
-                  {/* <Button variant="contained" onClick={() => navigate("/kovil/assigntickets")}>Assign Tickets</Button> */}
+                  <Button variant="contained" onClick={() => navigate(`/kovil/assigntickets/${docId}`)}>Assign Tickets</Button>
                  
-                 {data?.sub_admin_uid?
+                 {/* {data?.sub_admin_uid?
                  <Button variant="contained" disabled>Ticket is already assigned</Button>
                   :
                   <Button variant="contained" onClick={()=>setShowAdmin(!showAdmin)}>Assign Tickets</Button>}
-                  
+                   */}
                 
 
                 </div>
