@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../services/firebase";
+import { useNavigate } from "react-router-dom";
 
 const UserDetails = () => {
   const docId=useParams().id
@@ -26,11 +27,26 @@ const UserDetails = () => {
     getDetails();
     console.log(data);
   }, [count]);
+
+  const save = {
+    backgroundColor: "#f17116",
+    color: "#fff",
+    
+    "&:hover": {
+      backgroundColor: "#f17116",
+      color: "#fff",
+    },
+
+  };
+
+  const navigate = useNavigate();
   return (
     <Stack>
       <h1>
         <b>
-          Users <i class="fas fa-chevron-right"></i> UserDetails
+        <span onClick={() => {
+          navigate("/kovil/user-post")
+        }}>Users</span>   <i class="fas fa-chevron-right"></i> UserDetails
         </b>
       </h1>
       <Box>
@@ -39,7 +55,7 @@ const UserDetails = () => {
             <Card sx={{ p: 2 }}>
               <div className="row user-tabs">
                 <h5>User Details</h5>
-                <Button variant="outlined">
+                <Button variant="text">
                   <EditIcon /> Edit
                 </Button>
               </div>
@@ -48,7 +64,7 @@ const UserDetails = () => {
                   <Avatar sx={{ width: 60, height: 60, mr: 1 }} />
                   <p className="m-0">{data?.first_name} {data?.last_name}</p>
                 </div>
-                <Button variant="outlined">Admin</Button>
+                <Button variant="contained" sx={save}>Admin</Button>
               </div>
               <div>
                 <p>Mobile Number</p>

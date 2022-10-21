@@ -150,7 +150,7 @@ const AssignTicket = () => {
                 </div>
                 <div>
                   <AssignSelect />
-                </div>
+                </div> 
 
                 <div>
                   {" "}
