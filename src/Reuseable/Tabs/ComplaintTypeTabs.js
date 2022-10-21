@@ -57,6 +57,7 @@ export default function ComplaintTypeTabs({allTickets,open,closed,inProgress}) {
     background: "#fff",
     outline: "none",
     color: "#000",
+    textTransform: "none",
     "&.Mui-selected": {
       fontWeight: "700",
       color: "#ff6000",
@@ -72,7 +73,7 @@ export default function ComplaintTypeTabs({allTickets,open,closed,inProgress}) {
   return (
     <Box sx={table}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-      <h4 sx={{m:3}}>Complaint Type Tickets</h4>
+      <h4 style={{padding: "10px"}}>Complaint Type Tickets</h4>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -87,10 +88,10 @@ export default function ComplaintTypeTabs({allTickets,open,closed,inProgress}) {
         <ComplaintsTable data={open}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+      <ComplaintsTable />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+      <ComplaintsTable />
       </TabPanel>
     </Box>
   );

@@ -91,12 +91,25 @@ const AssignTicket = () => {
             alert("error occured") 
         }
   }
+  const save = {
+    backgroundColor: "#f17116",
+    color: "#fff",
+    ml: 14,
+    mt:2,
+    "&:hover": {
+      backgroundColor: "#f17116",
+      color: "#fff",
+    },
+
+  };
   return (
     <>
       <Stack>
-        <h1>
+        <h1 style={{padding: "0 45px"}}>
           <b>
-            Tickets <i class="fas fa-chevron-right"></i> Tickets Details
+           <span className="navigateArrow" onClick = {() => {
+            navigate("/kovil/tickets")
+           }}>Tickets</span>  <i class="fas fa-chevron-right"></i> Tickets Details
           </b>
         </h1>
         <Box>
@@ -279,7 +292,7 @@ const AssignTicket = () => {
                 {data?.sub_admin_uid?
                 <Button   disabled variant="contained" sx={{mt:3,ml:13,background:"#ff6000"}}>Ticket already assigned</Button>
                 :
-                <Button  type="submit"  variant="contained" sx={{mt:3,ml:13,background:"#ff6000"}}>Assign To Sub-Admin</Button>
+                <Button  type="submit"  variant="contained" sx={save}>Assign To Sub-Admin</Button>
                 }
                 </div>
               </Card>

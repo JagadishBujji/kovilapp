@@ -10,47 +10,47 @@ import TableRow from "@mui/material/TableRow";
 import StateOption from "../SelectField/StateOptions";
 
 const columns = [
-  { id: "name", label: "District Code", minWidth: 170 },
+  { id: "name", label: "District Code", minWidth: 100,align: "center"},
   { id: "code", label: "District Name", minWidth: 100 },
   {
     id: "open",
     label: "Open",
-    minWidth: 170,
+    minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "inProgress",
     label: "In-Progress",
-    minWidth: 170,
+    minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "closed",
     label: "Closed",
-    minWidth: 170,
+    minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "total",
     label: "Total",
-    minWidth: 170,
+    minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "Admins",
     label: "Admins",
-    minWidth: 170,
+    minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "Subadmins",
     label: "Sub-Admins",
-    minWidth: 170,
+    minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
@@ -225,13 +225,11 @@ console.log(vals)
     fontSize: "16px",
     fontWeight: "600",
     color: "#1E3849",
-    textAlign: "left",
   };
   const stickybody = {
     fontSize: "14px",
     fontWeight: "500",
     color: "#1E3849",
-    textAlign: "left",
   };
 
   return (
@@ -241,7 +239,7 @@ console.log(vals)
         <h1 className="district-title">District Wise Tickets</h1>
       </div>
 
-      <TableContainer sx={{ maxHeight: 440 }}>
+      <TableContainer>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow s>

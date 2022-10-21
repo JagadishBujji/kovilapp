@@ -94,6 +94,7 @@ export default function UserTab() {
     background: "#fff",
     outline: "none",
     color: "#000",
+    textTransform: "none",
     "&.Mui-selected": {
       fontWeight: "700",
       color: "#ff6000",
