@@ -34,6 +34,8 @@ export default function ComplaintTypeTable() {
   const [rows, setRows] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [eData,setEdata]=useState()
+  const [refresh,setRefresh]=useState(0)
 
   React.useEffect(() => {
     const docRef = doc(db, "complaint_types", "complaint");
@@ -41,10 +43,13 @@ export default function ComplaintTypeTable() {
       .then((docSnap) => {
         if (docSnap.exists()) {
           let arr = [];
-          docSnap.data().types.forEach((type, i) => {
+          let arr2=[]
+          docSnap.data().NewArray.forEach((type, i) => {
             arr.push(createData(i + 1, type));
+            arr2.push(type)
           });
           setRows(arr);
+          setEdata(arr2)
         } else {
           // doc.data() will be undefined in this case
           // console.log("No such document!");
@@ -52,7 +57,8 @@ export default function ComplaintTypeTable() {
         }
       })
       .catch((e) => console.log(e));
-  }, []);
+    }, [refresh]);
+    console.log(eData)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -106,7 +112,7 @@ export default function ComplaintTypeTable() {
       <Button variant="contained" sx={save} onClick={handleChange}>
          Add New
         </Button>
-        {open && <ComplaintsField onCancel={handleCancel}/>}
+        {open && eData && <ComplaintsField refresh={refresh} setRefresh={setRefresh} eData={eData} onCancel={handleCancel}/>}
         {open && <TicketsBack />}
         </div>
       <TableContainer sx={{ maxHeight: 440 }}>
