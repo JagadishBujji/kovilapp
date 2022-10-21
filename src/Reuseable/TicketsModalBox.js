@@ -16,6 +16,15 @@ const TicketsModalBox = (props) => {
   const deleteMiniModal = () => {
     setOpenInModal(false)
   }
+  const save = {
+    backgroundColor: "#f17116",
+    color: "#fff",
+    "&:hover": {
+      backgroundColor: "#f17116",
+      color: "#fff",
+    },
+
+  };
 
   return (
     <Box>
@@ -24,7 +33,7 @@ const TicketsModalBox = (props) => {
           <h5 sx={{ p: 2 }}>
             <b>Add Feedback</b>
           </h5>
-          <h5 sx={{ p: 2 }} className="CloseButton">
+          <h5 sx={{ p: 2 }} className = "crossBtn">
             <b onClick={props.onCancel}>X</b>
           </h5>
         </div>
@@ -42,7 +51,7 @@ const TicketsModalBox = (props) => {
             variant="contained"
             onClick={handleMinimodal}
             className="FeedBtn"
-            sx={{ background: "#ff6000" }}
+            sx={ save }
           >
             Submit FeedBack
           </Button>

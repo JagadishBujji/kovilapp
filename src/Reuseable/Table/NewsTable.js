@@ -125,7 +125,15 @@ export default function NewsTable() {
  }
 
  
+ const save = {
+  borderColor: "#f17116",
+  color: "#f17116",
+  "&:hover": {
+    borderColor: "#f17116",
+    color: "#f17116",
+  },
 
+};
 
 
   return (
@@ -135,7 +143,7 @@ export default function NewsTable() {
           <b>New News</b>
         </h4>
         <Button
-          sx={{ borderColor: "#ff6000", color: "#ff6000" }}
+          sx={save }
           variant="outlined"
           onClick={handleClick}
         >

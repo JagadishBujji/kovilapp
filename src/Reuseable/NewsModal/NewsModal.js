@@ -28,7 +28,7 @@ const NewsModal = (props) => {
     <Card sx={{ p: 3 }} className="Newsmodal">
         <div className="row user-tabs">
         <h4>Add News</h4>
-        <span onClick={props.onCancel}><b>X</b></span>
+        <span className = "crossBtn" onClick={props.onCancel}><b>X</b></span>
       </div>
       <TextareaAutosize
       aria-label="minimum height"
