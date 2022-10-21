@@ -50,7 +50,8 @@ const rows = [
   createData("Heavy Noise pollution", 30, 123, 544, 30, 61,)
 ];
 
-export default function ComplaintsTable() {
+export default function ComplaintsTable({data}) {
+  console.log(data);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 

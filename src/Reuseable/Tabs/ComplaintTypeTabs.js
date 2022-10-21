@@ -39,7 +39,7 @@ function a11yProps(index) {
   };
 }
 
-export default function ComplaintTypeTabs() {
+export default function ComplaintTypeTabs({allTickets,open,closed,inProgress}) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -67,6 +67,8 @@ export default function ComplaintTypeTabs() {
     },
   };
 
+
+
   return (
     <Box sx={table}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -76,13 +78,13 @@ export default function ComplaintTypeTabs() {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab sx={tab} label="Open [200]" {...a11yProps(0)} />
-          <Tab sx={tab} label="In-Progress [20]" {...a11yProps(1)} />
-          <Tab sx={tab} label="Closed [400]" {...a11yProps(2)} />
+          <Tab sx={tab} label={`Open [${open.length}]`} {...a11yProps(0)} />
+          <Tab sx={tab} label={`In-Progress [${inProgress.length}]]`} {...a11yProps(1)} />
+          <Tab sx={tab} label={`Close [${closed.length}]`} {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <ComplaintsTable />
+        <ComplaintsTable data={open}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two
