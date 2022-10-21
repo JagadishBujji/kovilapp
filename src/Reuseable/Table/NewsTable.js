@@ -9,6 +9,9 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
 import DropDownIcon from "../DropDown/DropDownIcon";
+import { useState } from "react";
+import NewsModal from "../NewsModal/NewsModal";
+import TicketsBack from "../TicketsBack";
 
 const columns = [
   { id: "id", label: "id", minWidth: 170 },
@@ -98,6 +101,7 @@ export default function NewsTable() {
     fontWeight: "600",
     color: "#1E3849",
     textAlign: "left",
+    zIndex:"0"
   };
   const ticketbody = {
     fontSize: "14px",
@@ -105,6 +109,24 @@ export default function NewsTable() {
     color: "#1E3849",
     textAlign: "left",
   };
+
+
+ const [openModal ,setOpenModal] = useState(false);
+ const handleClick = () => {
+  setOpenModal(true)
+ }
+
+ const deleteHandler = () => {
+  setOpenModal(false)
+ }
+
+ const onConirm = () => {
+  setOpenModal(false)
+ }
+
+ 
+
+
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", p: 2 }}>
@@ -115,10 +137,13 @@ export default function NewsTable() {
         <Button
           sx={{ borderColor: "#ff6000", color: "#ff6000" }}
           variant="outlined"
+          onClick={handleClick}
         >
           Create News
         </Button>
       </div>
+      {openModal && <NewsModal onCancel={deleteHandler} onSave={onConirm}/>}
+      {openModal && <TicketsBack />}
       <TableContainer >
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

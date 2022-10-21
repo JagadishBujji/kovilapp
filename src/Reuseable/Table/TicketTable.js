@@ -11,55 +11,55 @@ import { useNavigate } from "react-router-dom";
 import TicketsDropDown from "../TicketsDropDown/TicketsDropDown";
 
 const columns = [
-  { id: "doc_id", label: "ID", minWidth: 170 },
-  { id: "city", label: "District Name", minWidth: 100 },
+  { id: "doc_id", label: "ID", minWidth: 120 },
+  { id: "city", label: "District Name", minWidth: 120 },
   {
     id: "temple_name",
     label: "Temple",
-    minWidth: 170,
+    minWidth: 120,
     align: "left",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "complaint_type",
     label: "Complaint Type",
-    minWidth: 170,
+    minWidth: 120,
     align: "left",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "admin",
     label: "Admin",
-    minWidth: 170,
+    minWidth: 120,
     align: "left",
     format: (value) => value.toFixed(2),
   },
   {
     id: "subadmin",
     label: "Sub-Admin",
-    minWidth: 170,
+    minWidth: 120,
     align: "left",
     format: (value) => value.toFixed(2),
   },
   {
     id: "posted_on",
     label: "Assigned-On",
-    minWidth: 170,
-    align: "left",
+    minWidth: 120,
+    align: "center",
     format: (value) => value.toFixed(2),
   },
   {
     id: "date",
     label: "Due-Date",
-    minWidth: 170,
-    align: "left",
+    minWidth: 120,
+    align: "center",
     format: (value) => value.toFixed(2),
   },
   {
     id: "actions",
     label: "Action",
-    minWidth: 170,
-    align: "left",
+    minWidth: 120,
+    align: "center",
     format: (value) => value.toFixed(2),
   },
 ];
@@ -169,22 +169,20 @@ export default function TicketTable({ tickets }) {
     fontSize: "16px",
     fontWeight: "600",
     color: "#1E3849",
-    textAlign: "left"
   
   };
   const Ticketbody = {
     fontSize: "14px",
     fontWeight: "500",
     color: "#1E3849",
-    textAlign: "left"
+    
   
   };
 
+  
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", padding: "10px" }}>
-      <h1>
-        <b>Tickets</b>
-      </h1>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -220,11 +218,10 @@ export default function TicketTable({ tickets }) {
                           key={column.id}
                           align={column.align}
                           // onClick={() => navigate("/kovil/ticketsdetails")}
-                          onClick={() => navigate(`/kovil/ticketsdetails/${row.doc_id}`)}
                           sx={{fontFamily: "sans-serif"}}
                         >
                           {column.id === "actions" ? (
-                            <TicketsDropDown />
+                            <TicketsDropDown onPress={() => navigate(`/kovil/ticketsdetails/${row.doc_id}`)} />
                           ) : column.format && typeof value === "number" ? (
                             column.format(value)
                           ) : (

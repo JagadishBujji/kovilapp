@@ -57,6 +57,7 @@ export default function ComplaintTypeTabs() {
     background: "#fff",
     outline: "none",
     color: "#000",
+    textTransform: "none",
     "&.Mui-selected": {
       fontWeight: "700",
       color: "#ff6000",
@@ -85,10 +86,10 @@ export default function ComplaintTypeTabs() {
         <ComplaintsTable />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+      <ComplaintsTable />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+      <ComplaintsTable />
       </TabPanel>
     </Box>
   );

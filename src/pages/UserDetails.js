@@ -44,7 +44,9 @@ const UserDetails = () => {
     <Stack>
       <h1>
         <b>
-        <span onClick={() => {
+        <span 
+        className="navigateArrow"
+        onClick={() => {
           navigate("/kovil/user-post")
         }}>Users</span>   <i class="fas fa-chevron-right"></i> UserDetails
         </b>

@@ -107,6 +107,7 @@ export default function HomeTabs() {
     outline: "none",
     color: "#000",
     borderRadius: "5px",
+    textTransform: "none",
     "&.Mui-selected": {
       fontWeight: "700",
       background: "#ff6000",
@@ -121,6 +122,7 @@ export default function HomeTabs() {
     //   background: "none!important",
     // },
   };
+
 
   return (
     <Box sx={{ width: "100%" }}>

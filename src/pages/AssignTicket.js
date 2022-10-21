@@ -96,7 +96,9 @@ const AssignTicket = () => {
       <Stack>
         <h1>
           <b>
-            Tickets <i class="fas fa-chevron-right"></i> Tickets Details
+           <span className="navigateArrow" onClick = {() => {
+            navigate("/kovil/tickets")
+           }}>Tickets</span>  <i class="fas fa-chevron-right"></i> Tickets Details
           </b>
         </h1>
         <Box>

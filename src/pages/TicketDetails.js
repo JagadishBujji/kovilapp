@@ -107,21 +107,14 @@ const TicketsDetails = () => {
             alert("error occured") 
         }
   }
-  const save = {
-    backgroundColor: "#f17116",
-    color: "#fff",
-    "&:hover": {
-      backgroundColor: "#f17116",
-      color: "#fff",
-    },
-
-  };
+ 
   return (
     <>
       <Stack>
         <h1>
           <b>
             <span
+            className="navigateArrow"
              onClick={() => {
               navigate("/kovil/tickets")
             }}>Tickets</span> <i class="fas fa-chevron-right"></i> Tickets Details
@@ -274,7 +267,7 @@ const TicketsDetails = () => {
                {data && <VerticalLinearStepper allFeedbacks={data?.allFeedbacks} />}
                 <div className="row user-tabs">
                   <Button variant="outlined" onClick={handleModal}>Add Feedback</Button>
-                  <Button variant="contained" onClick={() => navigate(`/kovil/assigntickets/${docId}`)}>Assign Tickets</Button>
+                  <Button variant="contained"  onClick={() => navigate(`/kovil/assigntickets/${docId}`)}>Assign Tickets</Button>
                  
                  {/* {data?.sub_admin_uid?
                  <Button variant="contained" disabled>Ticket is already assigned</Button>

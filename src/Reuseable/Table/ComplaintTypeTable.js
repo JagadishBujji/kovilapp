@@ -16,7 +16,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../services/firebase";
 
 const columns = [
-  { id: "sno", label: "Sl.No", minWidth: 170 },
+  { id: "sno", label: "Sl.No", minWidth: 100 },
   { id: "complaints", label: "Complaints", minWidth: 100 },
 ];
 
@@ -100,7 +100,7 @@ export default function ComplaintTypeTable() {
   }
  
   return (
-    <Paper sx={{ width: "100%" }}>
+    <Paper sx={{ width: "87%",ml:5}}>
         <Card sx={{p: 3}}>
         <div className="row addbtn">
       <Button variant="contained" sx={save} onClick={handleChange}>

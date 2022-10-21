@@ -49,6 +49,7 @@ export default function TicketTabs({ tickets }) {
     background: "#fff",
     outline: "none",
     color: "#000",
+    textTransform: "none",
     "&.Mui-selected": {
       fontWeight: "700",
       color: "#ff6000",
@@ -74,11 +75,11 @@ export default function TicketTabs({ tickets }) {
           <Tab sx={tab} label={`In-Progress [${tickets ? tickets.inProgress.length : 1}]`} {...a11yProps(1)}
           
           />
-          <Tab label= {`Closed [${tickets ? tickets.closed.length : 2}]`} {...a11yProps(2)} 
+          <Tab sx={tab} label= {`Closed [${tickets ? tickets.closed.length : 2}]`} {...a11yProps(2)} 
           
           
           />
-          <Tab label= {`New & Not Assigned [${tickets ? tickets.closed.length : 3}]`}{...a11yProps(3)} 
+          <Tab sx={tab} label= {`New & Not Assigned [${tickets ? tickets.closed.length : 3}]`}{...a11yProps(3)} 
           
           />
         </Tabs>
