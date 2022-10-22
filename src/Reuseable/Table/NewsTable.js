@@ -45,82 +45,77 @@ function createData(ID, date, published, article, more) {
   return { ID, date, published, article, more };
 }
 
-const rows = [
-  createData(
-    "#06",
-    "Oct. 11, 2022",
-    "None",
-    "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
-    <DropDownIcon />
-  ),
-  createData(
-    "#05",
-    "Oct. 11, 2022",
-    "None",
-    "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
-    <DropDownIcon />
-  ),
-  createData(
-    "#04",
-    "Oct. 11, 2022",
-    "None",
-    "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
-    <DropDownIcon />
-  ),
-  createData(
-    "#03",
-    "Oct. 11, 2022",
-    "None",
-    "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
-    <DropDownIcon />
-  ),
-  createData(
-    "#02",
-    "Oct. 11, 2022",
-    "None",
-    "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
-    <DropDownIcon />
-  ),
-  createData(
-    "#01",
-    "Oct. 11, 2022",
-    "None",
-    "Happy Dusserra to all",
-    <DropDownIcon />
-  ),
-];
+// const rows = [
+//   createData(
+//     "#06",
+//     "Oct. 11, 2022",
+//     "None",
+//     "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
+//     <DropDownIcon />
+//   ),
+//   createData(
+//     "#05",
+//     "Oct. 11, 2022",
+//     "None",
+//     "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
+//     <DropDownIcon />
+//   ),
+//   createData(
+//     "#04",
+//     "Oct. 11, 2022",
+//     "None",
+//     "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
+//     <DropDownIcon />
+//   ),
+//   createData(
+//     "#03",
+//     "Oct. 11, 2022",
+//     "None",
+//     "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
+//     <DropDownIcon />
+//   ),
+//   createData(
+//     "#02",
+//     "Oct. 11, 2022",
+//     "None",
+//     "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
+//     <DropDownIcon />
+//   ),
+//   createData(
+//     "#01",
+//     "Oct. 11, 2022",
+//     "None",
+//     "Happy Dusserra to all",
+//     <DropDownIcon />
+//   ),
+// ];
 
 export default function NewsTable() {
   const [page, setPage] = React.useState(0);
+  const [count,setCount]=useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [allNews,setAllNews]=React.useState();
   React.useEffect(() => {
     const getNews = async () => {
-      await getDocs(collection(db, "Complaints"))
+      await getDocs(collection(db, "short_news"))
       .then((querySnapshot) => {
-        let arr = {
-          open: [],
-          inProgress: [],
-          closed: [],
-        };
+        let arr=[]
         querySnapshot.forEach((doc) => {
           let data = doc.data();
-          if (data.status === "Open") {
-            arr.open.push(data);
-          } else if (data.status === "In-Progress") {
-            arr.inProgress.push(data);
-          } else if (data.status === "Closed") {
-            arr.closed.push(data);
+          // console.log(doc.id);
+          const obj={
+            doc_id:doc.id,
+            ...data
           }
+          arr.push(obj)
         });
-        // setTickets(arr);
+        setAllNews(arr);
       })
       .catch((e) => console.log(e));
        
     };
     getNews()
-    console.log(allNews);
-  }, []);
+  }, [count]); 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -129,7 +124,17 @@ export default function NewsTable() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
+  let rows=[] 
+  allNews?.map((as)=>{ 
+      rows.push(createData(
+        as.doc_id,
+        as.posted_on,
+        as.published_by,
+        as.news,
+        <DropDownIcon />
+      ))
+  })
+  console.log(rows);
   const stickyhead = {
     background: "#F2F4F8",
     fontSize: "16px",
@@ -177,7 +182,7 @@ export default function NewsTable() {
           Create News
         </Button>
       </div>
-      {openModal && <NewsModal onCancel={deleteHandler} onSave={onConirm} />}
+      {openModal && <NewsModal count={count} setCount={setCount} onCancel={deleteHandler} onSave={onConirm} />}
       {openModal && <TicketsBack />}
       <TableContainer>
         <Table stickyHeader aria-label="sticky table">

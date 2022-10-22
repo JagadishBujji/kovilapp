@@ -22,16 +22,18 @@ const NewsModal = (props) => {
     try{
       const docRef = await addDoc(collection(db, "short_news"), {
   
-        date:dd,
-        publishedBy:userEmail,
+        posted_on:dd,
+        published_by:userEmail,
         news
       });
-      alert("News added successfully")
       console.log("Document written with ID: ", docRef.id);
+      props.setCount(props.count+1)
+      alert("News added successfully")
       props.onCancel()
     }catch(err){
-      alert(err);
+      props.setCount(props.count+1)
       console.log(err);
+      alert(err);
       props.onCancel()
 
     }
