@@ -12,6 +12,8 @@ import DropDownIcon from "../DropDown/DropDownIcon";
 import { useState } from "react";
 import NewsModal from "../NewsModal/NewsModal";
 import TicketsBack from "../TicketsBack";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../services/firebase";
 
 const columns = [
   { id: "ID", label: "ID", minWidth: 170 },
@@ -79,13 +81,46 @@ const rows = [
     "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
     <DropDownIcon />
   ),
-  createData("#01", "Oct. 11, 2022", "None", "Happy Dusserra to all", <DropDownIcon />),
+  createData(
+    "#01",
+    "Oct. 11, 2022",
+    "None",
+    "Happy Dusserra to all",
+    <DropDownIcon />
+  ),
 ];
 
 export default function NewsTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
+  const [allNews,setAllNews]=React.useState();
+  React.useEffect(() => {
+    const getNews = async () => {
+      await getDocs(collection(db, "Complaints"))
+      .then((querySnapshot) => {
+        let arr = {
+          open: [],
+          inProgress: [],
+          closed: [],
+        };
+        querySnapshot.forEach((doc) => {
+          let data = doc.data();
+          if (data.status === "Open") {
+            arr.open.push(data);
+          } else if (data.status === "In-Progress") {
+            arr.inProgress.push(data);
+          } else if (data.status === "Closed") {
+            arr.closed.push(data);
+          }
+        });
+        setTickets(arr);
+      })
+      .catch((e) => console.log(e));
+       
+    };
+    getNews()
+    console.log(allNews);
+  }, []);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -101,7 +136,7 @@ export default function NewsTable() {
     fontWeight: "600",
     color: "#1E3849",
     textAlign: "left",
-    zIndex:"0"
+    zIndex: "0",
   };
   const ticketbody = {
     fontSize: "14px",
@@ -110,31 +145,27 @@ export default function NewsTable() {
     textAlign: "left",
   };
 
+  const [openModal, setOpenModal] = useState(false);
+  const handleClick = () => {
+    setOpenModal(true);
+  };
 
- const [openModal ,setOpenModal] = useState(false);
- const handleClick = () => {
-  setOpenModal(true)
- }
+  const deleteHandler = () => {
+    setOpenModal(false);
+  };
 
- const deleteHandler = () => {
-  setOpenModal(false)
- }
+  const onConirm = () => {
+    setOpenModal(false);
+  };
 
- const onConirm = () => {
-  setOpenModal(false)
- }
-
- 
- const save = {
-  borderColor: "#f17116",
-  color: "#f17116",
-  "&:hover": {
+  const save = {
     borderColor: "#f17116",
     color: "#f17116",
-  },
-
-};
-
+    "&:hover": {
+      borderColor: "#f17116",
+      color: "#f17116",
+    },
+  };
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", p: 2 }}>
@@ -142,17 +173,13 @@ export default function NewsTable() {
         <h4>
           <b>New News</b>
         </h4>
-        <Button
-          sx={save }
-          variant="outlined"
-          onClick={handleClick}
-        >
+        <Button sx={save} variant="outlined" onClick={handleClick}>
           Create News
         </Button>
       </div>
-      {openModal && <NewsModal onCancel={deleteHandler} onSave={onConirm}/>}
+      {openModal && <NewsModal onCancel={deleteHandler} onSave={onConirm} />}
       {openModal && <TicketsBack />}
-      <TableContainer >
+      <TableContainer>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>

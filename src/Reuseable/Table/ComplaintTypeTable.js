@@ -14,14 +14,16 @@ import ComplaintsField from "../../pages/ComplaintsField";
 import TicketsBack from "../TicketsBack";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../services/firebase";
+import DropDownIcon from "../DropDown/DropDownIcon";
 
 const columns = [
   { id: "sno", label: "Sl.No", minWidth: 100 },
   { id: "complaints", label: "Complaints", minWidth: 100 },
+  { id: "more", label: "More", minWidth: 100 },
 ];
 
-function createData(sno, complaints) {
-  return { sno, complaints };
+function createData(sno, complaints,more) {
+  return { sno, complaints,more };
 }
 
 // const rows = [
@@ -145,9 +147,13 @@ export default function ComplaintTypeTable() {
                           align={column.align}
                           sx={Complaintbody}
                         >
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
+                          {column.id === "more" ? (
+                            <DropDownIcon />
+                          ) : column.format && typeof value === "number" ? (
+                            column.format(value)
+                          ) : (
+                            value
+                          )}
                         </TableCell>
                       );
                     })}

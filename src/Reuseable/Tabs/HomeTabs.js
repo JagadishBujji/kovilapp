@@ -167,6 +167,7 @@ export default function HomeTabs() {
 
      {allTickets &&   <StickyHeadTable allTicketsAvailable={allTickets}/>}
       </TabPanel>
+      
       <TabPanel value={value} index={1}>
         <div className="row">
           <div className="col-sm-12 col-md-3 col-lg-2">

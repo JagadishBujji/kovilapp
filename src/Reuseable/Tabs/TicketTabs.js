@@ -5,6 +5,7 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import TicketTable from "../Table/TicketTable";
+import Loader from "../Loader/Loader";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -85,7 +86,7 @@ export default function TicketTabs({ tickets }) {
         </Tabs>
       </Box>
       {tickets === null ? (
-        <p>Loading!!!</p>
+        <Loader />
       ) : (
         <>
           <TabPanel value={value} index={0}>
