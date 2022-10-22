@@ -113,7 +113,7 @@ export default function NewsTable() {
             arr.closed.push(data);
           }
         });
-        setTickets(arr);
+        // setTickets(arr);
       })
       .catch((e) => console.log(e));
        
