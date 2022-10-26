@@ -16,19 +16,13 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../services/firebase";
 
 const columns = [
-  { id: "sno", label: "Sl.No", minWidth: 170 },
-  { id: "complaints", label: "Complaints", minWidth: 100 },
+  { id: "sno", label: "Sl.No", minWidth: 50 },
+  { id: "complaints", label: "Complaints", minWidth: 200 },
 ];
 
 function createData(sno, complaints) {
   return { sno, complaints };
 }
-
-// const rows = [
-//   createData("#01", "NoisePollution"),
-//   createData("#02", "Sound"),
-//   createData("#03", "Wastages"),
-// ];
 
 export default function ComplaintTypeTable() {
   const [rows, setRows] = React.useState([]);
@@ -69,7 +63,7 @@ export default function ComplaintTypeTable() {
     fontWeight: "600",
     color: "#1E3849",
     textAlign: "left",
-    zIndex:"0"
+    zIndex: "0",
   };
 
   const Complaintbody = {
@@ -87,79 +81,89 @@ export default function ComplaintTypeTable() {
       backgroundColor: "#f17116",
       color: "#fff",
     },
-
   };
-   
-  const[open,setOpen]=useState(false);
+
+  const [open, setOpen] = useState(false);
 
   const handleChange = () => {
-        setOpen(true)
-  }
+    setOpen(true);
+  };
   const handleCancel = () => {
-    setOpen(false)
-  }
- 
+    setOpen(false);
+  };
+
+  const saveComplaintTypes = (complaints) => {
+    console.log("prev: ", rows);
+    console.log("complaints: ", complaints);
+    handleCancel();
+  };
+
   return (
     <Paper sx={{ width: "100%" }}>
-        <Card sx={{p: 3}}>
+      <Card sx={{ p: 3 }}>
         <div className="row addbtn">
-      <Button variant="contained" sx={save} onClick={handleChange}>
-         Add New
-        </Button>
-        {open && <ComplaintsField onCancel={handleCancel}/>}
-        {open && <TicketsBack />}
+          <Button variant="contained" sx={save} onClick={handleChange}>
+            Add New
+          </Button>
+          {open && (
+            <ComplaintsField
+              onSave={saveComplaintTypes}
+              onCancel={handleCancel}
+            />
+          )}
+          {open && <TicketsBack />}
         </div>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                  sx={Complaint}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell
-                          key={column.id}
-                          align={column.align}
-                          sx={Complaintbody}
-                        >
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+        <TableContainer sx={{ maxHeight: 440 }}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {columns.map((column) => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align}
+                    style={{ minWidth: column.minWidth }}
+                    sx={Complaint}
+                  >
+                    {column.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, i) => {
+                  return (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={i}>
+                      {columns.map((column) => {
+                        const value = row[column.id];
+                        return (
+                          <TableCell
+                            key={column.id}
+                            align={column.align}
+                            sx={Complaintbody}
+                          >
+                            {column.format && typeof value === "number"
+                              ? column.format(value)
+                              : value}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </Card>
     </Paper>
   );
