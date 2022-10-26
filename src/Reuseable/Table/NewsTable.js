@@ -9,6 +9,11 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
 import DropDownIcon from "../DropDown/DropDownIcon";
+import { useState } from "react";
+import NewsModal from "../NewsModal/NewsModal";
+import TicketsBack from "../TicketsBack";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../services/firebase";
 
 const columns = [
   { id: "ID", label: "ID", minWidth: 170 },
@@ -40,49 +45,77 @@ function createData(ID, date, published, article, more) {
   return { ID, date, published, article, more };
 }
 
-const rows = [
-  createData(
-    "#06",
-    "Oct. 11, 2022",
-    "None",
-    "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
-    <DropDownIcon />
-  ),
-  createData(
-    "#05",
-    "Oct. 11, 2022",
-    "None",
-    "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
-    <DropDownIcon />
-  ),
-  createData(
-    "#04",
-    "Oct. 11, 2022",
-    "None",
-    "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
-    <DropDownIcon />
-  ),
-  createData(
-    "#03",
-    "Oct. 11, 2022",
-    "None",
-    "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
-    <DropDownIcon />
-  ),
-  createData(
-    "#02",
-    "Oct. 11, 2022",
-    "None",
-    "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
-    <DropDownIcon />
-  ),
-  createData("#01", "Oct. 11, 2022", "None", "Happy Dusserra to all", <DropDownIcon />),
-];
+// const rows = [
+//   createData(
+//     "#06",
+//     "Oct. 11, 2022",
+//     "None",
+//     "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
+//     <DropDownIcon />
+//   ),
+//   createData(
+//     "#05",
+//     "Oct. 11, 2022",
+//     "None",
+//     "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
+//     <DropDownIcon />
+//   ),
+//   createData(
+//     "#04",
+//     "Oct. 11, 2022",
+//     "None",
+//     "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
+//     <DropDownIcon />
+//   ),
+//   createData(
+//     "#03",
+//     "Oct. 11, 2022",
+//     "None",
+//     "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
+//     <DropDownIcon />
+//   ),
+//   createData(
+//     "#02",
+//     "Oct. 11, 2022",
+//     "None",
+//     "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
+//     <DropDownIcon />
+//   ),
+//   createData(
+//     "#01",
+//     "Oct. 11, 2022",
+//     "None",
+//     "Happy Dusserra to all",
+//     <DropDownIcon />
+//   ),
+// ];
 
 export default function NewsTable() {
   const [page, setPage] = React.useState(0);
+  const [count,setCount]=useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
+  const [allNews,setAllNews]=React.useState();
+  React.useEffect(() => {
+    const getNews = async () => {
+      await getDocs(collection(db, "short_news"))
+      .then((querySnapshot) => {
+        let arr=[]
+        querySnapshot.forEach((doc) => {
+          let data = doc.data();
+          // console.log(doc.id);
+          const obj={
+            doc_id:doc.id,
+            ...data
+          }
+          arr.push(obj)
+        });
+        setAllNews(arr);
+      })
+      .catch((e) => console.log(e));
+       
+    };
+    getNews()
+  }, [count]); 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -91,13 +124,24 @@ export default function NewsTable() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
+  let rows=[] 
+  allNews?.map((as)=>{ 
+      rows.push(createData(
+        as.doc_id,
+        as.posted_on,
+        as.published_by,
+        as.news,
+        <DropDownIcon />
+      ))
+  })
+  console.log(rows);
   const stickyhead = {
     background: "#F2F4F8",
     fontSize: "16px",
     fontWeight: "600",
     color: "#1E3849",
     textAlign: "left",
+    zIndex: "0",
   };
   const ticketbody = {
     fontSize: "14px",
@@ -106,20 +150,41 @@ export default function NewsTable() {
     textAlign: "left",
   };
 
+  const [openModal, setOpenModal] = useState(false);
+  const handleClick = () => {
+    setOpenModal(true);
+  };
+
+  const deleteHandler = () => {
+    setOpenModal(false);
+  };
+
+  const onConirm = () => {
+    setOpenModal(false);
+  };
+
+  const save = {
+    borderColor: "#f17116",
+    color: "#f17116",
+    "&:hover": {
+      borderColor: "#f17116",
+      color: "#f17116",
+    },
+  };
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", p: 2 }}>
       <div className="row user-tabs">
         <h4>
           <b>New News</b>
         </h4>
-        <Button
-          sx={{ borderColor: "#ff6000", color: "#ff6000" }}
-          variant="outlined"
-        >
+        <Button sx={save} variant="outlined" onClick={handleClick}>
           Create News
         </Button>
       </div>
-      <TableContainer >
+      {openModal && <NewsModal count={count} setCount={setCount} onCancel={deleteHandler} onSave={onConirm} />}
+      {openModal && <TicketsBack />}
+      <TableContainer>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>

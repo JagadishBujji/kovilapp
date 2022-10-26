@@ -94,6 +94,7 @@ export default function UserTab() {
     background: "#fff",
     outline: "none",
     color: "#000",
+    textTransform: "none",
     "&.Mui-selected": {
       fontWeight: "700",
       color: "#ff6000",
@@ -111,9 +112,9 @@ export default function UserTab() {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab sx={tab} label={`All-${allData?.length}`} {...a11yProps(0)} />
-          <Tab sx={tab} label={`Admin-${adminData?.length}`} {...a11yProps(1)} />
-          <Tab sx={tab} label={`SubAdmin-${subAdmin?.length}`} {...a11yProps(2)} />
+          <Tab sx={tab} label={`All [${allData?.length}]`} {...a11yProps(0)} />
+          <Tab sx={tab} label={`Admin [${adminData?.length}]`} {...a11yProps(1)} />
+          <Tab sx={tab} label={`SubAdmin [${subAdmin?.length}]`} {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>

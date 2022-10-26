@@ -78,8 +78,12 @@ const AddUser = () => {
   return (
     <>
       <Stack>
-        <h1>
-          Users <i class="fas fa-chevron-right"></i> Add User{" "}
+        <h1 >
+         <span className="navigateArrow"
+         onClick={() => {
+          navigate("/kovil/user-post")
+         }}
+         >Users</span>  <i class="fas fa-chevron-right"></i> Add User{" "}
         </h1>
         <form onSubmit={handleSubmit}>
         <Box>

@@ -5,11 +5,12 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function StateOption() {
+export default function StateOption({setSelectState}) {
   const [age, setAge] = React.useState('');
 
   const handleChange = (event) => {
     setAge(event.target.value);
+    setSelectState(event.target.value)
   };
 
   return (
@@ -24,9 +25,9 @@ export default function StateOption() {
           onChange={handleChange}
           sx={{fontFamily: "sans-serif"}}
         >
-          <MenuItem value={"none"}>None</MenuItem>
+          <MenuItem value={""}>None</MenuItem>
           <MenuItem value={"Tamil Nadu"}>Tamil Nadu</MenuItem>
-          <MenuItem value={"Andra Pradesh"}>Andra Pradesh</MenuItem>
+          <MenuItem value={"Andhra Pradesh"}>Andra Pradesh</MenuItem>
           <MenuItem value={"Uttra Pradesh"}>Uttra Pradesh</MenuItem>
         </Select>
       </FormControl>

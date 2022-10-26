@@ -10,47 +10,47 @@ import TableRow from "@mui/material/TableRow";
 import StateOption from "../SelectField/StateOptions";
 
 const columns = [
-  { id: "name", label: "District Code", minWidth: 170 },
+  { id: "name", label: "District Code", minWidth: 100,align: "center"},
   { id: "code", label: "District Name", minWidth: 100 },
   {
     id: "open",
     label: "Open",
-    minWidth: 170,
+    minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "inProgress",
     label: "In-Progress",
-    minWidth: 170,
+    minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "closed",
     label: "Closed",
-    minWidth: 170,
+    minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "total",
     label: "Total",
-    minWidth: 170,
+    minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "Admins",
     label: "Admins",
-    minWidth: 170,
+    minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "Subadmins",
     label: "Sub-Admins",
-    minWidth: 170,
+    minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
@@ -80,17 +80,137 @@ const rows = [
   createData("005", "West Gdavari", 362, 452, 544, 1358, 8, 40),
 ];
 
-export default function StickyHeadTable({allTickets}) {
-  console.log(allTickets)
+export default function StickyHeadTable({allTicketsAvailable}) {
+  const [selectState,setSelectState]=React.useState()
+  const [allTickets,setAllTickets]=React.useState(allTicketsAvailable)
+  React.useEffect(()=>{
+    if(selectState)
+    {
+    let filterdList=allTicketsAvailable.map((mp)=>{
+      const cc=mp.state.toLowerCase();
+      const gg=selectState?.toLowerCase();
+      console.log(cc,gg)
+        if(cc===gg){
+          return mp
+        } 
+    })
+    console.log(filterdList)
+    
+    filterdList = filterdList.filter(function( element ) {
+  return element !== undefined;
+});
+    setAllTickets(filterdList)
+  }else{
+    console.log(allTicketsAvailable)
+    setAllTickets(allTicketsAvailable)
+  } 
+  },[selectState])
+  // console.log(allTickets)
+
   let districts = new Set();
   allTickets?.forEach(element => {
     // console.log(element.city)
-    districts.add(element.city) 
+    districts.add(element?.district) 
   });
   console.log(districts);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
+  console.log(districts.size)
+  const distArray = Array.from(districts);
+  console.log(distArray)
+  const distArrayOpen=distArray;
+  const distArrayInProgess=distArray;
+  const distArrayClosed=distArray;
+  
+  let disObj={
+    
+  }
+  // distArray.map((ds)=>{
+  //   console.log(ds)
+  //   const newArr={
+      
+  //   }
+  // })
+  let res = distArray.reduce((acc,curr)=> (acc[curr]=0,acc),{});
+  let vals=[] 
+  let distInpro=[]
+  let disOpen=[]
+  let disClosed=[]
+  for(let i=0;i<districts.size;i++)
+  { 
+    vals.push(0)
+    disOpen.push(0)
+    disClosed.push(0)
+    distInpro.push(0);
+  }
+console.log(res)
+console.log(vals)
+    allTickets?.map((at)=>{
+      // console.log(at.district)
+     
+      
+      if(distArray.includes(at?.district))
+      {
+        const vs=distArray.indexOf(at?.district)
+        vals[vs]++;
+      }
+      if(distArray.includes(at?.district) && at?.status==="In-Progress")
+      {
+        const vs=distArray.indexOf(at?.district)
+        distInpro[vs]++;
+      }
+      if(distArray.includes(at?.district) && at?.status==="Open")
+      {
+        const vs=distArray.indexOf(at?.district)
+        disOpen[vs]++;
+      }
+      if(distArray.includes(at?.district) && at?.status==="Closed")
+      {
+        const vs=distArray.indexOf(at?.district)
+        disClosed[vs]++;
+      }
+    })
+    console.log(vals);
+     var r={}
+     var ip={}
+     var op={}
+     var cl={}
+      let i;
+      for(let i=0;i<districts.size;i++)
+      {
+        r[distArray[i]]=vals[i]
+        ip[distArray[i]]=distInpro[i]
+        op[distArray[i]]=disOpen[i]
+        cl[distArray[i]]=disClosed[i]
+      }
+      // console.log(r);
+      console.log("inprogess",ip);
+      console.log("closed",cl); 
+      console.log("opened",op);
+      let ap=[]
+      let id=0
+      distArray.map((rs)=>{
+        id=id+1
+        const tt=op[rs]+ip[rs]+cl[rs]
+        ap.push(createData(id, rs, op[rs], ip[rs], cl[rs], tt, 8, 40),)
+      })
+      // allTickets?.map((rs)=>{
+      //   // console.log(rs.district)
+      //   id=id+1
+      //   const ds=rs.district;
+      //   const tt=op[ds]+ip[ds]+cl[ds]
+      //   ap.push(createData(id, ds, op[ds], ip[ds], cl[ds], tt, 8, 40),)
+      // })
+      // allTickets?.map((rs)=>{
+      //   id=id+1
+      //   const ds=rs.district
+      //   const tt=op[ds]+ip[ds]+cl[ds]
+      //   ap.push(createData(id, rs, op[ds], ip[ds], cl[ds], tt, 8, 40),)
+      // })
+      // for (const property in r) {
+      //   console.log(`${property}: ${r[property]}`);
+      // }
+  
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -105,23 +225,21 @@ export default function StickyHeadTable({allTickets}) {
     fontSize: "16px",
     fontWeight: "600",
     color: "#1E3849",
-    textAlign: "left",
   };
   const stickybody = {
     fontSize: "14px",
     fontWeight: "500",
     color: "#1E3849",
-    textAlign: "left",
   };
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", padding: "13px" }}>
       <div className="statewise">
-        <StateOption />
+        <StateOption setSelectState={setSelectState}/>
         <h1 className="district-title">District Wise Tickets</h1>
       </div>
 
-      <TableContainer sx={{ maxHeight: 440 }}>
+      <TableContainer>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow s>
@@ -138,7 +256,7 @@ export default function StickyHeadTable({allTickets}) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
+            {ap
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (

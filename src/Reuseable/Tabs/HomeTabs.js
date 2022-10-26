@@ -107,6 +107,7 @@ export default function HomeTabs() {
     outline: "none",
     color: "#000",
     borderRadius: "5px",
+    textTransform: "none",
     "&.Mui-selected": {
       fontWeight: "700",
       background: "#ff6000",
@@ -121,6 +122,7 @@ export default function HomeTabs() {
     //   background: "none!important",
     // },
   };
+
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -161,9 +163,11 @@ export default function HomeTabs() {
             </div>
           </div>
         </div>
+        {/* {allTickets &&   <StickyHeadTable allTickets={allTickets}/>} */}
 
-        <StickyHeadTable allTickets={allTickets}/>
+     {allTickets &&   <StickyHeadTable allTicketsAvailable={allTickets}/>}
       </TabPanel>
+      
       <TabPanel value={value} index={1}>
         <div className="row">
           <div className="col-sm-12 col-md-3 col-lg-2">
@@ -191,7 +195,7 @@ export default function HomeTabs() {
             </div>
           </div>
         </div>
-        <ComplaintTypeTabs />
+       {allTickets && <ComplaintTypeTabs open={openTickets} closed={closed} inProgress={inProgress} />}
       </TabPanel>
     </Box>
   );

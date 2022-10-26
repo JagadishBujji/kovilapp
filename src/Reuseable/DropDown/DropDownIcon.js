@@ -16,15 +16,7 @@ export default function BasicMenu() {
 
   return (
     <div>
-      <Button
-        id="basic-button"
-        aria-controls={open ? 'basic-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
-      >
-       <MoreVertIcon />
-      </Button>
+     <span onClick={handleClick}><MoreVertIcon /></span>
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}
@@ -36,6 +28,7 @@ export default function BasicMenu() {
       >
         <MenuItem onClick={handleClose}>Edit</MenuItem>
         <MenuItem onClick={handleClose}>Delete</MenuItem>
+        
       </Menu>
     </div>
   );

@@ -8,7 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useNavigate } from "react-router-dom";
-import DropDownIcon from "../DropDown/DropDownIcon";
+import UserDropDown from "../DropDown/UserDropDown";
 
 const columns = [
   { id: "id", label: "ID", minWidth: 170 },
@@ -18,50 +18,50 @@ const columns = [
   {
     id: "phone_number",
     label: "Mobile Number",
-    minWidth: 170,
-    align: "left",
+    minWidth: 100,
+    align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "role",
     label: "Role",
-    minWidth: 170,
+    minWidth: 100,
     align: "left",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "assigned",
     label: "Assigned",
-    minWidth: 170,
-    align: "left",
+    minWidth: 100,
+    align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "open",
     label: "Open",
-    minWidth: 170,
+    minWidth: 100,
     align: "left",
     format: (value) =>  value.toLocaleString("en-US"),
   },
   {
     id: "close",
     label: "Close",
-    minWidth: 170,
-    align: "left",
+    minWidth: 100,
+    align: "center",
     format: (value) =>  value.toLocaleString("en-US"),
   },
   {
     id: "progress",
     label: "In-Progress",
-    minWidth: 170,
-    align: "left",
+    minWidth: 100,
+    align: "center",
     format: (value) =>  value.toLocaleString("en-US"),
   },
   {
     id: "more",
     label: "More",
-    minWidth: 170,
-    align: "left",
+    minWidth: 100,
+    align: "center",
     format: (value) =>  value.toLocaleString("en-US"),
   },
 ];
@@ -158,15 +158,11 @@ export default function UserTable({allData}) {
     fontSize: "16px",
     fontWeight: "600",
     color: "#1E3849",
-    textAlign: "left"
- 
   }
   const tablebody = {
     fontSize: "14px",
     fontWeight: "500",
     color: "#1E3849",
-    textAlign: "left"
- 
   }
 
   return (
@@ -221,9 +217,9 @@ export default function UserTable({allData}) {
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align}  onClick={() => navigate(`/kovil/userdetails/${row.id}`)} sx={tablebody}>
+                        <TableCell key={column.id} align={column.align}  sx={tablebody}>
                           {column.id === "more" ? (
-                            <DropDownIcon />
+                            <UserDropDown row={row} />
                           ) : column.format && typeof value === "number" ? (
                             column.format(value)
                           ) : (
@@ -250,3 +246,5 @@ export default function UserTable({allData}) {
     </Paper>
   );
 }
+
+// onClick={() => navigate(`/kovil/userdetails/${row.id}`)}
