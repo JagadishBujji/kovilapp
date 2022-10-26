@@ -33,7 +33,9 @@ export default function UserDropDown({row}) {
         }}
         sx={{ml: 3}}
       >
-        <MenuItem sx={{align:"center"}} onClick={handleClose}><i class="fas fa-edit mr-2"></i>Edit</MenuItem>
+        <MenuItem sx={{align:"center"}} onClick={()=>{
+            navigate("/kovil/adduser")
+        }}><i class="fas fa-edit mr-2"></i>Edit</MenuItem>
         <MenuItem sx={{align:"center"}} onClick={handleClose}><i class="fas fa-trash mr-2"></i>Delete</MenuItem>
         <MenuItem sx={{align:"center"}} onClick={handleClose}><i class="fas fa-eye-slash mr-2"></i>Disable</MenuItem>
         <MenuItem  sx={{align:"center"}} onClick={()=>{

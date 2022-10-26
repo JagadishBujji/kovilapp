@@ -34,6 +34,7 @@ const ComplaintsField = (props) => {
     more: undefined,
   });
 
+
   useEffect(() => {
     if (props.value) {
       setCompliantType(props.value);

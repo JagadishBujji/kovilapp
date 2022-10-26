@@ -14,6 +14,7 @@ import NewsModal from "../NewsModal/NewsModal";
 import TicketsBack from "../TicketsBack";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../../services/firebase";
+import Loader from "../Loader/Loader";
 
 const columns = [
   { id: "ID", label: "ID", minWidth: 170 },
@@ -95,6 +96,7 @@ export default function NewsTable() {
   const [count,setCount]=useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [allNews,setAllNews]=React.useState();
+  const [isLoading, setIsLoading] = useState(true);
   React.useEffect(() => {
     const getNews = async () => {
       await getDocs(query(collection(db, "short_news"),orderBy("created_at","desc")))
@@ -110,6 +112,7 @@ export default function NewsTable() {
           arr.push(obj)
         });
         setAllNews(arr);
+        setIsLoading(false);
       })
       .catch((e) => console.log(e));
        
@@ -173,6 +176,8 @@ export default function NewsTable() {
   };
 
   return (
+    <>
+     {isLoading && <Loader />}
     <Paper sx={{ width: "100%", overflow: "hidden", p: 2 }}>
       <div className="row user-tabs">
         <h4>
@@ -240,5 +245,6 @@ export default function NewsTable() {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Paper>
+    </>
   );
 }
