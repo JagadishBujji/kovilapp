@@ -2,7 +2,7 @@ import { Card, } from "@mui/material";
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import Button from "@mui/material/Button";
 import { useState } from "react";
-import { collection, addDoc } from "firebase/firestore"; 
+import { collection, addDoc, serverTimestamp } from "firebase/firestore"; 
 import { db } from "../../services/firebase";
 
 const NewsModal = (props) => {
@@ -24,7 +24,8 @@ const NewsModal = (props) => {
   
         posted_on:dd,
         published_by:userEmail,
-        news
+        news,
+        created_at:serverTimestamp()
       });
       console.log("Document written with ID: ", docRef.id);
       props.setCount(props.count+1)

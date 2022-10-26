@@ -197,13 +197,13 @@ const TicketsDetails = () => {
                 <div>
                   <p>Created On</p>
                   <p>
-                    <b>12-05-1998 </b>
+                    <b>{data?.posted_on} </b>
                   </p>
                 </div>
                 <div>
                   <p>Due Date</p>
                   <p>
-                    <b>12-05-1998</b>
+                    <b>{data?.assinged_date}</b>
                   </p>
                 </div>
                 <div>

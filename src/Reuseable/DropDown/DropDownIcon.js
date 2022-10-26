@@ -6,8 +6,10 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useState } from "react";
 import NewsModal from "../NewsModal/NewsModal";
 import TicketsBack from "../TicketsBack";
+import { deleteDoc, doc, setDoc } from 'firebase/firestore';
+import { db } from '../../services/firebase';    
 
-export default function BasicMenu() {
+export default function BasicMenu({data,count,setCount}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openModal, setOpenModal] = useState(false);
   const open = Boolean(anchorEl);
@@ -28,6 +30,25 @@ export default function BasicMenu() {
     alert("news deleted");
   };
 
+  const handleDelete=async()=>{
+    await deleteDoc(doc(db,"short_news",data.ID))
+    .then((res)=>{
+      console.log(res)
+      setCount(count+1)
+      alert("deleted successfully")
+      handleClose()
+    setAnchorEl(null);
+
+    }).catch((err)=>{
+      alert(err)
+      console.log(err);
+      handleClose()
+    setAnchorEl(null);
+
+
+    })
+  }
+
   return (
     <div>
       <span onClick={handleClick}>
@@ -43,7 +64,9 @@ export default function BasicMenu() {
         }}
       >
         <MenuItem onClick={editHandler}>Edit</MenuItem>
-        <MenuItem onClick={deleteHandler}>Delete</MenuItem>
+        {/* <MenuItem onClick={deleteHandler}>Delete</MenuItem> */}
+        <MenuItem onClick={handleDelete}>Delete</MenuItem>
+
       </Menu>
       {openModal && <NewsModal onSave={handleClose} onCancel={handleClose}/>}
       {openModal && <TicketsBack onCancel={handleClose} />}

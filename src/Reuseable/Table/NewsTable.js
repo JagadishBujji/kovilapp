@@ -12,7 +12,7 @@ import DropDownIcon from "../DropDown/DropDownIcon";
 import { useState } from "react";
 import NewsModal from "../NewsModal/NewsModal";
 import TicketsBack from "../TicketsBack";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../../services/firebase";
 
 const columns = [
@@ -97,7 +97,7 @@ export default function NewsTable() {
   const [allNews,setAllNews]=React.useState();
   React.useEffect(() => {
     const getNews = async () => {
-      await getDocs(collection(db, "short_news"))
+      await getDocs(query(collection(db, "short_news"),orderBy("created_at","desc")))
       .then((querySnapshot) => {
         let arr=[]
         querySnapshot.forEach((doc) => {
@@ -215,7 +215,7 @@ export default function NewsTable() {
                           sx={ticketbody}
                         >
                           {column.id === "more" ? (
-                            <DropDownIcon />
+                            <DropDownIcon count={count} setCount={setCount} data={row}/>
                           ) : column.format && typeof value === "number" ? (
                             column.format(value)
                           ) : (

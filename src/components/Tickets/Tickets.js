@@ -1,6 +1,6 @@
 // import React, { useEffect, useState } from "react";
 import React, { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 
 import Card from "@mui/material/Card";
 import TicketTabs from "../../Reuseable/Tabs/TicketTabs";
@@ -10,7 +10,7 @@ const Tickets = () => {
   const [tickets, setTickets] = useState(null);
 
   useEffect(() => {
-    getDocs(collection(db, "Complaints"))
+    getDocs(query(collection(db, "Complaints"),orderBy("posted_on_timestamp","desc")))
       .then((querySnapshot) => {
         let arr = {
           open: [],
