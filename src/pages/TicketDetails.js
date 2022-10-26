@@ -285,17 +285,19 @@ const TicketsDetails = () => {
                       />
                     ))
                   ) : (
-                    
-                      <video width="80" height="80" controls className="vdoplayer">
-                        <source src="../Videos/video1.mp4" type="video/mp4" />
-                      </video>
-                      
+                    <p>No image found</p>
                   )}
                 </div>
-               
+                <div className="row">
+                <div className="p-2">
+                  <video width="80" height="80" controls>
+                    <source src="../Videos/video1.mp4" type="video/mp4" />
+                  </video>
+                  </div>
+                </div>
                 <div className="row ">
                   <div className="p-2">
-                    <i class="fas fa-microphone"></i>
+                    <i class="fas fa-microphone m-5"></i>
                     <ReactAudioPlayer
                       src="my_audio_file.ogg"
                       autoPlay

@@ -15,6 +15,7 @@ import TicketsBack from "../TicketsBack";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../services/firebase";
 import ComplaintDropDown from "../DropDown/ComplaintDropDown";
+import Loader from "../Loader/Loader";
 
 const columns = [
   { id: "sno", label: "Sl.No", minWidth: 100 },
@@ -38,6 +39,7 @@ export default function ComplaintTypeTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [eData, setEdata] = useState();
   const [refresh, setRefresh] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   React.useEffect(() => {
     const docRef = doc(db, "complaint_types", "complaint");
@@ -52,6 +54,7 @@ export default function ComplaintTypeTable() {
           });
           setRows(arr);
           setEdata(arr2);
+          setIsLoading(false);
         } else {
           // doc.data() will be undefined in this case
           // console.log("No such document!");
@@ -106,6 +109,8 @@ export default function ComplaintTypeTable() {
   };
 
   return (
+    <>
+    {isLoading && <Loader />}
     <Paper sx={{ width: "87%", ml: 5 }}>
       <Card sx={{ p: 3 }}>
         <div className="row addbtn">
@@ -190,5 +195,6 @@ export default function ComplaintTypeTable() {
         />
       </Card>
     </Paper>
+    </>
   );
 }

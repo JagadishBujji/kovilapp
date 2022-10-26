@@ -217,7 +217,8 @@ export default function UserTable({allData}) {
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align}  sx={tablebody}>
+                        <TableCell key={column.id} align={column.align}  sx={tablebody}
+                        >
                           {column.id === "more" ? (
                             <UserDropDown row={row} />
                           ) : column.format && typeof value === "number" ? (
