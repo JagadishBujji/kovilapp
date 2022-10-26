@@ -63,8 +63,9 @@ const UserDetails = () => {
               </div>
               <div className="row  user-tabs">
                 <div className="row user-name">
-                  <Avatar sx={{ width: 60, height: 60, mr: 1 }} />
-                  <p className="m-0">{data?.first_name} {data?.last_name}</p>
+                {data?.profilePic && <img src={data.profilePic} width="150" alt="img"/>}
+                 {!data?.profilePic && <Avatar sx={{ width: 60, height: 60, mr: 1 }} />}
+                 <p className="m-0">{data?.first_name} {data?.last_name}</p>
                 </div>
                 <Button variant="contained" sx={save}>Admin</Button>
               </div>

@@ -4,32 +4,44 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { Country, State, City }  from 'country-state-city';
+
+
+// Import Interfaces`
+import { ICountry, IState, ICity } from 'country-state-city'
+import { useState } from 'react';
 
 export default function StateOption({setSelectState}) {
   const [age, setAge] = React.useState('');
-
+  // console.log(Country.getAllCountries())
+  const [allStates,setAllStates]=useState(State.getStatesOfCountry("IN"))
   const handleChange = (event) => {
     setAge(event.target.value);
+    console.log(event.target.value)
     setSelectState(event.target.value)
-  };
+  }; 
 
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl sx={{width: "100%", mr: 2}}>
-        <InputLabel id="demo-simple-select-label">State</InputLabel>
-        <Select
+        <InputLabel id="demo-simple-select-label">{age?"State":"Tamil nadu"}</InputLabel>
+     {allStates &&   <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={age}
+          value={age} 
           label="State"
           onChange={handleChange}
           sx={{fontFamily: "sans-serif"}}
         >
-          <MenuItem value={""}>None</MenuItem>
-          <MenuItem value={"Tamil Nadu"}>Tamil Nadu</MenuItem>
+          {/* <MenuItem value={""}>None</MenuItem> */}
+          <MenuItem value={"All"}>All</MenuItem>
+          {/* <MenuItem value={"Tamil nadu"} selected>Tamil Nadu</MenuItem>
           <MenuItem value={"Andhra Pradesh"}>Andra Pradesh</MenuItem>
-          <MenuItem value={"Uttra Pradesh"}>Uttra Pradesh</MenuItem>
-        </Select>
+          <MenuItem value={"Uttra Pradesh"}>Uttra Pradesh</MenuItem> */}
+          {allStates.map((state)=>(
+       <MenuItem value={state.name} selected>{state.name}</MenuItem>
+          ))}
+        </Select>}
       </FormControl>
     </Box>
   );

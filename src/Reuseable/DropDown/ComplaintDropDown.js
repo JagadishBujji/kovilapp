@@ -1,18 +1,17 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useState } from "react";
-import NewsModal from "../NewsModal/NewsModal";
+import ComplaintsField from "../../pages/ComplaintsField";
 import TicketsBack from "../TicketsBack";
-import { deleteDoc, doc, setDoc } from 'firebase/firestore';
-import { db } from '../../services/firebase';    
-
-export default function BasicMenu({data,count,setCount}) {
+import { db } from "../../services/firebase";
+import { setDoc, doc } from "firebase/firestore";
+export default function ComplaintDropDown(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openModal, setOpenModal] = useState(false);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -25,29 +24,28 @@ export default function BasicMenu({data,count,setCount}) {
     setOpenModal(true);
   };
 
-  const deleteHandler = () => {
+  const deleteHandler = async(e) => {
     setAnchorEl(null);
-    alert("news deleted");
-  };
-
-  const handleDelete=async()=>{
-    await deleteDoc(doc(db,"short_news",data.ID))
-    .then((res)=>{
-      console.log(res)
-      setCount(count+1)
-      alert("deleted successfully")
-      handleClose()
-    setAnchorEl(null);
-
-    }).catch((err)=>{
-      alert(err)
+    // delete complaint type from db
+    let NewArray = [];
+    if (props.value){
+      NewArray = [...props.eData];
+      let index = NewArray.findIndex(type => type === props.value.complaints)
+      NewArray.splice(index,1)
+      console.log(NewArray)
+    }
+    try {
+      await setDoc(doc(db, "complaint_types", "complaint"), { NewArray });
+      alert("Compliant type deleted");
+      props.setRefresh(props.refresh + 1);
+      props.onCancel();
+    } catch (err) {
       console.log(err);
-      handleClose()
-    setAnchorEl(null);
-
-
-    })
-  }
+      alert(err);
+      props.setRefresh(props.refresh + 1);
+      props.onCancel();
+    }
+  };
 
   return (
     <div>
@@ -64,11 +62,17 @@ export default function BasicMenu({data,count,setCount}) {
         }}
       >
         <MenuItem onClick={editHandler}>Edit</MenuItem>
-        {/* <MenuItem onClick={deleteHandler}>Delete</MenuItem> */}
-        <MenuItem onClick={handleDelete}>Delete</MenuItem>
-
+        <MenuItem onClick={deleteHandler}>Delete</MenuItem>
       </Menu>
-      {openModal && <NewsModal onSave={handleClose} onCancel={handleClose}/>}
+      {openModal && (
+        <ComplaintsField
+          refresh={props.refresh}
+          setRefresh={props.setRefresh}
+          eData={props.eData}
+          onCancel={handleClose}
+          value={props.value}
+        />
+      )}
       {openModal && <TicketsBack onCancel={handleClose} />}
     </div>
   );

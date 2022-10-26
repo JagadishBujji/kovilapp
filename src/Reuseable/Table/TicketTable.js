@@ -133,7 +133,7 @@ export default function TicketTable({ tickets }) {
                         <TableCell
                           key={column.id}
                           align={column.align}
-                          // onClick={() => navigate("/kovil/ticketsdetails")}
+                         onClick={() => navigate(`/kovil/ticketsdetails/${row.doc_id}`)}
                           sx={{fontFamily: "sans-serif"}}
                         >
                           <span

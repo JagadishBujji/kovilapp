@@ -5,11 +5,14 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-export default function StateSelect({formData,setFormData}) {
+export default function StateSelect({allStates, formData,setFormData,setStateClicked}) {
   const [age, setAge] = React.useState("");
+  
 
-  const handleChange = (event) => {
+  // console.log(allStates)
+  const handleChange = (event) => { 
     setAge(event.target.value);
+    setStateClicked(event.target.value)
     setFormData({
       ...formData,
       state:event.target.value
@@ -19,7 +22,7 @@ export default function StateSelect({formData,setFormData}) {
   return (
     <FormControl fullWidth>
       <InputLabel id="demo-simple-select-label">State</InputLabel>
-      <Select
+     {allStates && <Select
         labelId="demo-simple-select-label"
         id="demo-simple-select"
         value={age}
@@ -27,9 +30,13 @@ export default function StateSelect({formData,setFormData}) {
         label="State"
         onChange={handleChange}
       >
-        <MenuItem value={"Tamil-nadu"}>Tamil Nadu</MenuItem>
+        {/* <MenuItem value={"Tamil-nadu"}>Tamil Nadu</MenuItem>
         <MenuItem value={"kerala"}>kerala</MenuItem>
-      </Select>
+         */}
+         {allStates.map((state)=>(
+        <MenuItem value={state.name}>{state.name}</MenuItem>
+         ))}
+      </Select>}
     </FormControl>
   );
 }

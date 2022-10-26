@@ -8,6 +8,8 @@ import UserTable from "../Table/UserTable";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../services/firebase";
 import { SafetyDividerOutlined } from "@mui/icons-material";
+import Loader from "../Loader/Loader";
+import { useState } from "react";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -47,6 +49,7 @@ export default function UserTab() {
   const [allData,setAllData]=React.useState()
   const [adminData,setAdminData]=React.useState();
   const [subAdmin,setSubAdmin]=React.useState();
+  const [isLoading, setIsLoading] = useState(true);
    React.useEffect(() => {
     const fetchData = async () => {
 
@@ -78,8 +81,9 @@ export default function UserTab() {
         }
       });
       setAllData(all);
-      setAdminData(ad)
-      setSubAdmin(sad)
+      setAdminData(ad);
+      setSubAdmin(sad);
+      setIsLoading(false);
     }
     fetchData()
     // console.log(allData);
@@ -105,6 +109,8 @@ export default function UserTab() {
     },
   };
   return (
+    <>
+    {isLoading && <Loader />}
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
@@ -127,5 +133,6 @@ export default function UserTab() {
         {subAdmin && <UserTable allData={subAdmin} />}
       </TabPanel>
     </Box>
+    </>
   );
 }

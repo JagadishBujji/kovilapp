@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import TicketsBack from "../Reuseable/TicketsBack";
 import TicketsModalBox from "../Reuseable/TicketsModalBox";
 import { useNavigate, useParams } from "react-router-dom";
+import ReactAudioPlayer from "react-audio-player";
 import {
   collection,
   doc,
@@ -196,13 +197,13 @@ const TicketsDetails = () => {
                 <div>
                   <p>Created On</p>
                   <p>
-                    <b>12-05-1998 </b>
+                    <b>{data?.posted_on} </b>
                   </p>
                 </div>
                 <div>
                   <p>Due Date</p>
                   <p>
-                    <b>12-05-1998</b>
+                    <b>{data?.assinged_date}</b>
                   </p>
                 </div>
                 <div>
@@ -287,9 +288,22 @@ const TicketsDetails = () => {
                     <p>No image found</p>
                   )}
                 </div>
+                <div className="row">
+                <div className="p-2">
+                  <video width="80" height="80" controls>
+                    <source src="../Videos/video1.mp4" type="video/mp4" />
+                  </video>
+                  </div>
+                </div>
                 <div className="row ">
                   <div className="p-2">
-                    <i class="fas fa-microphone"></i>
+                    <i class="fas fa-microphone m-5"></i>
+                    <ReactAudioPlayer
+                      src="my_audio_file.ogg"
+                      autoPlay
+                      controls
+                      className="audioplayer"
+                    />
                   </div>
                   <div className="temple1">
                     <p>Sri Arasavalli Temple, Srikakulam</p>

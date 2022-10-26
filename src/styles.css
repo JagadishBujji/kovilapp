@@ -510,6 +510,15 @@ a {
   border-radius: 10px;
 }
 
+/* gallry */
+.audioplayer{
+  padding:5px;
+}
+.vdoplayer{
+  margin: 5px;
+  border-radius: 10px;
+}
+
 .fa-microphone {
   font-size: 32px;
 }
