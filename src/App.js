@@ -22,9 +22,9 @@ import EditUser from "./pages/EditUser";
 
 export default function App() {
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log("app page", user);
+  // console.log("app page", user);
   return (
-    <div className="App" >
+    <div className="App">
       <Routes>
         {/* //protected routes */}
         <Route path="/" element={user ? <Home /> : <Login />} />
@@ -71,20 +71,14 @@ export default function App() {
             path="assigntickets/:id"
             element={user ? <AssignTicket /> : <Navigate to="/" />}
           />
-           <Route
+          <Route
             path="newstable"
             element={user ? <NewsTable /> : <Navigate to="/" />}
           />
-           <Route
+          <Route
             path="complaintstypetable"
             element={user ? <ComplaintTypeTable /> : <Navigate to="/" />}
           />
-           <Route
-            path="complaintsfield"
-            element={user ? <ComplaintsField /> : <Navigate to="/" />}
-          />
-          
-          {/* <Route path="event-post" element={ user? <EventPosts /> : <Navigate to="/login"/>} /> */}
         </Route>
       </Routes>
     </div>
