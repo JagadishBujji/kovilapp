@@ -120,10 +120,7 @@ const Login = () => {
       backgroundColor: "#ff6000",
       border: "1px solid #ff6000",
     },
-  };
-  const handleSendMail=()=>{
-    alert("hello")
-  }
+  }; 
   return (
     <>
       <div class="container row m-auto loginmainbanner">
@@ -131,8 +128,7 @@ const Login = () => {
           <img src="/images/Picture1.jpg" alt="" className="login-img" />
         </div>
         <div className="col-md-7 login-from">
-          <div className="container login">
-            <button onClick={handleSendMail} >Send mail</button>
+          <div className="container login"> 
             <h2>Login</h2>
             <p>Enter your credentials to access your account</p>
             {/* <div className="googlelogin">
