@@ -11,12 +11,13 @@ import { useState } from "react";
 import UserModal from "../Reuseable/UserModal/UserModal";
 import TicketsBack from "../Reuseable/TicketsBack";
 import { useNavigate } from "react-router-dom";
-import { doc, addDoc, collection, serverTimestamp } from 'firebase/firestore'
-import { db } from "../services/firebase";
+import { doc, addDoc, collection, serverTimestamp, setDoc } from 'firebase/firestore'
+import { auth, db } from "../services/firebase";
 import { ref, uploadBytes, getDownloadURL, listAll, list } from 'firebase/storage'
 import country_state_district from 'country_state_district'
 import { v4 } from "uuid";
 import { storage } from "../services/firebase";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 const AddUser = () => {
   const [allStates, setAllStates] = React.useState();
@@ -31,10 +32,14 @@ const AddUser = () => {
       setPreviewImage(reader.result)
     }
   }
+  const [error, setError] = useState();
+  const [setPassword, setPasswordError] = useState()
   React.useEffect(() => {
     const states = country_state_district.getAllStates()
     setAllStates(states)
   }, [])
+  const pass = Math.floor(Math.random() * 10000000000)
+  // console.log(pass)
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -46,7 +51,8 @@ const AddUser = () => {
     state: "",
     zipcode: "",
     dob: "",
-    district: ""
+    district: "",
+    password: pass
 
   })
   const [showModal, setShowModal] = useState(false);
@@ -62,80 +68,133 @@ const AddUser = () => {
   const deleteHandle = () => {
     navigate("/kovil/user-post")
   }
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (formData.mobile.length === 10 && formData.alternateNumber.length === 10) {
+  //     if (uImage) {
+  //       setIsPending(true)
+  //       const imageRef = ref(storage, `images/${uImage.name + v4()}`);
+  //       await 
+  //       uploadBytes(imageRef, uImage).then((snapshot) => {
+  //         getDownloadURL(snapshot.ref).then((url) => {
+  //           const imageURL = url
+  //           // setUserImage(imageURL)
+  //           // console.log(url);
+
+  //           addDoc(collection(db, "userProfile"),
+  //           {
+  //             first_name: formData.firstName,
+  //             last_name: formData.lastName,
+  //             role: formData.role,
+  //             state: formData.state,
+  //             district: formData.district,
+  //             phone_number: formData.mobile,
+  //             alternate_number: formData.alternateNumber,
+  //             email: formData.email,
+  //             aadhar: formData.aadhar,
+  //             dob: formData.dob,
+  //             zipcode: formData.zipcode,
+  //             profilePic: imageURL,
+  //             timestamp:serverTimestamp()
+  //           }
+  //         )
+  //         .then((res) => {
+  //           console.log(res);
+  //           setIsPending(false)
+  //           alert("user created")
+  //           navigate("/kovil/user-post")
+  //         }).catch((err) => {
+  //           setIsPending(false)
+  //           console.log(err);
+  //           alert("error occured")
+  //         })
+  //         });
+  //       }).catch((err)=>{
+  //         setIsPending(false)
+  //         console.log(err);
+  //         alert(err)
+  //         navigate("/kovil/user-post")
+
+  //       })
+
+  //     }
+
+  //     else {
+  //       alert("please select a image")
+  //     }
+
+  //   }
+  //   else {
+  //     alert("enter valid mobile number")
+  //   }
+
+  // }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData)
     if (formData.mobile.length === 10 && formData.alternateNumber.length === 10) {
       if (uImage) {
-        setIsPending(true)
-        const imageRef = ref(storage, `images/${uImage.name + v4()}`);
-        await 
-        uploadBytes(imageRef, uImage).then((snapshot) => {
-          getDownloadURL(snapshot.ref).then((url) => {
-            const imageURL = url
-            // setUserImage(imageURL)
-            // console.log(url);
-            addDoc(collection(db, "userProfile"),
-            {
-              first_name: formData.firstName,
-              last_name: formData.lastName,
-              role: formData.role,
-              state: formData.state,
-              district: formData.district,
-              phone_number: formData.mobile,
-              alternate_number: formData.alternateNumber,
-              email: formData.email,
-              aadhar: formData.aadhar,
-              dob: formData.dob,
-              zipcode: formData.zipcode,
-              profilePic: imageURL,
-              timestamp:serverTimestamp()
-            }
-          )
+        setIsPending(true);
+        await createUserWithEmailAndPassword(auth, formData.email, formData.password)
           .then((res) => {
-            console.log(res);
-            setIsPending(false)
-            alert("user created")
-            navigate("/kovil/user-post")
-          }).catch((err) => {
-            setIsPending(false)
-            console.log(err);
-            alert("error occured")
+            setIsPending(true);
+
+            const userId = res.user.uid
+            console.log(userId)
+            const imageRef = ref(storage, `images/${uImage.name + v4()}`);
+            uploadBytes(imageRef, uImage).then((snapshot) => {
+              getDownloadURL(snapshot.ref)
+                .then((url) => {
+                  setIsPending(true);
+
+                  const imageURL = url
+                  setDoc(doc(db, "userProfile", userId),
+                    {
+                      first_name: formData.firstName,
+                      last_name: formData.lastName,
+                      role: formData.role,
+                      state: formData.state,
+                      district: formData.district,
+                      phone_number: formData.mobile,
+                      alternate_number: formData.alternateNumber,
+                      email: formData.email,
+                      aadhar: formData.aadhar,
+                      dob: formData.dob,
+                      uid: userId,
+                      password: formData.password,
+                      zipcode: formData.zipcode,
+                      profilePic: imageURL,
+                      timestamp: serverTimestamp()
+                    }
+                  )
+                    .then((res) => {
+                      console.log(res);
+                      setIsPending(true)
+                      setDoc(doc(db, "admins", userId), {
+                        email: formData.email,
+                        password: formData.password,
+                        role: formData.role
+                      })
+                        .then((res) => {
+                          setIsPending(false)
+                          alert("user created")
+                          navigate("/kovil/user-post")
+                        })
+
+                    })
+                })
+            })
           })
+          .catch((err) => {
+            alert(err);
+            setIsPending(false);
+            console.log(err.code);
           });
-        }).catch((err)=>{
-          setIsPending(false)
-          console.log(err);
-          alert(err)
-          navigate("/kovil/user-post")
-
-        })
-          
       }
-
       else {
         alert("please select a image")
       }
-      //   try{
-      //     const docRef = await addDoc(collection(db, "userProfile"), {
-      //       first_name:formData.firstName,
-      //       last_name:formData.lastName,
-      //       role:formData.role,
-      //       state:formData.state,
-      //       district:formData.district,
-      //       phone_number:formData.mobile,
-      //       alternate_number:formData.alternateNumber,
-      //       email:formData.email,
-      //       aadhar:formData.aadhar,
-      //       dob:formData.dob,
-      //       zipcode:formData.zipcode       
-      //     });
-      //     console.log(docRef.id)
-      //     alert("user added successfully") 
-      //     navigate("/kovil/user-post")
-      // }catch(err){
-      //     console.log(err); 
-      //     alert("error occured") 
-      // }
 
     }
     else {
@@ -143,7 +202,6 @@ const AddUser = () => {
     }
 
   }
-
   const save = {
     backgroundColor: "#f17116",
     color: "#fff",

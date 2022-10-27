@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../services/firebase";
+import { auth, db } from "../services/firebase";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -13,6 +13,7 @@ import Button from "@mui/material/Button";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { fontSize, width } from "@mui/system";
+import { getDoc, doc, query, collection, where, getDocs } from "firebase/firestore";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -32,11 +33,28 @@ const Login = () => {
       .then((res) => {
         const user = res.user;
         console.log(user);
-        localStorage.setItem("user", JSON.stringify(user));
-        window.location.reload();
+        console.log(formData.email);
+        const docRef = doc(db, "admins", user.uid)
+        getDoc(docRef)
+          .then((res) => {
+            console.log(res.data())
+            const data = res.data()
+            const role = data.role.toLowerCase();
+            if (role === "admin") {
+              localStorage.setItem("user", JSON.stringify(user));
+              window.location.reload();
+            }
+            else if (role === "sub-admin") {
+              localStorage.setItem("subadmin", JSON.stringify(user));
+              window.location.reload();
+            }
+          }).catch((err) => {
+            alert(err)
+            console.log(err)
+          })
       })
       .catch((err) => {
-        console.log(err.code);
+        console.log(err);
         if (err.code === "auth/user-not-found") {
           setError("Email not register, kindly sign up");
           setPasswordError("");
@@ -103,7 +121,9 @@ const Login = () => {
       border: "1px solid #ff6000",
     },
   };
-
+  const handleSendMail=()=>{
+    alert("hello")
+  }
   return (
     <>
       <div class="container row m-auto loginmainbanner">
@@ -112,6 +132,7 @@ const Login = () => {
         </div>
         <div className="col-md-7 login-from">
           <div className="container login">
+            <button onClick={handleSendMail} >Send mail</button>
             <h2>Login</h2>
             <p>Enter your credentials to access your account</p>
             {/* <div className="googlelogin">
@@ -168,6 +189,8 @@ const Login = () => {
                   label="Password"
                 />
               </FormControl>
+              {passwordError && <p>{passwordError}</p>}
+              {error && <p>{error}</p>}
               <Button sx={login} variant="outlined" onClick={handleClick}>
                 Login
               </Button>

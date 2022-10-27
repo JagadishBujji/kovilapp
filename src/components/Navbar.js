@@ -1,6 +1,6 @@
 import { DriveEta } from "@mui/icons-material";
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 
 // import ChatIcon from "@mui/icons-material/Chat";
@@ -10,9 +10,13 @@ const Navbar = () => {
   function open() {
     document.getElementById("mySidebar").style.display = "block";
   }
-
+  const navigate=useNavigate()
+  const user = JSON.parse(localStorage.getItem("user"));
   const handleClick = () => {
     // alert("hello")
+    // localStorage.clear()
+    // navigate("/")
+    localStorage.removeItem("subadmin");
     localStorage.removeItem("user");
     window.location.reload();
   };
@@ -26,7 +30,7 @@ const Navbar = () => {
 
           <a className="navbar-brand" href="#/">
             {/* <img src="images/logo.png" alt="" classNameName="Logo-img"  /> */}
-            <h1 style={{fontFamily: "aladin"}}>
+            <h1 style={{ fontFamily: "aladin" }}>
               Kovil App
             </h1>
           </a>
@@ -58,7 +62,7 @@ const Navbar = () => {
                 Dashboard
               </NavLink>
 
-              <NavLink
+              {user && <NavLink
                 className={({ isActive }) =>
                   isActive ? "activelink" : "nav-link"
                 }
@@ -68,6 +72,7 @@ const Navbar = () => {
                 <i className="fas fa-user-friends mr-1"></i>
                 Users
               </NavLink>
+              }
 
               <NavLink
                 className={({ isActive }) =>
@@ -78,31 +83,31 @@ const Navbar = () => {
                 {/* <i classNameName="fas fa-calendar mr-3"></i> */}
                 <i className="fas fa-ticket-alt mr-1"></i>
                 Tickets
-              </NavLink>  
+              </NavLink>
               <NavLink
                 className={({ isActive }) =>
                   isActive ? "activelink" : "nav-link "
                 }
                 to="/kovil/newstable"
               >
-               
+
                 <i className="fas fa-newspaper mr-1"></i>
 
                 News
               </NavLink>
-              
-              <NavLink
+
+             {user && <NavLink
                 className={({ isActive }) =>
                   isActive ? "activelink" : "nav-link "
                 }
                 to="/kovil/complaintstypetable"
               >
-               
-               <i class="fas fa-pager mr-1"></i>
+
+                <i class="fas fa-pager mr-1"></i>
 
                 Complaint Type
-              </NavLink>
-              
+              </NavLink>}
+
 
               {/* <li classNameName="nav-item">
                 <Link classNameName="nav-link   px-4" to="user-profile">
@@ -150,7 +155,7 @@ const Navbar = () => {
                       </li> */}
                       <li>
                         <button className="logout" onClick={handleClick}>
-                        <i class="fas fa-sign-out-alt mr-1"></i>Logout
+                          <i class="fas fa-sign-out-alt mr-1"></i>Logout
                         </button>
                       </li>
                     </ul>
