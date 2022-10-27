@@ -25,7 +25,7 @@ export default function StateSelect({allStates, formData,setFormData,setStateCli
      {allStates && <Select
         labelId="demo-simple-select-label"
         id="demo-simple-select"
-        value={age}
+        value={formData.state}
         required
         label="State"
         onChange={handleChange}

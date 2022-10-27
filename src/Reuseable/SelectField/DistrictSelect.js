@@ -38,7 +38,7 @@ export default function DistrictSelect({ allStates, formData, setFormData, state
         required
         labelId="demo-simple-select-label"
         id="demo-simple-select"
-        value={age}
+        value={formData.district}
         label="State"
         onChange={handleChange}
       >

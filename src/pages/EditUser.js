@@ -10,18 +10,21 @@ import DistrictSelect from "../Reuseable/SelectField/DistrictSelect";
 import { useState } from "react";
 import UserModal from "../Reuseable/UserModal/UserModal";
 import TicketsBack from "../Reuseable/TicketsBack";
-import { useNavigate } from "react-router-dom";
-import { doc, addDoc, collection, serverTimestamp } from 'firebase/firestore'
+import { useNavigate, useParams } from "react-router-dom";
+import { doc, addDoc, collection, getDoc, serverTimestamp, setDoc } from 'firebase/firestore'
 import { db } from "../services/firebase";
 import { ref, uploadBytes, getDownloadURL, listAll, list } from 'firebase/storage'
 import country_state_district from 'country_state_district'
 import { v4 } from "uuid";
 import { storage } from "../services/firebase";
 
-const AddUser = () => {
+const EditUser = () => {
+    const docId=useParams().id; 
+    const [data,setData]=useState();
   const [allStates, setAllStates] = React.useState();
   const [userImage, setUserImage] = React.useState();
   const [previewImage, setPreviewImage] = useState();
+  const [oldImage,setOldImage]=useState();
   const [uImage, setUImage] = useState();
   const handleImage = (img) => {
     setUImage(img)
@@ -36,7 +39,7 @@ const AddUser = () => {
     setAllStates(states)
   }, [])
   const [formData, setFormData] = useState({
-    firstName: "",
+    firstName: data?.first_name,
     lastName: "",
     role: "",
     mobile: "",
@@ -46,9 +49,43 @@ const AddUser = () => {
     state: "",
     zipcode: "",
     dob: "",
-    district: ""
-
+    district: "",
+    profilePic:"",
   })
+  React.useEffect(() => {
+    const getDetails = async () => {
+      const docRef = doc(db, "userProfile", docId)
+      try {
+        const docSnap = await getDoc(docRef);
+        // console.log(docSnap.data())
+        setData(docSnap.data());
+        const ds=docSnap.data()
+        setFormData({
+            firstName:ds.first_name,
+            lastName:ds.last_name,
+            role:ds.role,
+            mobile:ds.phone_number,
+            alternateNumber:ds.alternate_number,
+            email:ds.email,
+            aadhar:ds.aadhar,
+            state:ds.state,
+            zipcode:ds.zipcode,
+            dob:ds.dob,
+            district:ds.district,
+            profilePic:ds.profilePic
+        })
+        setPreviewImage(ds.profilePic);
+        setOldImage(ds.profilePic)
+      } catch (err) {
+        alert("Invalid user id")
+        console.log(err)
+      }
+    }
+    getDetails();
+}, []);
+console.log(data);
+ 
+  console.log(formData)
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const [isPending, setIsPending] = useState(false)
@@ -65,7 +102,39 @@ const AddUser = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.mobile.length === 10 && formData.alternateNumber.length === 10) {
-      if (uImage) {
+      if (uImage || oldImage) {
+        if(previewImage===oldImage)
+        { 
+            setIsPending(true);
+             await   setDoc(doc(db, "userProfile",docId),
+                {
+                  first_name: formData.firstName,
+                  last_name: formData.lastName,
+                  role: formData.role,
+                  state: formData.state,
+                  district: formData.district,
+                  phone_number: formData.mobile,
+                  alternate_number: formData.alternateNumber,
+                  email: formData.email,
+                  aadhar: formData.aadhar,
+                  dob: formData.dob,
+                  zipcode: formData.zipcode,
+                  profilePic: formData.profilePic,
+                  timestamp:serverTimestamp()
+                }
+              )
+              .then((res) => {
+                // console.log(res);
+                setIsPending(false)
+                alert("user updated")
+                navigate("/kovil/user-post")
+              }).catch((err) => {
+                setIsPending(false)
+                console.log(err);
+                alert("error occured")
+              })       
+        }
+        else{
         setIsPending(true)
         const imageRef = ref(storage, `images/${uImage.name + v4()}`);
         await 
@@ -74,7 +143,7 @@ const AddUser = () => {
             const imageURL = url
             // setUserImage(imageURL)
             // console.log(url);
-            addDoc(collection(db, "userProfile"),
+            setDoc(doc(db, "userProfile",docId),
             {
               first_name: formData.firstName,
               last_name: formData.lastName,
@@ -94,7 +163,7 @@ const AddUser = () => {
           .then((res) => {
             console.log(res);
             setIsPending(false)
-            alert("user created")
+            alert("user updated")
             navigate("/kovil/user-post")
           }).catch((err) => {
             setIsPending(false)
@@ -109,7 +178,7 @@ const AddUser = () => {
           navigate("/kovil/user-post")
 
         })
-          
+    }
       }
 
       else {
@@ -174,13 +243,13 @@ const AddUser = () => {
             onClick={() => {
               navigate("/kovil/user-post")
             }}
-          >Users</span>  <i class="fas fa-chevron-right"></i> Add User{" "}
+          >Users</span>  <i class="fas fa-chevron-right"></i> Edit User{" "}
         </h1>
         <form onSubmit={handleSubmit}>
           <Box>
             <Card sx={{ p: 3 }}>
               <h1>
-                <b>Add User</b>
+                <b>Edit User</b>
               </h1>
               <Box sx={{ p: 3 }}>
                 <div className="row">
@@ -202,8 +271,9 @@ const AddUser = () => {
                   <div className="col-md-6 picture">
                     <TextField
                       id="outlined-basic"
-                      label="Enter First Name"
+                    //   label="Enter First Name"
                       required
+                      value={formData.firstName}
                       onChange={(e) => {
                         setFormData({
                           ...formData,
@@ -223,10 +293,10 @@ const AddUser = () => {
                   <div className="col-md-6 picture">
                     <TextField
                       id="outlined-basic"
-                      label="Enter Last Name"
+                    //   label="Enter Last Name"
                       variant="outlined"
                       required
-
+                      value={formData.lastName}
                       fullWidth
                       onChange={(e) => {
                         setFormData({
@@ -247,11 +317,11 @@ const AddUser = () => {
                   <div className="col-md-6 picture">
                     <TextField
                       id="outlined-basic"
-                      label="Enter Mobile Number"
+                    //   label="Enter Mobile Number"
                       variant="outlined"
                       fullWidth
                       required
-
+                      value={formData.mobile}
                       onChange={(e) => {
                         setFormData({
                           ...formData,
@@ -269,10 +339,10 @@ const AddUser = () => {
                   <div className="col-md-6 picture">
                     <TextField
                       id="outlined-basic"
-                      label="Enter Alternate Mobile Number"
+                    //   label="Enter Alternate Mobile Number"
                       variant="outlined"
                       required
-
+                      value={formData.alternateNumber}
                       fullWidth
                       onChange={(e) => {
                         setFormData({
@@ -286,11 +356,11 @@ const AddUser = () => {
                 </div>
                 <TextField
                   id="outlined-basic"
-                  label="Enter Email ID"
+                //   label="Enter Email ID"
                   variant="outlined"
                   fullWidth
                   required
-
+                      value={formData.email}
                   type="email"
                   onChange={(e) => {
                     setFormData({
@@ -309,11 +379,11 @@ const AddUser = () => {
                   <div className="col-md-6 picture">
                     <TextField
                       id="outlined-basic"
-                      label="Enter Aadhar Number"
+                    //   label="Enter Aadhar Number"
                       variant="outlined"
                       fullWidth
                       required
-
+                    value={formData.aadhar}
                       onChange={(e) => {
                         setFormData({
                           ...formData,
@@ -332,7 +402,7 @@ const AddUser = () => {
                     <TextField
                       id="outlined-basic"
                       required
-
+                      value={formData.dob}
                       label=""
                       variant="outlined"
                       fullWidth
@@ -373,11 +443,11 @@ const AddUser = () => {
                       + Add
                     </Button><TextField
                       id="outlined-basic"
-                      label="ZipCode"
+                    //   label="ZipCode"
                       variant="outlined"
                       fullWidth
                       required
-
+                        value={formData.zipcode}
                       onChange={(e) => {
                         setFormData({
                           ...formData,
@@ -400,7 +470,7 @@ const AddUser = () => {
                   </Button>
                   <Button type="submit"
                     disabled={isPending}
-                    variant="contained" sx={save}>Create User</Button>
+                    variant="contained" sx={save}>Update User</Button>
                 </div>
                 {showModal && (
                   <UserModal onConfirm={deleteHandle} onCancel={handleCancel} />
@@ -415,4 +485,4 @@ const AddUser = () => {
   );
 };
 
-export default AddUser;
+export default EditUser;

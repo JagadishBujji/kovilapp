@@ -68,7 +68,7 @@ export default function BasicMenu({data,count,setCount}) {
         <MenuItem onClick={handleDelete}>Delete</MenuItem>
 
       </Menu>
-      {openModal && <NewsModal onSave={handleClose} onCancel={handleClose}/>}
+      {openModal && <NewsModal count={count} setCount={setCount} editData={data} forWhat="edit" onSave={handleClose} onCancel={handleClose}/>}
       {openModal && <TicketsBack onCancel={handleClose} />}
     </div>
   );

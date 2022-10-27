@@ -17,6 +17,7 @@ import AssignTicket from "./pages/AssignTicket";
 import NewsTable from "./Reuseable/Table/NewsTable";
 import ComplaintTypeTable from "./Reuseable/Table/ComplaintTypeTable";
 import ComplaintsField from "./pages/ComplaintsField";
+import EditUser from "./pages/EditUser";
 // import EventPosts from "./components/EventPost/EventPosts";
 
 export default function App() {
@@ -47,6 +48,10 @@ export default function App() {
           <Route
             path="adduser"
             element={user ? <AddUser /> : <Navigate to="/" />}
+          />
+            <Route
+            path="editUser/:id"
+            element={user ? <EditUser /> : <Navigate to="/" />}
           />
           <Route
             path="userdetails/:id"

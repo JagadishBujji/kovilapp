@@ -9,6 +9,7 @@ export default function UserDropDown({row}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
+  console.log(row);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -34,7 +35,7 @@ export default function UserDropDown({row}) {
         sx={{ml: 3}}
       >
         <MenuItem sx={{align:"center"}} onClick={()=>{
-            navigate("/kovil/adduser")
+            navigate(`/kovil/editUser/${row.id}`)
         }}><i class="fas fa-edit mr-2"></i>Edit</MenuItem>
         <MenuItem sx={{align:"center"}} onClick={handleClose}><i class="fas fa-trash mr-2"></i>Delete</MenuItem>
         <MenuItem sx={{align:"center"}} onClick={handleClose}><i class="fas fa-eye-slash mr-2"></i>Disable</MenuItem>

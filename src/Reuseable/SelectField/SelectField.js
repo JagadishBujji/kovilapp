@@ -24,7 +24,7 @@ export default function BasicSelect({formData,setFormData}) {
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           required
-          value={age}
+          value={formData.role}
           label="Select Role"
           onChange={handleChange}
           

@@ -2,14 +2,15 @@ import { Card, } from "@mui/material";
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import Button from "@mui/material/Button";
 import { useState } from "react";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore"; 
+import { collection,updateDoc,doc, addDoc, serverTimestamp } from "firebase/firestore"; 
 import { db } from "../../services/firebase";
 
 const NewsModal = (props) => {
+  console.log(props.editData)
   const user=JSON.parse(localStorage.getItem("user"));
   const userEmail=user.email
   const userId=user.uid
-  const [news,setNews]=useState()
+  const [news,setNews]=useState(props.editData?.article)
   const date=new Date();
   // console.log(date)
   const day=date.getDate();
@@ -63,6 +64,24 @@ const NewsModal = (props) => {
     },
 
   };
+  const handleUpdate=async()=>{
+    const docRef=doc(db,"short_news",props.editData.ID)
+   
+    await updateDoc(docRef,{
+      news:news
+    })
+    .then((res)=>{
+      console.log(res);
+      props.setCount(props.count+1) 
+      alert("updated successfully")
+      props.onCancel()
+
+    }).catch((err)=>{
+      console.log(err);
+      alert(err);
+      props.onCancel()
+    })
+  }
   return (
     <form onSubmit={handleSubmit}>
     <Card sx={{ p: 3 }} className="Newsmodal">
@@ -73,6 +92,7 @@ const NewsModal = (props) => {
       <TextareaAutosize
       aria-label="minimum height"
       minRows={8}
+      value={news}
       onChange={(e)=>{
         setNews(e.target.value)
       }}
@@ -80,10 +100,16 @@ const NewsModal = (props) => {
       style={{ width: 500 }}
     />
       <div className="row complaints-btn ">
-        <Button variant="contained" sx={save} 
+      {props.forWhat? 
+      <Button variant="contained" sx={save} 
+      type="button" onClick={handleUpdate}>
+       Update
+     </Button>:
+     <Button variant="contained" sx={save} 
         type="submit">
           Save
         </Button>
+        }
         <Button variant="outlined"  type="button" sx={cancel} onClick={props.onSave}>
           Cancel
         </Button>

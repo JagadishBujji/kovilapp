@@ -57,7 +57,9 @@ const UserDetails = () => {
             <Card sx={{ p: 2 }}>
               <div className="row user-tabs">
                 <h5>User Details</h5>
-                <Button variant="text">
+                <Button onClick={()=>{
+                  navigate(`/kovil/editUser/${docId}`)
+                }} variant="text">
                   <EditIcon /> Edit
                 </Button>
               </div>
