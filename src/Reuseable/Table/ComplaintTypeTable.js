@@ -27,37 +27,20 @@ function createData(sno, complaints, more) {
   return { sno, complaints, more };
 }
 
+
+const rows = [
+  createData("01", "Noise", "" ),
+  createData("02", "waste", ""),
+];
+
 export default function ComplaintTypeTable() {
-  const [rows, setRows] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [eData, setEdata] = useState();
-  const [refresh, setRefresh] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [eData, setEdata] = useState();
+  // const [refresh, setRefresh] = useState(0);
+  // const [isLoading, setIsLoading] = useState(true);
 
-  React.useEffect(() => {
-    const docRef = doc(db, "complaint_types", "complaint");
-    getDoc(docRef)
-      .then((docSnap) => {
-        if (docSnap.exists()) {
-          let arr = [];
-          let arr2 = [];
-          docSnap.data().NewArray.forEach((type, i) => {
-            arr.push(createData(i + 1, type));
-            arr2.push(type);
-          });
-          setRows(arr);
-          setEdata(arr2);
-          setIsLoading(false);
-        } else {
-          // doc.data() will be undefined in this case
-          // console.log("No such document!");
-          setRows([]);
-        }
-      })
-      .catch((e) => console.log(e));
-  }, [refresh]);
-
+  
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -104,22 +87,18 @@ export default function ComplaintTypeTable() {
 
   return (
     <>
-      {isLoading && <Loader />}
       <Paper sx={{ width: "87%", ml: 5 }}>
         <Card sx={{ p: 3 }}>
           <div className="row addbtn">
             <Button variant="contained" sx={save} onClick={handleChange}>
               Add New
             </Button>
-            {open && eData && (
+            {open &&  
               <ComplaintsField
-                refresh={refresh}
-                setRefresh={setRefresh}
-                eData={eData}
                 onCancel={handleCancel}
               />
-            )}
-            {open && <TicketsBack />}
+            }
+            {open && <TicketsBack onCancel={handleCancel}/>}
           </div>
           <TableContainer sx={{ maxHeight: 440 }}>
             <Table stickyHeader aria-label="sticky table">
@@ -158,11 +137,7 @@ export default function ComplaintTypeTable() {
                             >
                               {column.id === "more" ? (
                                 <ComplaintDropDown
-                                  refresh={refresh}
-                                  setRefresh={setRefresh}
-                                  eData={eData}
                                   onCancel={handleCancel}
-                                  value={row}
                                 />
                               ) : column.format && typeof value === "number" ? (
                                 column.format(value)

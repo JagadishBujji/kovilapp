@@ -35,39 +35,12 @@ const ComplaintsField = (props) => {
   });
 
 
-  useEffect(() => {
-    if (props.value) {
-      setCompliantType(props.value);
-    }
-  }, []);
+  
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    let NewArray = [];
-    if(props.value) {
-      // edit
-      NewArray = [...props.eData];
-      let index = NewArray.findIndex(type => type === props.value.complaints);
-      NewArray[index] = compliantType.complaints;
-    } else {
-      // new complaint
-      NewArray = [...props.eData, compliantType.complaints];
-    }
-    try {
-      await setDoc(doc(db, "complaint_types", "complaint"), { NewArray });
-      alert("Compliant type added");
-      props.setRefresh(props.refresh + 1);
-      props.onCancel();
-    } catch (err) {
-      console.log(err);
-      alert(err);
-      props.setRefresh(props.refresh + 1);
-      props.onCancel();
-    }
-  };
+ 
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form >
       <Card sx={{ p: 3 }} className="complaintmodal">
         <div className="row user-tabs">
           <h4>Complaint Type</h4>
@@ -82,15 +55,6 @@ const ComplaintsField = (props) => {
           variant="outlined"
           fullWidth
           type="text"
-          value={compliantType.complaints}
-          onChange={(e) => {
-            setCompliantType((prevState) => {
-              return {
-                ...prevState,
-                complaints: e.target.value,
-              };
-            });
-          }}
         />
         <div className="row complaints-btn ">
           <Button type="submit" variant="contained" sx={save}>

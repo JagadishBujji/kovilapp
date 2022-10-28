@@ -27,24 +27,7 @@ export default function ComplaintDropDown(props) {
   const deleteHandler = async(e) => {
     setAnchorEl(null);
     // delete complaint type from db
-    let NewArray = [];
-    if (props.value){
-      NewArray = [...props.eData];
-      let index = NewArray.findIndex(type => type === props.value.complaints)
-      NewArray.splice(index,1)
-      console.log(NewArray)
-    }
-    try {
-      await setDoc(doc(db, "complaint_types", "complaint"), { NewArray });
-      alert("Compliant type deleted");
-      props.setRefresh(props.refresh + 1);
-      props.onCancel();
-    } catch (err) {
-      console.log(err);
-      alert(err);
-      props.setRefresh(props.refresh + 1);
-      props.onCancel();
-    }
+    alert("Compliant type deleted");
   };
 
   return (
