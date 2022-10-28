@@ -9,7 +9,7 @@ export default function UserDropDown({row}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
-  console.log(row);
+  // console.log(row);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };

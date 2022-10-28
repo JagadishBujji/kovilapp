@@ -99,7 +99,7 @@ export default function NewsTable() {
   const [isLoading, setIsLoading] = useState(true);
   React.useEffect(() => {
     const getNews = async () => {
-      await getDocs(query(collection(db, "short_news"),orderBy("created_at","desc")))
+      await getDocs(query(collection(db, "short_news"),orderBy("posted_on_timestamp","desc")))
       .then((querySnapshot) => {
         let arr=[]
         querySnapshot.forEach((doc) => {

@@ -40,7 +40,7 @@ const TicketsDetails = () => {
 
     getDetails();
   }, [count]);
-  // console.log(data);
+  console.log(data);
   const [subAdmins, setSubAdmins] = useState();
   useEffect(() => {
     const fetchData = async () => {
@@ -184,9 +184,15 @@ const TicketsDetails = () => {
                   </p>
                 </div>
                 <div>
+                  <p>Name</p>
+                  <p>
+                    <b>{data?.user_name}</b>
+                  </p>
+                </div>
+                <div>
                   <p> Mobile Number</p>
                   <p>
-                    <b>12345677890</b>
+                    <b>{data?.user_mobile_number}</b>
                   </p>
                 </div>
                 <div>
@@ -210,7 +216,7 @@ const TicketsDetails = () => {
                 <div>
                   <p>Email Address</p>
                   <p>
-                    <b>jagadish00198@gmail.com</b>
+                    <b>{data?.user_email}</b>
                   </p>
                 </div>
                 <div>

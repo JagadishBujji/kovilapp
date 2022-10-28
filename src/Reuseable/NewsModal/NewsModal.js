@@ -3,7 +3,7 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 import Button from "@mui/material/Button";
 import { useState } from "react";
 import { collection,updateDoc,doc, addDoc, serverTimestamp } from "firebase/firestore"; 
-import { db } from "../../services/firebase";
+import { db } from "../../services/firebase"; 
 
 const NewsModal = (props) => {
   console.log(props.editData)
@@ -16,9 +16,12 @@ const NewsModal = (props) => {
   const day=date.getDate();
   const month=date.getMonth();
   const year=date.getFullYear();
-  const dd=`${day}-${month}-${year}`
+  const dd=`${day}-${month}-${year}` 
+  // console.log(milliseconds)
   const handleSubmit=async(e)=>{
     e.preventDefault();
+  var milliseconds = (new Date).getTime();
+
     // console.log(news,userEmail,dd,userId)
     try{
       const docRef = await addDoc(collection(db, "short_news"), {
@@ -26,7 +29,7 @@ const NewsModal = (props) => {
         posted_on:dd,
         published_by:userEmail,
         news,
-        created_at:serverTimestamp()
+        posted_on_timestamp:milliseconds
       });
       console.log("Document written with ID: ", docRef.id);
       props.setCount(props.count+1)

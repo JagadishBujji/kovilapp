@@ -22,24 +22,33 @@ import EditUser from "./pages/EditUser";
 
 export default function App() {
   const user = JSON.parse(localStorage.getItem("user"));
+  const subAdmin=JSON.parse(localStorage.getItem("subadmin"))
   // console.log("app page", user);
+  let loggedId="";
+  if(user)
+  {
+    loggedId=user
+  }
+  else if(subAdmin){
+    loggedId=subAdmin
+  }
   return (
     <div className="App">
-      <Routes>
+   <Routes>
         {/* //protected routes */}
-        <Route path="/" element={user ? <Home /> : <Login />} />
+        <Route path="/" element={loggedId ? <Home /> : <Login />} />
 
         <Route path="/signup" element={<Signup />} />
 
         {/* <Route path="welcome" element={ user?  <Welcome /> :<Navigate to="/login"/>} /> */}
-        <Route
+         <Route
           path="/kovil"
-          element={user ? <Home /> : <Navigate to="/" />}
+          element={user || subAdmin  ? <Home /> : <Navigate to="/" />}
           // element={<Home />}
         >
           <Route
             path="home-post"
-            element={user ? <HomePost /> : <Navigate to="/" />}
+            element={user || subAdmin  ? <HomePost /> : <Navigate to="/" />}
           />
           <Route
             path="user-post"
@@ -59,28 +68,28 @@ export default function App() {
           />
           <Route
             path="tickets"
-            element={user ? <Tickets /> : <Navigate to="/" />}
+            element={user || subAdmin ? <Tickets /> : <Navigate to="/" />}
             // element={<Tickets />}
           />
           <Route
             path="ticketsdetails/:id"
-            element={user ? <TicketsDetails /> : <Navigate to="/" />}
+            element={user || subAdmin ? <TicketsDetails /> : <Navigate to="/" />}
             // element={<TicketsDetails />}
           />
           <Route
             path="assigntickets/:id"
-            element={user ? <AssignTicket /> : <Navigate to="/" />}
+            element={user || subAdmin ? <AssignTicket /> : <Navigate to="/" />}
           />
           <Route
             path="newstable"
-            element={user ? <NewsTable /> : <Navigate to="/" />}
+            element={user || subAdmin ? <NewsTable /> : <Navigate to="/" />}
           />
           <Route
             path="complaintstypetable"
             element={user ? <ComplaintTypeTable /> : <Navigate to="/" />}
           />
-        </Route>
-      </Routes>
+        </Route> 
+      </Routes> 
     </div>
   );
 }
