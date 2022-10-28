@@ -18,6 +18,7 @@ import country_state_district from 'country_state_district'
 import { v4 } from "uuid";
 import { storage } from "../services/firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import axios from "axios";
 
 const AddUser = () => {
   const [allStates, setAllStates] = React.useState();
@@ -177,9 +178,21 @@ const AddUser = () => {
                         role: formData.role
                       })
                         .then((res) => {
-                          setIsPending(false)
-                          alert("user created")
-                          navigate("/kovil/user-post")
+                          setIsPending(true) 
+                          axios.post("http://localhost:5000/sendMail", {
+                            email: formData.email,
+                            password: formData.password
+                          })
+                            .then((res) => {
+                              setIsPending(false)
+                              alert("user created")
+                              navigate("/kovil/user-post")
+                              console.log(res);
+                            }).catch((err) => {
+                              alert(err)
+                              console.log(err);
+                            })
+
                         })
 
                     })

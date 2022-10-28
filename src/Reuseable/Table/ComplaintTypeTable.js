@@ -40,6 +40,7 @@ export default function ComplaintTypeTable() {
     getDoc(docRef)
       .then((docSnap) => {
         if (docSnap.exists()) {
+          console.log(docSnap)
           let arr = [];
           let arr2 = [];
           docSnap.data().NewArray.forEach((type, i) => {
@@ -52,6 +53,8 @@ export default function ComplaintTypeTable() {
         } else {
           // doc.data() will be undefined in this case
           // console.log("No such document!");
+          setIsLoading(false);
+
           setRows([]);
         }
       })

@@ -233,7 +233,7 @@ const TicketsDetails = () => {
                 <div>
                   <p>District</p>
                   <p>
-                    <b>{data?.city}</b>
+                    <b>{data?.district}</b>
                   </p>
                 </div>
                 <div>

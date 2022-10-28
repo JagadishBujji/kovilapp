@@ -14,6 +14,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { fontSize, width } from "@mui/system";
 import { getDoc, doc, query, collection, where, getDocs } from "firebase/firestore";
+import axios from "axios";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -25,10 +26,11 @@ const Login = () => {
 
   const eyeClick = document.querySelector("[data-password]");
   const password_elem = document.getElementById("password");
-
+  const [isPending, setIsPending] = useState(false)
   const handleClick = async (e) => {
     e.preventDefault();
     console.log("formData: ", formData);
+    setIsPending(true);
     await signInWithEmailAndPassword(auth, formData.email, formData.password)
       .then((res) => {
         const user = res.user;
@@ -41,19 +43,27 @@ const Login = () => {
             const data = res.data()
             const role = data.role.toLowerCase();
             if (role === "admin") {
+              setIsPending(false);
+
               localStorage.setItem("user", JSON.stringify(user));
               window.location.reload();
             }
             else if (role === "sub-admin") {
+              setIsPending(false);
+
               localStorage.setItem("subadmin", JSON.stringify(user));
               window.location.reload();
             }
           }).catch((err) => {
+            setIsPending(false);
+
             alert(err)
             console.log(err)
           })
       })
       .catch((err) => {
+        setIsPending(false);
+
         console.log(err);
         if (err.code === "auth/user-not-found") {
           setError("Email not register, kindly sign up");
@@ -61,6 +71,12 @@ const Login = () => {
         } else if (err.code === "auth/wrong-password") {
           setPasswordError("Wrong password");
           setError("");
+        }
+        else {
+          setIsPending(false);
+
+          setError(err.code)
+          setPasswordError("")
         }
       });
   };
@@ -120,7 +136,8 @@ const Login = () => {
       backgroundColor: "#ff6000",
       border: "1px solid #ff6000",
     },
-  }; 
+  };
+
   return (
     <>
       <div class="container row m-auto loginmainbanner">
@@ -128,7 +145,7 @@ const Login = () => {
           <img src="/images/Picture1.jpg" alt="" className="login-img" />
         </div>
         <div className="col-md-7 login-from">
-          <div className="container login"> 
+          <div className="container login">
             <h2>Login</h2>
             <p>Enter your credentials to access your account</p>
             {/* <div className="googlelogin">
@@ -185,9 +202,9 @@ const Login = () => {
                   label="Password"
                 />
               </FormControl>
-              {passwordError && <p>{passwordError}</p>}
-              {error && <p>{error}</p>}
-              <Button sx={login} variant="outlined" onClick={handleClick}>
+              {passwordError && <p style={{ color: "red" }}>{passwordError}</p>}
+              {error && <p style={{ color: "red" }}>{error}</p>}
+              <Button sx={login} disabled={isPending} variant="outlined" onClick={handleClick}>
                 Login
               </Button>
             </form>
