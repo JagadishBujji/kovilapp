@@ -14,6 +14,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../services/firebase";
 import AssignSelect from "../Reuseable/SelectField/AssignSelect";
+import TicketImage from "../Reuseable/ImageModal/TicketImage";
 
 const TicketsDetails = () => {
   const navigate = useNavigate();
@@ -166,7 +167,7 @@ const TicketsDetails = () => {
             <div className="col-md-5">
               <Card sx={{ p: 2 }}>
                 <div className="row user-tabs">
-                  <h5>{data?.doc_id}</h5>
+                  {/* <h5>{data?.doc_id}</h5> */}
                   <Button variant="outlined">open</Button>
                 </div>
                 {/* <div className="row  user-tabs">
@@ -276,26 +277,26 @@ const TicketsDetails = () => {
                   /> */}
                   {data?.files?.length > 0 ? (
                     data?.files?.map((fs) => (
-                      <img
-                        src={fs}
-                        alt="compliant image"
-                        width="80"
-                        height="80"
-                        className="img-upload"
-                      />
+                      // <img
+                      
+                      //   src={fs}
+                      //   alt="compliant image"
+                      //   width="80"
+                      //   height="80"
+                      //   className="img-upload"
+                      // />
+                     <TicketImage source={fs}/>
                     ))
                   ) : (
                     <p>No image found</p>
                   )}
                 </div>
-                <div className="row">
+                {/* <div className="row">
                 <div className="p-2">
-                  <video width="80" height="80" controls>
-                    <source src="../Videos/video1.mp4" type="video/mp4" />
-                  </video>
+                 
                   </div>
-                </div>
-                <div className="row ">
+                </div> */}
+                {/* <div className="row ">
                   <div className="p-2">
                     <i class="fas fa-microphone m-5"></i>
                     <ReactAudioPlayer
@@ -315,7 +316,7 @@ const TicketsDetails = () => {
                     <p>Admin</p>
                     <p>00:41:22</p>
                   </div>
-                </div>
+                </div> */}
               </Card>
               <Card sx={{ mt: 5, p: 2 }}>
                 {data && (

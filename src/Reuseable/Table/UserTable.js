@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import UserDropDown from "../DropDown/UserDropDown";
 
 const columns = [
-  { id: "id", label: "ID", minWidth: 170 },
+  // { id: "id", label: "ID", minWidth: 170 },
   { id: "first_name", label: "First name", minWidth: 100, align: "left"},
   { id: "last_name", label: "Last name", minWidth: 100, align: "left"},
 

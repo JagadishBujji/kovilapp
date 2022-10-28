@@ -17,7 +17,7 @@ import { db } from "../../services/firebase";
 import Loader from "../Loader/Loader";
 
 const columns = [
-  { id: "ID", label: "ID", minWidth: 170 },
+  // { id: "ID", label: "ID", minWidth: 170 },
   { id: "date", label: "Date", minWidth: 100 },
   {
     id: "published",
@@ -42,8 +42,8 @@ const columns = [
   },
 ];
 
-function createData(ID, date, published, article, more) {
-  return { ID, date, published, article, more };
+function createData( date, published, article, more) {
+  return {  date, published, article, more };
 }
 
 // const rows = [
@@ -130,7 +130,7 @@ export default function NewsTable() {
   let rows=[] 
   allNews?.map((as)=>{ 
       rows.push(createData(
-        as.doc_id,
+        // as.doc_id,
         as.posted_on,
         as.published_by,
         as.news,

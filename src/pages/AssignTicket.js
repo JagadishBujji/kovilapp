@@ -6,6 +6,7 @@ import { collection, doc, getDoc, getDocs, updateDoc } from "firebase/firestore"
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
+import TicketImage from "../Reuseable/ImageModal/TicketImage";
 
 const AssignTicket = () => {
   const docId = useParams().id;
@@ -118,7 +119,7 @@ const AssignTicket = () => {
               <Card sx={{ p: 2 }}>
                 <div className="row user-tabs">
                   {/* <h5>#KA001</h5> */}
-                  <h5>{data?.doc_id}</h5>
+                  {/* <h5>{data?.doc_id}</h5> */}
 
                   <Button variant="outlined">In Progress</Button>
                 </div>
@@ -233,13 +234,7 @@ const AssignTicket = () => {
                   /> */}
                   {data?.files?.length>0?
                   data?.files?.map((fs)=>(
-                     <img
-                     src={fs}
-                     alt="compliant image"
-                     width="80"
-                     height="80"
-                     className="img-upload"
-                   />
+                  <TicketImage source={fs}/>
                   ))
                 :
                 <p>No image found</p>
