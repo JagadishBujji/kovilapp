@@ -6,6 +6,7 @@ import { collection, doc, getDoc, getDocs, updateDoc } from "firebase/firestore"
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
+import TicketImage from "../Reuseable/ImageModal/TicketImage";
 
 const AssignTicket = () => {
   const docId = useParams().id;
@@ -14,6 +15,7 @@ const AssignTicket = () => {
   const [subAdmins,setSubAdmins]=useState();  
   const [selectedSubAdmin,setSelectedSubAdmin]=useState();
   const [assignDate,setAssignDate]=useState();
+  const [dd,setDd]=useState();
   useEffect(() => {
     const getDetails = async () => {
       const docRef = doc(db, "Complaints", docId)
@@ -55,6 +57,23 @@ const AssignTicket = () => {
     }
     fetchData()
   }, []);
+  console.log(assignDate)
+  const dm=new Date(assignDate)
+  console.log(dm.getDate());
+  if(assignDate)
+  {
+    const dueDate=addDays(assignDate,3); 
+    const date=dueDate.getDate();
+    const year=dueDate.getFullYear();
+    const month=dueDate.getMonth();
+    const formattedDueDate=`${year}-${month+1}-${date}`
+    setDd(formattedDueDate)
+  }
+  function addDays(date, days) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  }
   console.log(subAdmins)
   const handleFormSubmit=async(e)=>{
     e.preventDefault();
@@ -66,7 +85,8 @@ const AssignTicket = () => {
             await  updateDoc(docRef,{
                 status:"In-Progress",
                 sub_admin_uid:selectedSubAdmin.id,
-                assinged_date:assignDate
+                assinged_date:assignDate,
+                // due_date:dd
             }) 
             if(selectedSubAdmin.current_ticket)
             {
@@ -118,7 +138,7 @@ const AssignTicket = () => {
               <Card sx={{ p: 2 }}>
                 <div className="row user-tabs">
                   {/* <h5>#KA001</h5> */}
-                  <h5>{data?.doc_id}</h5>
+                  {/* <h5>{data?.doc_id}</h5> */}
 
                   <Button variant="outlined">In Progress</Button>
                 </div>
@@ -233,13 +253,7 @@ const AssignTicket = () => {
                   /> */}
                   {data?.files?.length>0?
                   data?.files?.map((fs)=>(
-                     <img
-                     src={fs}
-                     alt="compliant image"
-                     width="80"
-                     height="80"
-                     className="img-upload"
-                   />
+                  <TicketImage source={fs}/>
                   ))
                 :
                 <p>No image found</p>

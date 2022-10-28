@@ -2,7 +2,7 @@ import { Card } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useEffect, useState } from "react";
-import { collection, addDoc, setDoc, doc } from "firebase/firestore";
+import { collection, addDoc, setDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../services/firebase";
 import { useNavigate } from "react-router-dom";
 // Add a new document with a generated id.
@@ -28,43 +28,55 @@ const ComplaintsField = (props) => {
       color: "#f17116",
     },
   };
-  const [compliantType, setCompliantType] = useState({
-    sno: "",
-    complaints: "",
-    more: undefined,
-  });
-
-
-  useEffect(() => {
-    if (props.value) {
-      setCompliantType(props.value);
-    }
-  }, []);
-
+  // const [compliantType, setCompliantType] = useState({
+  //   sno: "",
+  //   complaints: "",
+  //   more: undefined,
+  // });
+  const [complaintType, setCompliantType] = useState(props.data?.complaints);
+  var milliseconds = (new Date).getTime();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let NewArray = [];
-    if(props.value) {
-      // edit
-      NewArray = [...props.eData];
-      let index = NewArray.findIndex(type => type === props.value.complaints);
-      NewArray[index] = compliantType.complaints;
-    } else {
-      // new complaint
-      NewArray = [...props.eData, compliantType.complaints];
+    if (props.forWhat === "createType") {
+      try {
+        const docRef = await addDoc(collection(db, "complaint_types"), {
+          complaint_type: complaintType,
+          posted_on: milliseconds,
+        });
+        console.log("Document written with ID: ", docRef.id);
+        props.setCount(props.count + 1)
+        alert("type added successfully")
+        props.onCancel()
+      } catch (err) {
+        props.setCount(props.count + 1)
+        console.log(err);
+        alert(err);
+        props.onCancel()
+
+      }
     }
-    try {
-      await setDoc(doc(db, "complaint_types", "complaint"), { NewArray });
-      alert("Compliant type added");
-      props.setRefresh(props.refresh + 1);
-      props.onCancel();
-    } catch (err) {
-      console.log(err);
-      alert(err);
-      props.setRefresh(props.refresh + 1);
-      props.onCancel();
+    else if (props.forWhat === "editType") {
+      const docRef = doc(db, "complaint_types", props.data.more)
+
+      await updateDoc(docRef, {
+        complaint_type: complaintType,
+        posted_on: milliseconds,
+      })
+        .then((res) => {
+          console.log(res);
+          props.setCount(props.count + 1)
+          alert("updated successfully")
+          props.onCancel()
+
+        }).catch((err) => {
+          console.log(err);
+          alert(err);
+          props.onCancel()
+        })
     }
-  };
+  }
+
+
 
   return (
     <form onSubmit={handleSubmit}>
@@ -80,17 +92,12 @@ const ComplaintsField = (props) => {
           required
           label=""
           variant="outlined"
+          value={complaintType}
           fullWidth
-          type="text"
-          value={compliantType.complaints}
           onChange={(e) => {
-            setCompliantType((prevState) => {
-              return {
-                ...prevState,
-                complaints: e.target.value,
-              };
-            });
+            setCompliantType(e.target.value)
           }}
+          type="text"
         />
         <div className="row complaints-btn ">
           <Button type="submit" variant="contained" sx={save}>

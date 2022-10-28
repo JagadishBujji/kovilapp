@@ -42,7 +42,7 @@ app.post("/sendMail",async(req,res)=>{
     to: req.body.email, // list of receivers
     subject: "Temporary password - KOVIL ✔", // Subject line
     text: "hi", // plain text body
-    html: `<b>Hi your temporary password for subadmin login
+    html: `<b>Hi ${req.body.name}, your temporary password for subadmin login
     is- ${req.body.password}</b>`, // html body
   }).then((res)=>{
     console.log(res);

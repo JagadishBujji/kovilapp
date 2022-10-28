@@ -12,7 +12,7 @@ import { Card } from "@mui/material";
 import { useState } from "react";
 import ComplaintsField from "../../pages/ComplaintsField";
 import TicketsBack from "../TicketsBack";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../../services/firebase";
 import ComplaintDropDown from "../DropDown/ComplaintDropDown";
 import Loader from "../Loader/Loader";
@@ -27,40 +27,20 @@ function createData(sno, complaints, more) {
   return { sno, complaints, more };
 }
 
+
+// const rows = [
+//   createData("01", "Noise", "" ),
+//   createData("02", "waste", ""),
+// ];
+
 export default function ComplaintTypeTable() {
-  const [rows, setRows] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [eData, setEdata] = useState();
-  const [refresh, setRefresh] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [eData, setEdata] = useState();
+  // const [refresh, setRefresh] = useState(0);
+  // const [isLoading, setIsLoading] = useState(true);
 
-  React.useEffect(() => {
-    const docRef = doc(db, "complaint_types", "complaint");
-    getDoc(docRef)
-      .then((docSnap) => {
-        if (docSnap.exists()) {
-          console.log(docSnap)
-          let arr = [];
-          let arr2 = [];
-          docSnap.data().NewArray.forEach((type, i) => {
-            arr.push(createData(i + 1, type));
-            arr2.push(type);
-          });
-          setRows(arr);
-          setEdata(arr2);
-          setIsLoading(false);
-        } else {
-          // doc.data() will be undefined in this case
-          // console.log("No such document!");
-          setIsLoading(false);
-
-          setRows([]);
-        }
-      })
-      .catch((e) => console.log(e));
-  }, [refresh]);
-
+  
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -104,25 +84,54 @@ export default function ComplaintTypeTable() {
   const handleCancel = () => {
     setOpen(false);
   };
-
+  const [allTypes,setAllTypes]=useState();
+  const [count,setCount]=React.useState(0);
+  React.useEffect(() => {
+    const getType = async () => {
+      await getDocs(query(collection(db, "complaint_types"),orderBy("posted_on","desc")))
+      .then((querySnapshot) => {
+        let arr=[]
+        querySnapshot.forEach((doc) => {
+          let data = doc.data();
+          // console.log(doc.id);
+          const obj={
+            doc_id:doc.id,
+            ...data
+          }
+          arr.push(obj)
+        });
+        setAllTypes(arr); 
+      })
+      .catch((e) => console.log(e));
+       
+    };
+    getType()
+  }, [count]);
+  console.log(allTypes);
+  let rows=[]
+  allTypes?.map((as,index)=>{ 
+    rows.push(createData(
+      index, 
+      as.complaint_type,
+      as.doc_id
+    ))
+})
   return (
     <>
-      {isLoading && <Loader />}
       <Paper sx={{ width: "87%", ml: 5 }}>
         <Card sx={{ p: 3 }}>
           <div className="row addbtn">
             <Button variant="contained" sx={save} onClick={handleChange}>
               Add New
             </Button>
-            {open && eData && (
-              <ComplaintsField
-                refresh={refresh}
-                setRefresh={setRefresh}
-                eData={eData}
+            {open &&  
+              <ComplaintsField forWhat="createType"
                 onCancel={handleCancel}
+                count={count}
+                setCount={setCount}
               />
-            )}
-            {open && <TicketsBack />}
+            }
+            {open && <TicketsBack onCancel={handleCancel}/>}
           </div>
           <TableContainer sx={{ maxHeight: 440 }}>
             <Table stickyHeader aria-label="sticky table">
@@ -161,11 +170,10 @@ export default function ComplaintTypeTable() {
                             >
                               {column.id === "more" ? (
                                 <ComplaintDropDown
-                                  refresh={refresh}
-                                  setRefresh={setRefresh}
-                                  eData={eData}
+                                data={row}
+                                count={count}
+                                setCount={setCount}
                                   onCancel={handleCancel}
-                                  value={row}
                                 />
                               ) : column.format && typeof value === "number" ? (
                                 column.format(value)

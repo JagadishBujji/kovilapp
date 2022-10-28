@@ -181,7 +181,8 @@ const AddUser = () => {
                           setIsPending(true) 
                           axios.post("http://localhost:5000/sendMail", {
                             email: formData.email,
-                            password: formData.password
+                            password: formData.password,
+                            name:formData.firstName
                           })
                             .then((res) => {
                               setIsPending(false)
@@ -434,15 +435,28 @@ const AddUser = () => {
                 </div>
                 <div className="row">
                   <div className="col-md-6 picture">
-
+                  <TextField
+                      id="outlined-basic"
+                      label="BJP ID"
+                      variant="outlined"
+                      fullWidth
+                      type="text"
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: "900",
+                        fontFamily: "sans-serif",
+                        mb:8
+                      }}
+                    />
                   </div>
                   <div className="col-md-6 picture1">
                     <Button
                       variant="contained"
-                      sx={{ backgroundColor: "#198754", color: "#fff", mb: 2 }}
+                      sx={{ backgroundColor: "#198754", color: "#fff", mt: 4 }}
                     >
                       + Add
-                    </Button><TextField
+                    </Button>
+                    <TextField
                       id="outlined-basic"
                       label="ZipCode"
                       variant="outlined"
@@ -460,6 +474,7 @@ const AddUser = () => {
                         fontSize: "14px",
                         fontWeight: "900",
                         fontFamily: "sans-serif",
+                        mt: 4
                       }}
                     />
 

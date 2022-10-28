@@ -6,12 +6,12 @@ import { useState } from "react";
 import ComplaintsField from "../../pages/ComplaintsField";
 import TicketsBack from "../TicketsBack";
 import { db } from "../../services/firebase";
-import { setDoc, doc } from "firebase/firestore";
+import { setDoc, doc, deleteDoc } from "firebase/firestore";
 export default function ComplaintDropDown(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openModal, setOpenModal] = useState(false);
   const open = Boolean(anchorEl);
-
+  console.log(props.data);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -24,27 +24,24 @@ export default function ComplaintDropDown(props) {
     setOpenModal(true);
   };
 
-  const deleteHandler = async(e) => {
-    setAnchorEl(null);
+  const deleteHandler = async (e) => {
+    // setAnchorEl(null);
     // delete complaint type from db
-    let NewArray = [];
-    if (props.value){
-      NewArray = [...props.eData];
-      let index = NewArray.findIndex(type => type === props.value.complaints)
-      NewArray.splice(index,1)
-      console.log(NewArray)
-    }
-    try {
-      await setDoc(doc(db, "complaint_types", "complaint"), { NewArray });
-      alert("Compliant type deleted");
-      props.setRefresh(props.refresh + 1);
-      props.onCancel();
-    } catch (err) {
-      console.log(err);
-      alert(err);
-      props.setRefresh(props.refresh + 1);
-      props.onCancel();
-    }
+    await deleteDoc(doc(db, "complaint_types", props.data.more))
+      .then((res) => {
+        console.log(res)
+        props.setCount(props.count + 1)
+        alert("deleted successfully")
+        handleClose()
+        setAnchorEl(null);
+
+      }).catch((err) => {
+        alert(err)
+        console.log(err);
+        handleClose()
+        setAnchorEl(null);
+      })
+    // alert("Compliant type deleted");
   };
 
   return (
@@ -66,9 +63,10 @@ export default function ComplaintDropDown(props) {
       </Menu>
       {openModal && (
         <ComplaintsField
-          refresh={props.refresh}
-          setRefresh={props.setRefresh}
-          eData={props.eData}
+          count={props.count}
+          setCount={props.setCount}
+          forWhat="editType"
+          data={props.data}
           onCancel={handleClose}
           value={props.value}
         />
