@@ -82,7 +82,7 @@ export default function App() {
           />
           <Route
             path="newstable"
-            element={user || subAdmin ? <NewsTable /> : <Navigate to="/" />}
+            element={user  ? <NewsTable /> : <Navigate to="/" />}
           />
           <Route
             path="complaintstypetable"

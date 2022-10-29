@@ -5,6 +5,10 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import ComplaintsTable from "../Table/ComplaintsTable";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { db } from "../../services/firebase";
+import { getDistrictTotal, removeDuplicates } from "./CompliantTypeWise/DistricNumber";
+import { useEffect } from "react";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -39,12 +43,56 @@ function a11yProps(index) {
   };
 }
 
-export default function ComplaintTypeTabs({allTickets,open,closed,inProgress}) {
+export default function ComplaintTypeTabs({allTypes,allTickets,open,closed,inProgress}) {
   const [value, setValue] = React.useState(0);
-
+  // console.log(allTickets)
+  // console.log(open,closed,inProgress)
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  // const [allTypes,setAllTypes]=React.useState();
+  // React.useEffect(()=>{
+  //   const getType = async () => {
+  //     await getDocs(query(collection(db, "complaint_types"),orderBy("posted_on","desc")))
+  //     .then((querySnapshot) => {
+  //       let arr=[]
+  //       querySnapshot.forEach((doc) => {
+  //         let data = doc.data();
+  //         // console.log(doc.id);
+  //         // const obj={
+  //         //   doc_id:doc.id,
+  //         //   ...data
+  //         // }
+  //         // console.log(data);
+  //         arr.push(data.complaint_type)
+  //       });
+  //       setAllTypes(arr); 
+  //     })
+  //     .catch((e) => console.log(e));
+       
+  //   };
+  //   getType();
+  // },[]) 
+  let openTotal;
+  let closedTotal;
+  let inProgressTotal;
+  if(allTypes && open)
+  {
+   openTotal= getDistrictTotal(allTypes,open) 
+  }
+  if(allTypes && closed)
+  {
+   closedTotal= getDistrictTotal(allTypes,closed) 
+  }
+  if(allTypes && inProgress)
+  {
+   inProgressTotal= getDistrictTotal(allTypes,inProgress) 
+  }
+  // useEffect(()=>{ 
+  //    openTotal= getDistrictTotal(allTypes,open)   
+  //    closedTotal= getDistrictTotal(allTypes,closed)  
+  //    inProgressTotal= getDistrictTotal(allTypes,inProgress)  
+  // },[])
 
   const table = {
     width: "100%",
@@ -85,13 +133,13 @@ export default function ComplaintTypeTabs({allTickets,open,closed,inProgress}) {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <ComplaintsTable data={open}/>
+        <ComplaintsTable data={openTotal}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-      <ComplaintsTable />
+      <ComplaintsTable data={inProgressTotal} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-      <ComplaintsTable />
+      <ComplaintsTable data={closedTotal}/>
       </TabPanel>
     </Box>
   );

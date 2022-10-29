@@ -362,6 +362,7 @@ console.log(data);
                   required
                       value={formData.email}
                   type="email"
+                  disabled
                   onChange={(e) => {
                     setFormData({
                       ...formData,
@@ -468,9 +469,9 @@ console.log(data);
                   <Button variant="text" sx={{ mr: 2 }} onClick={handleClick}>
                     Cancel
                   </Button>
-                  <Button type="submit"
+                 {data && <Button type="submit"
                     disabled={isPending}
-                    variant="contained" sx={save}>Update User</Button>
+                    variant="contained" sx={save}>Update User</Button>}
                 </div>
                 {showModal && (
                   <UserModal onConfirm={deleteHandle} onCancel={handleCancel} />

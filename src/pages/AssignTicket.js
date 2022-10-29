@@ -57,23 +57,23 @@ const AssignTicket = () => {
     }
     fetchData()
   }, []);
-  console.log(assignDate)
+  // console.log(assignDate)
   const dm=new Date(assignDate)
   console.log(dm.getDate());
-  if(assignDate)
-  {
-    const dueDate=addDays(assignDate,3); 
-    const date=dueDate.getDate();
-    const year=dueDate.getFullYear();
-    const month=dueDate.getMonth();
-    const formattedDueDate=`${year}-${month+1}-${date}`
-    setDd(formattedDueDate)
-  }
-  function addDays(date, days) {
-    var result = new Date(date);
-    result.setDate(result.getDate() + days);
-    return result;
-  }
+  // if(assignDate)
+  // {
+  //   const dueDate=addDays(assignDate,3); 
+  //   const date=dueDate.getDate();
+  //   const year=dueDate.getFullYear();
+  //   const month=dueDate.getMonth();
+  //   const formattedDueDate=`${year}-${month+1}-${date}`
+  //   setDd(formattedDueDate)
+  // }
+  // function addDays(date, days) {
+  //   var result = new Date(date);
+  //   result.setDate(result.getDate() + days);
+  //   return result;
+  // }
   console.log(subAdmins)
   const handleFormSubmit=async(e)=>{
     e.preventDefault();
@@ -298,6 +298,7 @@ const AssignTicket = () => {
                     type="date"
                     onChange={(e)=>{
                       setAssignDate(e.target.value)
+                      // console.log(e);
                     }}
                     sx={{width:"300px",mt: 5}}
                   />

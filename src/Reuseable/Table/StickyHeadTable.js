@@ -94,12 +94,12 @@ export default function StickyHeadTable({ allTicketsAvailable }) {
       let filterdList = allTicketsAvailable.map((mp) => {
         const cc = mp.state.toLowerCase();
         const gg = selectState?.toLowerCase();
-        console.log(cc, gg)
+        // console.log(cc, gg)
         if (cc === gg) {
           return mp
         }
       })
-      console.log(filterdList)
+      // console.log(filterdList)
 
       filterdList = filterdList.filter(function (element) {
         return element !== undefined;
@@ -107,7 +107,7 @@ export default function StickyHeadTable({ allTicketsAvailable }) {
       setAllTickets(filterdList)
     }
     } else {
-      console.log(allTicketsAvailable)
+      // console.log(allTicketsAvailable)
       setAllTickets(allTicketsAvailable)
     }
   }, [selectState])
@@ -118,12 +118,12 @@ export default function StickyHeadTable({ allTicketsAvailable }) {
     // console.log(element.city)
     districts.add(element?.district)
   });
-  console.log(districts);
+  // console.log(districts);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  console.log(districts.size)
+  // console.log(districts.size)
   const distArray = Array.from(districts);
-  console.log(distArray)
+  // console.log(distArray)
   const distArrayOpen = distArray;
   const distArrayInProgess = distArray;
   const distArrayClosed = distArray;
@@ -148,8 +148,8 @@ export default function StickyHeadTable({ allTicketsAvailable }) {
     disClosed.push(0)
     distInpro.push(0);
   }
-  console.log(res)
-  console.log(vals)
+  // console.log(res)
+  // console.log(vals)
   allTickets?.map((at) => {
     // console.log(at.district)
 
@@ -171,7 +171,7 @@ export default function StickyHeadTable({ allTicketsAvailable }) {
       disClosed[vs]++;
     }
   })
-  console.log(vals);
+  // console.log(vals);
   var r = {}
   var ip = {}
   var op = {}
@@ -184,9 +184,9 @@ export default function StickyHeadTable({ allTicketsAvailable }) {
     cl[distArray[i]] = disClosed[i]
   }
   // console.log(r);
-  console.log("inprogess", ip);
-  console.log("closed", cl);
-  console.log("opened", op);
+  // console.log("inprogess", ip);
+  // console.log("closed", cl);
+  // console.log("opened", op);
   let ap = []
   let id = 0
   distArray.map((rs) => {

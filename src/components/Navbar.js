@@ -84,7 +84,7 @@ const Navbar = () => {
                 <i className="fas fa-ticket-alt mr-1"></i>
                 Tickets
               </NavLink>
-              <NavLink
+              {user &&  <NavLink
                 className={({ isActive }) =>
                   isActive ? "activelink" : "nav-link "
                 }
@@ -94,7 +94,7 @@ const Navbar = () => {
                 <i className="fas fa-newspaper mr-1"></i>
 
                 News
-              </NavLink>
+              </NavLink>}
 
              {user && <NavLink
                 className={({ isActive }) =>

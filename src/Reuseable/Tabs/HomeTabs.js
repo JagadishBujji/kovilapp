@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import ComplaintsTable from "../Table/ComplaintsTable";
 import StickyHeadTable from "../Table/StickyHeadTable";
 import ComplaintTypeTabs from "./ComplaintTypeTabs";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../../services/firebase";
 import Loader from "../Loader/Loader";
 
@@ -79,6 +79,29 @@ export default function HomeTabs() {
     };
     fetchData();
   }, []);
+  const [allTypes,setAllTypes]=useState();
+  useEffect(()=>{
+    const getType = async () => {
+      await getDocs(query(collection(db, "complaint_types"),orderBy("posted_on","desc")))
+      .then((querySnapshot) => {
+        let arr=[]
+        querySnapshot.forEach((doc) => {
+          let data = doc.data();
+          // console.log(doc.id);
+          // const obj={
+          //   doc_id:doc.id,
+          //   ...data
+          // }
+          // console.log(data);
+          arr.push(data.complaint_type)
+        });
+        setAllTypes(arr); 
+      })
+      .catch((e) => console.log(e));
+       
+    };
+    getType();
+  },[]) 
   const openTickets = tickets?.open;
   const inProgress = tickets?.inProgress;
   const closed = tickets?.closed;
@@ -200,6 +223,8 @@ export default function HomeTabs() {
               open={openTickets}
               closed={closed}
               inProgress={inProgress}
+              allTypes={allTypes}
+              allTickets={allTickets}
             />
           )}
         </TabPanel>

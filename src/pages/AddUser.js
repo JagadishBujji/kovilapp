@@ -53,7 +53,8 @@ const AddUser = () => {
     zipcode: "",
     dob: "",
     district: "",
-    password: pass
+    password: pass,
+    bjp_id:""
 
   })
   const [showModal, setShowModal] = useState(false);
@@ -166,6 +167,7 @@ const AddUser = () => {
                       password: formData.password,
                       zipcode: formData.zipcode,
                       profilePic: imageURL,
+                      bjp_id:formData.bjp_id,
                       timestamp: serverTimestamp()
                     }
                   )
@@ -178,6 +180,7 @@ const AddUser = () => {
                         role: formData.role
                       })
                         .then((res) => {
+                           
                           setIsPending(true) 
                           axios.post("http://localhost:5000/sendMail", {
                             email: formData.email,
@@ -440,6 +443,12 @@ const AddUser = () => {
                       label="BJP ID"
                       variant="outlined"
                       fullWidth
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          bjp_id: e.target.value
+                        })
+                      }}
                       type="text"
                       sx={{
                         fontSize: "14px",

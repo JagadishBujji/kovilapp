@@ -25,8 +25,8 @@ const UserDetails = () => {
       }
     }
     getDetails();
-    console.log(data);
   }, [count]);
+  console.log(data);
 
   const save = {
     backgroundColor: "#f17116",

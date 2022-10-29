@@ -44,14 +44,18 @@ function createData(
   return { name, code, population, size, density };
 }
 
-const rows = [
-  createData("Noise from Loud Speakers", 30, 123, 30, 61 ),
-  createData("Complaint about Loud sound",  30,123, 30, 61),
-  createData("Heavy Noise pollution", 30, 123, 544, 30, 61,)
-];
+// const rows = [
+//   createData("Noise from Loud Speakers", 30, 123, 30, 61 ),
+//   createData("Complaint about Loud sound",  30,123, 30, 61),
+//   createData("Heavy Noise pollution", 30, 123, 544, 30, 61,)
+// ];
 
 export default function ComplaintsTable({data}) {
   console.log(data);
+  let rows=[];
+  data?.map((ds)=>{
+    rows.push(createData(ds.complaint_type,ds.districtTotal,ds.templeTotal,0,0))
+  })
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
