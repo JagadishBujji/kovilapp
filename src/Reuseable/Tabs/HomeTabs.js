@@ -10,6 +10,9 @@ import ComplaintTypeTabs from "./ComplaintTypeTabs";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../../services/firebase";
 import Loader from "../Loader/Loader";
+import Button from '@mui/material/Button';
+import PasswordModal from "../Passwordmodal/PasswordModal";
+import TicketsBack from "../TicketsBack";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -48,6 +51,15 @@ export default function HomeTabs() {
   const [tickets, setTickets] = useState();
   const [allTickets, setAllTickets] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const[openModal,setOpenModal] = useState(false);
+
+  const handleClick = () => {
+    setOpenModal(true)
+  }
+
+  const handleClose = () => {
+    setOpenModal(false)
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -158,6 +170,15 @@ export default function HomeTabs() {
             <Tab sx={tab} label="District Wise" {...a11yProps(0)} />
             <Tab sx={tab} label="Complaint Type Wise" {...a11yProps(1)} />
           </Tabs>
+          
+          <Button variant="outlined" 
+          sx={{m:2}}
+          onClick = {handleClick}
+          >
+          Open
+        </Button>
+        {openModal && <PasswordModal onCancel={handleClose}/>}
+        {openModal && <TicketsBack onCancel={handleClose}/>}
         </Box>
         <TabPanel value={value} index={0}>
           <div className="row">

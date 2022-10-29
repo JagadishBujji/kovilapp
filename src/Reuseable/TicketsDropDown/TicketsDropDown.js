@@ -19,7 +19,7 @@ export default function TicketsDropDown(props) {
     <div>
       <div className='row drpdwnBtn'>
     <span onClick={props.onPress} ><VisibilityIcon /></span>
-       <span><EditIcon /></span> 
+       <span  onClick={props.onNavigate}><EditIcon /></span> 
       </div>
     </div>
   );

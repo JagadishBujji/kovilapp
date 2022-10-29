@@ -225,6 +225,7 @@ export default function StickyHeadTable({ allTicketsAvailable }) {
     fontSize: "16px",
     fontWeight: "600",
     color: "#1E3849",
+    zIndex: "0",
   };
   const stickybody = {
     fontSize: "14px",

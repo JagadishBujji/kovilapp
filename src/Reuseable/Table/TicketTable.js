@@ -147,7 +147,7 @@ export default function TicketTable({ tickets }) {
 
                         
                           {column.id === "actions" ? (
-                            <TicketsDropDown onPress={() => navigate(`/kovil/ticketsdetails/${row.doc_id}`)} />
+                            <TicketsDropDown onNavigate={()=>navigate("kovil/assigntickets/4TL5j9ZbJV5d0NpSqlt2")} onPress={() => navigate(`/kovil/ticketsdetails/${row.doc_id}`)} />
                           ) : column.format && typeof value === "number" ? (
                             column.format(value)
                           ) : (

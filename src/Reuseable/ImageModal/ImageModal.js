@@ -25,8 +25,8 @@ const ImageModal = (props) => {
     <div id="myModal" className="Imagemodal">
       <span className="closed" onClick={props.onCancel}>X</span>
       {fileType==="Image" && <img src={props.source} className="modal-content" id="img01" />}
-      {fileType==="Video" && <video controls><source src={props.source} className="modal-content"/></video>}
-      {fileType==="audio" && <audio controls><source src={props.source} className="modal-content"/></audio>}
+      {fileType==="Video" && <center><video controls><source src={props.source} className="modal-content"/></video></center>}
+      {fileType==="audio" && <center><audio controls><source src={props.source} className="modal-content"/></audio></center>}
       <div id="caption"></div>
     </div>
   );
