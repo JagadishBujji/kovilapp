@@ -179,10 +179,10 @@ const AddUser = () => {
                         password: formData.password,
                         role: formData.role
                       })
-                        .then((res) => {
+                        .then(async(res) => {
                            
                           setIsPending(true) 
-                          axios.post("http://localhost:5000/sendMail", {
+                          await axios.post("http://localhost:5000/sendMail", {
                             email: formData.email,
                             password: formData.password,
                             name:formData.firstName
