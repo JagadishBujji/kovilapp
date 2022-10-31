@@ -209,8 +209,69 @@ const AddUser = () => {
             console.log(err.code);
           });
       }
-      else {
-        alert("please select a image")
+      else { 
+        setIsPending(true);
+        await createUserWithEmailAndPassword(auth, formData.email, formData.password)
+          .then((res) => {
+            setIsPending(true); 
+            const userId = res.user.uid
+            console.log(userId)
+            setDoc(doc(db, "userProfile", userId),
+              {
+                first_name: formData.firstName,
+                last_name: formData.lastName,
+                role: formData.role,
+                state: formData.state,
+                district: formData.district,
+                phone_number: formData.mobile,
+                alternate_number: formData.alternateNumber,
+                email: formData.email,
+                aadhar: formData.aadhar,
+                dob: formData.dob,
+                uid: userId,
+                password: formData.password,
+                zipcode: formData.zipcode,
+                profilePic: "",
+                bjp_id:formData.bjp_id,
+                timestamp: serverTimestamp()
+              }
+            )
+              .then((res) => {
+                console.log(res);
+                setIsPending(true)
+                setDoc(doc(db, "admins", userId), {
+                  email: formData.email,
+                  password: formData.password,
+                  role: formData.role
+                })
+                  .then((res) => {
+                     
+                    setIsPending(true) 
+                    axios.post("http://localhost:5000/sendMail", {
+                      email: formData.email,
+                      password: formData.password,
+                      name:formData.firstName
+                    })
+                      .then((res) => {
+                        setIsPending(false)
+                        alert("user created")
+                        navigate("/kovil/user-post")
+                        console.log(res);
+                      }).catch((err) => {
+                        alert(err)
+                        console.log(err);
+                      })
+
+                  })
+
+              })
+          })
+          .catch((err) => {
+            alert(err);
+            setIsPending(false);
+            console.log(err.code);
+          });
+
       }
 
     }

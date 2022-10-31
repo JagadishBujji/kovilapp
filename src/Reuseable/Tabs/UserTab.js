@@ -5,7 +5,7 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import UserTable from "../Table/UserTable";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../../services/firebase";
 import { SafetyDividerOutlined } from "@mui/icons-material";
 import Loader from "../Loader/Loader";
@@ -53,7 +53,7 @@ export default function UserTab() {
    React.useEffect(() => {
     const fetchData = async () => {
 
-      const querySnapshot = await getDocs(collection(db, "userProfile"));
+      const querySnapshot = await getDocs(query(collection(db, "userProfile"),orderBy("timestamp","desc")));
       let all=[]
       let ad=[]
         let sad=[]

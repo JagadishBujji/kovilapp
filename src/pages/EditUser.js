@@ -51,6 +51,9 @@ const EditUser = () => {
     dob: "",
     district: "",
     profilePic:"",
+    password:"",
+    bjp_id:"", 
+    uid:""
   })
   React.useEffect(() => {
     const getDetails = async () => {
@@ -72,8 +75,11 @@ const EditUser = () => {
             zipcode:ds.zipcode,
             dob:ds.dob,
             district:ds.district,
-            profilePic:ds.profilePic
-        })
+            profilePic:ds.profilePic,
+            bjp_id:ds.bjp_id,
+            password:ds.password,
+            uid:ds.uid
+         })
         setPreviewImage(ds.profilePic);
         setOldImage(ds.profilePic)
       } catch (err) {
@@ -93,6 +99,7 @@ console.log(data);
   const handleClick = () => {
     setShowModal(true)
   }
+  console.log(oldImage===previewImage)
   const handleCancel = () => {
     setShowModal(false)
   }
@@ -120,7 +127,11 @@ console.log(data);
                   dob: formData.dob,
                   zipcode: formData.zipcode,
                   profilePic: formData.profilePic,
-                  timestamp:serverTimestamp()
+                  timestamp:serverTimestamp(),
+                  bjp_id:formData.bjp_id,
+                  password:formData.password,
+                  timestamp:serverTimestamp(),
+                  uid:formData.uid,
                 }
               )
               .then((res) => {
@@ -432,9 +443,28 @@ console.log(data);
                     <p>Select a state to view district</p>
                   }
                 </div>
-                <div className="row">
+                <div className="row"> 
                   <div className="col-md-6 picture">
-
+                  <TextField
+                      id="outlined-basic"
+                      label= {formData.bjp_id?"":"BJP_ID"}  
+                      value={formData.bjp_id}
+                      variant="outlined"
+                      fullWidth
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          bjp_id: e.target.value
+                        })
+                      }}
+                      type="text"
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: "900",
+                        fontFamily: "sans-serif",
+                        mb:8
+                      }}
+                    /> 
                   </div>
                   <div className="col-md-6 picture1">
                     <Button
