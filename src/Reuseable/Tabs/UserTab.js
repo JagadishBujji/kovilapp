@@ -53,7 +53,7 @@ export default function UserTab() {
    React.useEffect(() => {
     const fetchData = async () => {
 
-      const querySnapshot = await getDocs(query(collection(db, "userProfile"),orderBy("timestamp","desc")));
+      const querySnapshot = await getDocs(query(collection(db, "admins"),orderBy("timestamp","desc")));
       let all=[]
       let ad=[]
         let sad=[]
@@ -61,7 +61,7 @@ export default function UserTab() {
         // doc.data() is never undefined for query doc snapshots
         // console.log(doc.id, " => ", doc.data());
         let data=doc.data()
-        // console.log(doc.id)
+        console.log(data)
         const nD={
           id:doc.id,
           ...data

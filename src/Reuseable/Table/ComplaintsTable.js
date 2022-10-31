@@ -54,7 +54,7 @@ export default function ComplaintsTable({data}) {
   console.log(data);
   let rows=[];
   data?.map((ds)=>{
-    rows.push(createData(ds.complaint_type,ds.districtTotal,ds.templeTotal,0,0))
+    rows.push(createData(ds.complaint_type,ds.districtTotal,ds.templeTotal,1,ds.templeTotal))
   })
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);

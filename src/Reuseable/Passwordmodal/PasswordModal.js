@@ -39,33 +39,35 @@ const PasswordModal = (props) => {
     e.preventDefault();
     // console.log( typeof(formData.currentPassword) , typeof(props.data.password));
     // console.log(formData.currentPassword===props.data.password)
-    const pd=String(props.data.password)
+    const pd = String(props.data.password)
     if (formData.currentPassword === pd) {
-      const docRef = doc(db, "userProfile", props.data.uid);
-      const docRef2=doc(db,"admins",props.data.uid)
-     await updatePassword(user, formData.newPassword)
+      // const docRef = doc(db, "userProfile", props.data.uid);
+      const docRef2 = doc(db, "admins", props.data.uid)
+      await updatePassword(user, formData.newPassword)
         .then(async (res) => {
-            console.log(res)
-            await updateDoc(docRef2, {
-                password: formData.newPassword
-              })
-                .then(async() => {
-                    await updateDoc(docRef, {
-                        password: formData.newPassword,
-                        is_password_changed: true,
-                      })
-                        .then(() => {
-                          props.setIsPasswordChanged("changed");
-                          alert("password updated");
-                        })
-                        .catch((err) => {
-                          alert(err);
-                        });
-                })
-                .catch((err) => {
-                  alert(err);
-                });
-          
+          console.log(res)
+          await updateDoc(docRef2, {
+            password: formData.newPassword,
+            is_password_changed: true,
+
+          })
+            // .then(async() => {
+            //     await updateDoc(docRef, {
+            //         password: formData.newPassword,
+            //         is_password_changed: true,
+            //       })
+            .then(() => {
+              props.setIsPasswordChanged("changed");
+              alert("password updated");
+            })
+            .catch((err) => {
+              alert(err);
+            });
+          // })
+          // .catch((err) => {
+          //   alert(err);
+          // });
+
         })
         .catch((error) => {
           alert(error);

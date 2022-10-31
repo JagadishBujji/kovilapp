@@ -69,7 +69,7 @@ export default function HomeTabs() {
     {
       const subadminId=subAdmin.uid;
 const getSubAdmin=async()=>{
-  const docRef = doc(db, "userProfile", subadminId);
+  const docRef = doc(db, "admins", subadminId);
   const docSnap = await getDoc(docRef);
   
   if (docSnap.exists()) {

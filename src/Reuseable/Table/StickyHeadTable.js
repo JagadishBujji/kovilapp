@@ -193,7 +193,7 @@ export default function StickyHeadTable({ allTicketsAvailable }) {
   distArray.map((rs) => {
     id = id + 1
     const tt = op[rs] + ip[rs] + cl[rs]
-    ap.push(createData(id, rs, op[rs], ip[rs], cl[rs], tt, 8, 40),)
+    ap.push(createData(id, rs, op[rs], ip[rs], cl[rs], tt, 1, 1),)
   })
   // allTickets?.map((rs)=>{
   //   // console.log(rs.district)

@@ -131,7 +131,155 @@ const AddUser = () => {
   //   }
 
   // }
+// ******recent
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   console.log(formData)
+  //   if (formData.mobile.length === 10 && formData.alternateNumber.length === 10) {
+  //     if (uImage) {
+  //       setIsPending(true);
+  //       await createUserWithEmailAndPassword(auth, formData.email, formData.password)
+  //         .then((res) => {
+  //           setIsPending(true);
 
+  //           const userId = res.user.uid
+  //           console.log(userId)
+  //           const imageRef = ref(storage, `images/${uImage.name + v4()}`);
+  //           uploadBytes(imageRef, uImage).then((snapshot) => {
+  //             getDownloadURL(snapshot.ref)
+  //               .then((url) => {
+  //                 setIsPending(true);
+
+  //                 const imageURL = url
+  //                 setDoc(doc(db, "userProfile", userId),
+  //                   {
+  //                     first_name: formData.firstName,
+  //                     last_name: formData.lastName,
+  //                     role: formData.role,
+  //                     state: formData.state,
+  //                     district: formData.district,
+  //                     phone_number: formData.mobile,
+  //                     alternate_number: formData.alternateNumber,
+  //                     email: formData.email,
+  //                     aadhar: formData.aadhar,
+  //                     dob: formData.dob,
+  //                     uid: userId,
+  //                     password: formData.password,
+  //                     zipcode: formData.zipcode,
+  //                     profilePic: imageURL,
+  //                     bjp_id:formData.bjp_id,
+  //                     timestamp: serverTimestamp()
+  //                   }
+  //                 )
+  //                   .then((res) => {
+  //                     console.log(res);
+  //                     setIsPending(true)
+  //                     setDoc(doc(db, "admins", userId), {
+  //                       email: formData.email,
+  //                       password: formData.password,
+  //                       role: formData.role
+  //                     })
+  //                       .then(async(res) => {
+                           
+  //                         // setIsPending(true) 
+  //                         // await axios.post("http://localhost:5000/sendMail", {
+  //                         //   email: formData.email,
+  //                         //   password: formData.password,
+  //                         //   name:formData.firstName
+  //                         // })
+  //                         //   .then((res) => {
+  //                             setIsPending(false)
+  //                             alert("user created")
+  //                             navigate("/kovil/user-post")
+  //                             console.log(res);
+  //                           }).catch((err) => {
+  //                             alert(err)
+  //                             console.log(err);
+  //                           })
+
+  //                       // })
+
+  //                   })
+  //               })
+  //           })
+  //         })
+  //         .catch((err) => {
+  //           alert(err);
+  //           setIsPending(false);
+  //           console.log(err.code);
+  //         });
+  //     }
+  //     else { 
+  //       setIsPending(true);
+  //       await createUserWithEmailAndPassword(auth, formData.email, formData.password)
+  //         .then((res) => {
+  //           setIsPending(true); 
+  //           const userId = res.user.uid
+  //           console.log(userId)
+  //           setDoc(doc(db, "userProfile", userId),
+  //             {
+  //               first_name: formData.firstName,
+  //               last_name: formData.lastName,
+  //               role: formData.role,
+  //               state: formData.state,
+  //               district: formData.district,
+  //               phone_number: formData.mobile,
+  //               alternate_number: formData.alternateNumber,
+  //               email: formData.email,
+  //               aadhar: formData.aadhar,
+  //               dob: formData.dob,
+  //               uid: userId,
+  //               password: formData.password,
+  //               zipcode: formData.zipcode,
+  //               profilePic: "",
+  //               bjp_id:formData.bjp_id,
+  //               timestamp: serverTimestamp()
+  //             }
+  //           )
+  //             .then((res) => {
+  //               console.log(res);
+  //               setIsPending(true)
+  //               setDoc(doc(db, "admins", userId), {
+  //                 email: formData.email,
+  //                 password: formData.password,
+  //                 role: formData.role
+  //               })
+  //                 .then((res) => {
+                     
+  //                   // setIsPending(true) 
+  //                   // axios.post("http://localhost:5000/sendMail", {
+  //                   //   email: formData.email,
+  //                   //   password: formData.password,
+  //                   //   name:formData.firstName
+  //                   // })
+  //                   //   .then((res) => {
+  //                       setIsPending(false)
+  //                       alert("user created")
+  //                       navigate("/kovil/user-post")
+  //                       console.log(res);
+  //                     }).catch((err) => {
+  //                       alert(err)
+  //                       console.log(err);
+  //                     })
+
+  //                 // })
+
+  //             })
+  //         })
+  //         .catch((err) => {
+  //           alert(err);
+  //           setIsPending(false);
+  //           console.log(err.code);
+  //         });
+
+  //     }
+
+  //   }
+  //   else {
+  //     alert("enter valid mobile number")
+  //   }
+
+  // }
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData)
@@ -151,7 +299,7 @@ const AddUser = () => {
                   setIsPending(true);
 
                   const imageURL = url
-                  setDoc(doc(db, "userProfile", userId),
+                  setDoc(doc(db, "admins", userId),
                     {
                       first_name: formData.firstName,
                       last_name: formData.lastName,
@@ -162,23 +310,18 @@ const AddUser = () => {
                       alternate_number: formData.alternateNumber,
                       email: formData.email,
                       aadhar: formData.aadhar,
+                      doc_id:userId,
                       dob: formData.dob,
                       uid: userId,
                       password: formData.password,
                       zipcode: formData.zipcode,
                       profilePic: imageURL,
                       bjp_id:formData.bjp_id,
-                      timestamp: serverTimestamp()
+                      timestamp: serverTimestamp(),
+                      is_password_changed:false,
                     }
                   )
-                    .then((res) => {
-                      console.log(res);
-                      setIsPending(true)
-                      setDoc(doc(db, "admins", userId), {
-                        email: formData.email,
-                        password: formData.password,
-                        role: formData.role
-                      })
+                     
                         .then(async(res) => {
                            
                           setIsPending(true) 
@@ -198,8 +341,7 @@ const AddUser = () => {
                             })
 
                         })
-
-                    })
+ 
                 })
             })
           })
@@ -216,7 +358,7 @@ const AddUser = () => {
             setIsPending(true); 
             const userId = res.user.uid
             console.log(userId)
-            setDoc(doc(db, "userProfile", userId),
+            setDoc(doc(db, "admins", userId),
               {
                 first_name: formData.firstName,
                 last_name: formData.lastName,
@@ -233,17 +375,11 @@ const AddUser = () => {
                 zipcode: formData.zipcode,
                 profilePic: "",
                 bjp_id:formData.bjp_id,
-                timestamp: serverTimestamp()
+                timestamp: serverTimestamp(),
+                is_password_changed:false
               }
             )
-              .then((res) => {
-                console.log(res);
-                setIsPending(true)
-                setDoc(doc(db, "admins", userId), {
-                  email: formData.email,
-                  password: formData.password,
-                  role: formData.role
-                })
+              
                   .then((res) => {
                      
                     setIsPending(true) 
@@ -263,8 +399,7 @@ const AddUser = () => {
                       })
 
                   })
-
-              })
+ 
           })
           .catch((err) => {
             alert(err);

@@ -42,22 +42,25 @@ const EditUser = () => {
     firstName: data?.first_name,
     lastName: "",
     role: "",
+    state: "",
+    district: "",
     mobile: "",
     alternateNumber: "",
     email: "",
     aadhar: "",
-    state: "",
-    zipcode: "",
+    doc_id:"",
     dob: "",
-    district: "",
-    profilePic:"",
+    uid:"",
     password:"",
+    zipcode: "",
+    profilePic:"",
     bjp_id:"", 
-    uid:""
+    is_password_changed:"",
+    timestamp:"",
   })
   React.useEffect(() => {
     const getDetails = async () => {
-      const docRef = doc(db, "userProfile", docId)
+      const docRef = doc(db, "admins", docId)
       try {
         const docSnap = await getDoc(docRef);
         // console.log(docSnap.data())
@@ -73,12 +76,14 @@ const EditUser = () => {
             aadhar:ds.aadhar,
             state:ds.state,
             zipcode:ds.zipcode,
+            doc_id:ds.doc_id,
             dob:ds.dob,
             district:ds.district,
             profilePic:ds.profilePic,
             bjp_id:ds.bjp_id,
             password:ds.password,
-            uid:ds.uid
+            uid:ds.uid,
+            is_password_changed:ds.is_password_changed
          })
         setPreviewImage(ds.profilePic);
         setOldImage(ds.profilePic)
@@ -113,7 +118,7 @@ console.log(data);
         if(previewImage===oldImage)
         { 
             setIsPending(true);
-             await   setDoc(doc(db, "userProfile",docId),
+             await   setDoc(doc(db, "admins",docId),
                 {
                   first_name: formData.firstName,
                   last_name: formData.lastName,
@@ -124,14 +129,16 @@ console.log(data);
                   alternate_number: formData.alternateNumber,
                   email: formData.email,
                   aadhar: formData.aadhar,
+                  doc_id:formData.doc_id,
                   dob: formData.dob,
+                  uid:formData.uid,
+                  password:formData.password,
                   zipcode: formData.zipcode,
                   profilePic: formData.profilePic,
+                  bjp_id:formData.bjp_id, 
                   timestamp:serverTimestamp(),
-                  bjp_id:formData.bjp_id,
-                  password:formData.password,
-                  timestamp:serverTimestamp(),
-                  uid:formData.uid,
+                  is_password_changed:formData.is_password_changed
+
                 }
               )
               .then((res) => {
@@ -154,7 +161,7 @@ console.log(data);
             const imageURL = url
             // setUserImage(imageURL)
             // console.log(url);
-            setDoc(doc(db, "userProfile",docId),
+            setDoc(doc(db, "admins",docId),
             {
               first_name: formData.firstName,
               last_name: formData.lastName,
@@ -165,10 +172,16 @@ console.log(data);
               alternate_number: formData.alternateNumber,
               email: formData.email,
               aadhar: formData.aadhar,
+              doc_id:formData.doc_id,
               dob: formData.dob,
+              uid:formData.uid,
+              password:formData.password,
               zipcode: formData.zipcode,
               profilePic: imageURL,
-              timestamp:serverTimestamp()
+              bjp_id:formData.bjp_id,
+              timestamp:serverTimestamp(),
+              is_password_changed:formData.is_password_changed,
+
             }
           )
           .then((res) => {

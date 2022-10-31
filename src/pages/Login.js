@@ -15,6 +15,8 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { fontSize, width } from "@mui/system";
 import { getDoc, doc, query, collection, where, getDocs } from "firebase/firestore";
 import axios from "axios";
+import firebaseApp from "../services/firebase";
+import { getMessaging, getToken } from 'firebase/messaging'
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -137,6 +139,27 @@ const Login = () => {
       border: "1px solid #ff6000",
     },
   };
+  const sendNotification = async () => {
+    // c4bD7v8zQ-S80EOyMxEjSi:APA91bEKE8EwA8psXCODTDwKnEPh_8-QIIqkMyP7buE1Jhdg5l38nBd8hmMEzfYvELjQvBhVKI9SrSdEDbADy67TCFrexmzDa5JQIoZu08oSvhj1xUgKCpD1eEKbSUXpsUuyuTNf_5jw
+    await axios.post("https://fcm.googleapis.com/fcm/send", {
+      "notification": {
+        "title": "Firebase",
+        "body": "Firebase is awesome",
+        "click_action": "http://localhost:3000/",
+        "icon": "http://url-to-an-icon/icon.png"
+      },
+      "to": "c4bD7v8zQ-S80EOyMxEjSi:APA91bEKE8EwA8psXCODTDwKnEPh_8-QIIqkMyP7buE1Jhdg5l38nBd8hmMEzfYvELjQvBhVKI9SrSdEDbADy67TCFrexmzDa5JQIoZu08oSvhj1xUgKCpD1eEKbSUXpsUuyuTNf_5jw"
+    },{
+      headers:{
+          "Content-Type": "application/json",
+          "Authorization": "key=AAAAujeDNFk:APA91bFTPFchdLLWS_6Tp4LsLe14M8QX9pvLOMfUv9ILl-l3O7SGCRuVSbaOsqZvNrYRlxlRc22ygeOxHXN_85SxPsOKZG6l7H3l9WRbHJ3LWJHypuFM6kwPeZhcKTMlgnMx85tNHDt-"
+      }
+    }).then((res)=>{
+      console.log(res);
+    }).catch((err)=>{
+      console.log(err.response);
+    })
+  }
 
   return (
     <>
@@ -146,6 +169,8 @@ const Login = () => {
         </div>
         <div className="col-md-7 login-from">
           <div className="container login">
+            {/* <button onClick={sendNotification} >send notification</button> */}
+
             <h2>Login</h2>
             <p>Enter your credentials to access your account</p>
             {/* <div className="googlelogin">

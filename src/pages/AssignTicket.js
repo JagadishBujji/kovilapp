@@ -37,7 +37,7 @@ const AssignTicket = () => {
   useEffect(() => { 
     const fetchData=async()=>{
       
-    await getDocs(collection(db, "userProfile"))
+    await getDocs(collection(db, "admins"))
       .then((querySnapshot) => {  
         let subAd=[]
         querySnapshot.forEach((doc) => { 
@@ -79,7 +79,7 @@ const AssignTicket = () => {
     e.preventDefault();
     console.log(selectedSubAdmin.id,assignDate,data.doc_id)
     const docRef=doc(db,"Complaints",data.doc_id) 
-    const docRef2=doc(db,"userProfile",selectedSubAdmin.id) 
+    const docRef2=doc(db,"admins",selectedSubAdmin.id) 
 
         try{
             await  updateDoc(docRef,{

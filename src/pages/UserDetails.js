@@ -14,7 +14,7 @@ const UserDetails = () => {
   const [count,setCount]=useState(0) 
   useEffect(() => {
     const getDetails = async () => {
-      const docRef = doc(db, "userProfile", docId)
+      const docRef = doc(db, "admins", docId)
       try {
         const docSnap = await getDoc(docRef);
         // console.log(docSnap.data())
@@ -139,10 +139,12 @@ const UserDetails = () => {
               {data?.current_ticket?
               data.current_ticket.map((cc)=>(
                 
-              <div className="row Userdetails">
-                <div>
-                  <p>Assigned On</p>
-                  <p><b>{cc.assinged_date}</b></p>
+              <div onClick={()=>{
+                alert("hello")
+              }} className="row Userdetails">
+                <div >
+                  <p>Posted On</p>
+                  <p><b>{cc.posted_on}</b></p>
                 </div>
                 {/* <div>
                   <p>Due Date</p>
