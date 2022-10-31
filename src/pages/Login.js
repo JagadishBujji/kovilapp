@@ -139,27 +139,27 @@ const Login = () => {
       border: "1px solid #ff6000",
     },
   };
-  const sendNotification = async () => {
-    // c4bD7v8zQ-S80EOyMxEjSi:APA91bEKE8EwA8psXCODTDwKnEPh_8-QIIqkMyP7buE1Jhdg5l38nBd8hmMEzfYvELjQvBhVKI9SrSdEDbADy67TCFrexmzDa5JQIoZu08oSvhj1xUgKCpD1eEKbSUXpsUuyuTNf_5jw
-    await axios.post("https://fcm.googleapis.com/fcm/send", {
-      "notification": {
-        "title": "Firebase",
-        "body": "Firebase is awesome",
-        "click_action": "http://localhost:3000/",
-        "icon": "http://url-to-an-icon/icon.png"
-      },
-      "to": "c4bD7v8zQ-S80EOyMxEjSi:APA91bEKE8EwA8psXCODTDwKnEPh_8-QIIqkMyP7buE1Jhdg5l38nBd8hmMEzfYvELjQvBhVKI9SrSdEDbADy67TCFrexmzDa5JQIoZu08oSvhj1xUgKCpD1eEKbSUXpsUuyuTNf_5jw"
-    },{
-      headers:{
-          "Content-Type": "application/json",
-          "Authorization": "key=AAAAujeDNFk:APA91bFTPFchdLLWS_6Tp4LsLe14M8QX9pvLOMfUv9ILl-l3O7SGCRuVSbaOsqZvNrYRlxlRc22ygeOxHXN_85SxPsOKZG6l7H3l9WRbHJ3LWJHypuFM6kwPeZhcKTMlgnMx85tNHDt-"
-      }
-    }).then((res)=>{
-      console.log(res);
-    }).catch((err)=>{
-      console.log(err.response);
-    })
-  }
+  // const sendNotification = async () => {
+  //   // c4bD7v8zQ-S80EOyMxEjSi:APA91bEKE8EwA8psXCODTDwKnEPh_8-QIIqkMyP7buE1Jhdg5l38nBd8hmMEzfYvELjQvBhVKI9SrSdEDbADy67TCFrexmzDa5JQIoZu08oSvhj1xUgKCpD1eEKbSUXpsUuyuTNf_5jw
+  //   await axios.post("https://fcm.googleapis.com/fcm/send", {
+  //     "notification": {
+  //       "title": "Firebase",
+  //       "body": "Firebase is awesome",
+  //       "click_action": "http://localhost:3000/",
+  //       "icon": "http://url-to-an-icon/icon.png"
+  //     },
+  //     "to": "c4bD7v8zQ-S80EOyMxEjSi:APA91bEKE8EwA8psXCODTDwKnEPh_8-QIIqkMyP7buE1Jhdg5l38nBd8hmMEzfYvELjQvBhVKI9SrSdEDbADy67TCFrexmzDa5JQIoZu08oSvhj1xUgKCpD1eEKbSUXpsUuyuTNf_5jw"
+  //   },{
+  //     headers:{
+  //         "Content-Type": "application/json",
+  //         "Authorization": "key=AAAAujeDNFk:APA91bFTPFchdLLWS_6Tp4LsLe14M8QX9pvLOMfUv9ILl-l3O7SGCRuVSbaOsqZvNrYRlxlRc22ygeOxHXN_85SxPsOKZG6l7H3l9WRbHJ3LWJHypuFM6kwPeZhcKTMlgnMx85tNHDt-"
+  //     }
+  //   }).then((res)=>{
+  //     console.log(res);
+  //   }).catch((err)=>{
+  //     console.log(err.response);
+  //   })
+  // }
 
   return (
     <>
