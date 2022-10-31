@@ -81,6 +81,7 @@ const rows = [
 ];
 
 export default function StickyHeadTable({ allTicketsAvailable }) {
+  const user = JSON.parse(localStorage.getItem("user"));
   const [selectState, setSelectState] = React.useState("tamil nadu")
   const [allTickets, setAllTickets] = React.useState(allTicketsAvailable)
   React.useEffect(() => {
@@ -236,7 +237,7 @@ export default function StickyHeadTable({ allTicketsAvailable }) {
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", padding: "13px" }}>
       <div className="statewise">
-        <StateOption setSelectState={setSelectState} />
+      {user &&  <StateOption setSelectState={setSelectState} />}
         <h1 className="district-title">District Wise Tickets</h1>
       </div>
 

@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import ComplaintsTable from "../Table/ComplaintsTable";
 import StickyHeadTable from "../Table/StickyHeadTable";
 import ComplaintTypeTabs from "./ComplaintTypeTabs";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../../services/firebase";
 import Loader from "../Loader/Loader";
 import Button from '@mui/material/Button';
@@ -52,7 +52,7 @@ export default function HomeTabs() {
   const [allTickets, setAllTickets] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const[openModal,setOpenModal] = useState(false);
-
+  const [subAdminData,setSubAdminData]=useState()
   const handleClick = () => {
     setOpenModal(true)
   }
@@ -60,7 +60,40 @@ export default function HomeTabs() {
   const handleClose = () => {
     setOpenModal(false)
   }
+  const [isPasswordChanged,setIsPasswordChanged]=useState("inital")
+  useEffect(()=>{
 
+    const user = JSON.parse(localStorage.getItem("user"));
+    const subAdmin=JSON.parse(localStorage.getItem("subadmin"))
+    if(subAdmin)
+    {
+      const subadminId=subAdmin.uid;
+const getSubAdmin=async()=>{
+  const docRef = doc(db, "userProfile", subadminId);
+  const docSnap = await getDoc(docRef);
+  
+  if (docSnap.exists()) {
+    const data=docSnap.data();
+    setSubAdminData(data)
+    console.log(data)
+    if(data.is_password_changed){
+      setIsPasswordChanged("passwordChanged")
+    }
+    else if(!data.is_password_changed){
+      setIsPasswordChanged("notChanged")
+    }
+    console.log("Document data:", docSnap.data());
+
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+  }
+}
+getSubAdmin()
+
+    }
+  },[])
+console.log(isPasswordChanged)
   useEffect(() => {
     const fetchData = async () => {
       await getDocs(collection(db, "Complaints"))
@@ -72,7 +105,7 @@ export default function HomeTabs() {
           };
           let allTic = [];
           querySnapshot.forEach((doc) => {
-            console.log(doc);
+            // console.log(doc);
             let data = doc.data();
             allTic.push(data);
             if (data.status === "Open") {
@@ -170,15 +203,8 @@ export default function HomeTabs() {
             <Tab sx={tab} label="District Wise" {...a11yProps(0)} />
             <Tab sx={tab} label="Complaint Type Wise" {...a11yProps(1)} />
           </Tabs>
-          
-          <Button variant="outlined" 
-          sx={{m:2}}
-          onClick = {handleClick}
-          >
-          Open
-        </Button>
-        {openModal && <PasswordModal onCancel={handleClose}/>}
-        {openModal && <TicketsBack onCancel={handleClose}/>}
+        {isPasswordChanged==="notChanged" && <PasswordModal data={subAdminData} setIsPasswordChanged={setIsPasswordChanged} onCancel={handleClose}/>}
+        {isPasswordChanged==="notChanged" && <TicketsBack onCancel={handleClose}/>}
         </Box>
         <TabPanel value={value} index={0}>
           <div className="row">
