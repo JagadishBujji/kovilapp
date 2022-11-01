@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import TicketsBack from "../Reuseable/TicketsBack";
 import TicketsModalBox from "../Reuseable/TicketsModalBox";
 import { useNavigate, useParams } from "react-router-dom";
-import ReactAudioPlayer from "react-audio-player";
 import {
   collection,
   doc,
@@ -15,6 +14,7 @@ import {
 import { db } from "../services/firebase";
 import AssignSelect from "../Reuseable/SelectField/AssignSelect";
 import TicketImage from "../Reuseable/ImageModal/TicketImage";
+import BasicSelect from "../components/Ticketstatus/TicketStatus";
 
 const TicketsDetails = () => {
   const navigate = useNavigate();
@@ -166,10 +166,9 @@ const TicketsDetails = () => {
           <div className="row p-5">
             <div className="col-md-5">
               <Card sx={{ p: 2 }}>
-                <div className="row user-tabs">
-                  {/* <h5>{data?.doc_id}</h5> */}
-                  <Button variant="outlined">open</Button>
-                </div>
+               <div className="row ticketStatus">
+                <BasicSelect />
+               </div>
                 {/* <div className="row  user-tabs">
                 <div className="row user-name">
                   <Avatar sx={{ width: 60, height: 60, mr: 1 }} />
