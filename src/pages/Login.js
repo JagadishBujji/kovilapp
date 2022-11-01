@@ -1,5 +1,3 @@
-// import $ from "jquery";
-
 import React, { useEffect, useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../services/firebase";
@@ -12,12 +10,8 @@ import FormControl from "@mui/material/FormControl";
 import Button from "@mui/material/Button";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { fontSize, width } from "@mui/system";
-import { getDoc, doc, query, collection, where, getDocs } from "firebase/firestore";
-import axios from "axios";
-import firebaseApp from "../services/firebase";
-import { getMessaging, getToken } from 'firebase/messaging'
 
+import { getDoc, doc } from "firebase/firestore";
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
