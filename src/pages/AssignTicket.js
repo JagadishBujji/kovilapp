@@ -33,7 +33,7 @@ const AssignTicket = () => {
     getDetails();
   }, [count]); 
   const navigate = useNavigate();
-
+const [isPending,setIsPending]=useState(false)
   useEffect(() => { 
     const fetchData=async()=>{
       
@@ -82,6 +82,7 @@ const AssignTicket = () => {
     const docRef2=doc(db,"admins",selectedSubAdmin.id) 
 
         try{
+          setIsPending(true)
             await  updateDoc(docRef,{
                 status:"In-Progress",
                 sub_admin_uid:selectedSubAdmin.id,
@@ -93,21 +94,30 @@ const AssignTicket = () => {
               const newSCT=[...selectedSubAdmin.current_ticket,
               data
               ]
+          setIsPending(true)
+
               await  updateDoc(docRef2,{
                 current_ticket:newSCT
               }) 
+          setIsPending(false)
+
               alert("Sub admin has been assigned successfully") 
               navigate('/kovil/tickets')
             }
             else{
               const newSCT=[data]
+          setIsPending(true)
+
               await  updateDoc(docRef2,{
                 current_ticket:newSCT
               }) 
+          setIsPending(false)
+
               alert("Sub admin has been assigned successfully") 
               navigate('/kovil/tickets')
             } 
         }catch(err){ 
+          setIsPending(false)
             alert("error occured") 
         }
   }
@@ -307,7 +317,7 @@ const AssignTicket = () => {
                 {data?.sub_admin_uid?
                 <Button   disabled variant="contained" sx={{mt:3,ml:13,background:"#ff6000"}}>Ticket already assigned</Button>
                 :
-                <Button  type="submit"  variant="contained" sx={save}>Assign To Sub-Admin</Button>
+                <Button  type="submit" disabled={isPending} variant="contained" sx={save}>Assign To Sub-Admin</Button>
                 }
                 </div>
               </Card>

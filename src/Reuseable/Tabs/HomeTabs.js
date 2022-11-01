@@ -61,10 +61,11 @@ export default function HomeTabs() {
     setOpenModal(false)
   }
   const [isPasswordChanged,setIsPasswordChanged]=useState("inital")
+  
+  const user = JSON.parse(localStorage.getItem("user"));
+  const subAdmin=JSON.parse(localStorage.getItem("subadmin"))
   useEffect(()=>{
 
-    const user = JSON.parse(localStorage.getItem("user"));
-    const subAdmin=JSON.parse(localStorage.getItem("subadmin"))
     if(subAdmin)
     {
       const subadminId=subAdmin.uid;
@@ -95,6 +96,9 @@ getSubAdmin()
   },[])
 console.log(isPasswordChanged)
   useEffect(() => {
+    if(!subAdmin)
+    {
+
     const fetchData = async () => {
       await getDocs(collection(db, "Complaints"))
         .then((querySnapshot) => {
@@ -123,6 +127,43 @@ console.log(isPasswordChanged)
         .catch((e) => console.log(e));
     };
     fetchData();
+  }
+  else{
+    const fetchData = async () => {
+      await getDocs(collection(db, "Complaints"))
+        .then((querySnapshot) => {
+          let arr = {
+            open: [],
+            inProgress: [],
+            closed: [],
+          };
+          let allTic = [];
+          querySnapshot.forEach((doc) => {
+            // console.log(doc);
+            let data = doc.data();
+            if(data.sub_admin_uid===subAdmin.uid)
+            {
+              // console.log(data);
+            allTic.push(data);
+            if (data.status === "Open") {
+              arr.open.push(data);
+            } else if (data.status === "In-Progress") {
+              arr.inProgress.push(data);
+            } else if (data.status === "Closed") {
+              arr.closed.push(data);
+            }
+          }
+          });
+          // console.log(arr);
+          // console.log(allTic);
+          setTickets(arr);
+          setAllTickets(allTic);
+          setIsLoading(false);
+        })
+        .catch((e) => console.log(e));
+    };
+    fetchData();
+  }
   }, []);
   const [allTypes,setAllTypes]=useState();
   useEffect(()=>{

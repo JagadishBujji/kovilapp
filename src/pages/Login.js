@@ -17,7 +17,7 @@ import { getDoc, doc, query, collection, where, getDocs } from "firebase/firesto
 import axios from "axios";
 import firebaseApp from "../services/firebase";
 import { getMessaging, getToken } from 'firebase/messaging'
-
+ 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -152,14 +152,16 @@ const Login = () => {
   //   },{
   //     headers:{
   //         "Content-Type": "application/json",
-  //         "Authorization": "key=AAAAujeDNFk:APA91bFTPFchdLLWS_6Tp4LsLe14M8QX9pvLOMfUv9ILl-l3O7SGCRuVSbaOsqZvNrYRlxlRc22ygeOxHXN_85SxPsOKZG6l7H3l9WRbHJ3LWJHypuFM6kwPeZhcKTMlgnMx85tNHDt-"
-  //     }
+  //         // "Authorization": "key=AAAAujeDNFk:APA91bFTPFchdLLWS_6Tp4LsLe14M8QX9pvLOMfUv9ILl-l3O7SGCRuVSbaOsqZvNrYRlxlRc22ygeOxHXN_85SxPsOKZG6l7H3l9WRbHJ3LWJHypuFM6kwPeZhcKTMlgnMx85tNHDt-"
+  //           "Authorization":process.env.REACT_APP_MESSAGING_KEY
+  //       }
   //   }).then((res)=>{
   //     console.log(res);
   //   }).catch((err)=>{
   //     console.log(err.response);
   //   })
   // }
+  console.log(process.env)
 
   return (
     <>

@@ -19,13 +19,15 @@ import { v4 } from "uuid";
 import { storage } from "../services/firebase";
 
 const EditUser = () => {
-    const docId=useParams().id; 
-    const [data,setData]=useState();
+  const docId = useParams().id;
+  const [data, setData] = useState();
   const [allStates, setAllStates] = React.useState();
   const [userImage, setUserImage] = React.useState();
   const [previewImage, setPreviewImage] = useState();
-  const [oldImage,setOldImage]=useState();
+  const [oldImage, setOldImage] = useState();
   const [uImage, setUImage] = useState();
+  console.log(previewImage)
+  console.log(oldImage)
   const handleImage = (img) => {
     setUImage(img)
     const reader = new FileReader();
@@ -48,15 +50,15 @@ const EditUser = () => {
     alternateNumber: "",
     email: "",
     aadhar: "",
-    doc_id:"",
+    doc_id: "",
     dob: "",
-    uid:"",
-    password:"",
+    uid: "",
+    password: "",
     zipcode: "",
-    profilePic:"",
-    bjp_id:"", 
-    is_password_changed:"",
-    timestamp:"",
+    profilePic: "",
+    bjp_id: "",
+    is_password_changed: "",
+    timestamp: "",
   })
   React.useEffect(() => {
     const getDetails = async () => {
@@ -65,26 +67,26 @@ const EditUser = () => {
         const docSnap = await getDoc(docRef);
         // console.log(docSnap.data())
         setData(docSnap.data());
-        const ds=docSnap.data()
+        const ds = docSnap.data()
         setFormData({
-            firstName:ds.first_name,
-            lastName:ds.last_name,
-            role:ds.role,
-            mobile:ds.phone_number,
-            alternateNumber:ds.alternate_number,
-            email:ds.email,
-            aadhar:ds.aadhar,
-            state:ds.state,
-            zipcode:ds.zipcode,
-            doc_id:ds.doc_id,
-            dob:ds.dob,
-            district:ds.district,
-            profilePic:ds.profilePic,
-            bjp_id:ds.bjp_id,
-            password:ds.password,
-            uid:ds.uid,
-            is_password_changed:ds.is_password_changed
-         })
+          firstName: ds.first_name,
+          lastName: ds.last_name,
+          role: ds.role,
+          mobile: ds.phone_number,
+          alternateNumber: ds.alternate_number,
+          email: ds.email,
+          aadhar: ds.aadhar,
+          state: ds.state,
+          zipcode: ds.zipcode,
+          doc_id: ds.doc_id,
+          dob: ds.dob,
+          district: ds.district,
+          profilePic: ds.profilePic,
+          bjp_id: ds.bjp_id,
+          password: ds.password,
+          uid: ds.uid,
+          is_password_changed: ds.is_password_changed
+        })
         setPreviewImage(ds.profilePic);
         setOldImage(ds.profilePic)
       } catch (err) {
@@ -93,10 +95,10 @@ const EditUser = () => {
       }
     }
     getDetails();
-}, []);
-console.log(data);
- 
-  console.log(formData)
+  }, []);
+  // console.log(data);
+
+  // console.log(formData)
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const [isPending, setIsPending] = useState(false)
@@ -104,7 +106,7 @@ console.log(data);
   const handleClick = () => {
     setShowModal(true)
   }
-  console.log(oldImage===previewImage)
+  // console.log(oldImage === previewImage)
   const handleCancel = () => {
     setShowModal(false)
   }
@@ -114,7 +116,7 @@ console.log(data);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.mobile.length === 10 && formData.alternateNumber.length === 10) {
-      if (uImage || oldImage) {
+      
         if(previewImage===oldImage)
         { 
             setIsPending(true);
@@ -203,39 +205,14 @@ console.log(data);
 
         })
     }
-      }
-
-      else {
-        alert("please select a image")
-      }
-      //   try{
-      //     const docRef = await addDoc(collection(db, "userProfile"), {
-      //       first_name:formData.firstName,
-      //       last_name:formData.lastName,
-      //       role:formData.role,
-      //       state:formData.state,
-      //       district:formData.district,
-      //       phone_number:formData.mobile,
-      //       alternate_number:formData.alternateNumber,
-      //       email:formData.email,
-      //       aadhar:formData.aadhar,
-      //       dob:formData.dob,
-      //       zipcode:formData.zipcode       
-      //     });
-      //     console.log(docRef.id)
-      //     alert("user added successfully") 
-      //     navigate("/kovil/user-post")
-      // }catch(err){
-      //     console.log(err); 
-      //     alert("error occured") 
-      // }
-
     }
     else {
       alert("enter valid mobile number")
     }
 
-  }
+}
+
+
 
   const save = {
     backgroundColor: "#f17116",
@@ -295,7 +272,7 @@ console.log(data);
                   <div className="col-md-6 picture">
                     <TextField
                       id="outlined-basic"
-                    //   label="Enter First Name"
+                      //   label="Enter First Name"
                       required
                       value={formData.firstName}
                       onChange={(e) => {
@@ -317,7 +294,7 @@ console.log(data);
                   <div className="col-md-6 picture">
                     <TextField
                       id="outlined-basic"
-                    //   label="Enter Last Name"
+                      //   label="Enter Last Name"
                       variant="outlined"
                       required
                       value={formData.lastName}
@@ -341,7 +318,7 @@ console.log(data);
                   <div className="col-md-6 picture">
                     <TextField
                       id="outlined-basic"
-                    //   label="Enter Mobile Number"
+                      //   label="Enter Mobile Number"
                       variant="outlined"
                       fullWidth
                       required
@@ -363,7 +340,7 @@ console.log(data);
                   <div className="col-md-6 picture">
                     <TextField
                       id="outlined-basic"
-                    //   label="Enter Alternate Mobile Number"
+                      //   label="Enter Alternate Mobile Number"
                       variant="outlined"
                       required
                       value={formData.alternateNumber}
@@ -380,11 +357,11 @@ console.log(data);
                 </div>
                 <TextField
                   id="outlined-basic"
-                //   label="Enter Email ID"
+                  //   label="Enter Email ID"
                   variant="outlined"
                   fullWidth
                   required
-                      value={formData.email}
+                  value={formData.email}
                   type="email"
                   disabled
                   onChange={(e) => {
@@ -404,11 +381,11 @@ console.log(data);
                   <div className="col-md-6 picture">
                     <TextField
                       id="outlined-basic"
-                    //   label="Enter Aadhar Number"
+                      //   label="Enter Aadhar Number"
                       variant="outlined"
                       fullWidth
                       required
-                    value={formData.aadhar}
+                      value={formData.aadhar}
                       onChange={(e) => {
                         setFormData({
                           ...formData,
@@ -456,11 +433,11 @@ console.log(data);
                     <p>Select a state to view district</p>
                   }
                 </div>
-                <div className="row"> 
+                <div className="row">
                   <div className="col-md-6 picture">
-                  <TextField
+                    <TextField
                       id="outlined-basic"
-                      label= {formData.bjp_id?"":"BJP_ID"}  
+                      label={formData.bjp_id ? "" : "BJP_ID"}
                       value={formData.bjp_id}
                       variant="outlined"
                       fullWidth
@@ -475,9 +452,9 @@ console.log(data);
                         fontSize: "14px",
                         fontWeight: "900",
                         fontFamily: "sans-serif",
-                        mb:8
+                        mb: 8
                       }}
-                    /> 
+                    />
                   </div>
                   <div className="col-md-6 picture1">
                     <Button
@@ -487,11 +464,11 @@ console.log(data);
                       + Add
                     </Button><TextField
                       id="outlined-basic"
-                    //   label="ZipCode"
+                      //   label="ZipCode"
                       variant="outlined"
                       fullWidth
                       required
-                        value={formData.zipcode}
+                      value={formData.zipcode}
                       onChange={(e) => {
                         setFormData({
                           ...formData,
@@ -512,7 +489,7 @@ console.log(data);
                   <Button variant="text" sx={{ mr: 2 }} onClick={handleClick}>
                     Cancel
                   </Button>
-                 {data && <Button type="submit"
+                  {data && <Button type="submit"
                     disabled={isPending}
                     variant="contained" sx={save}>Update User</Button>}
                 </div>

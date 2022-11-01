@@ -82,7 +82,10 @@ const rows = [
 
 export default function StickyHeadTable({ allTicketsAvailable }) {
   const user = JSON.parse(localStorage.getItem("user"));
-  const [selectState, setSelectState] = React.useState("tamil nadu")
+  const subAdmin=JSON.parse(localStorage.getItem("subadmin"))
+
+  const [selectState, setSelectState] = React.useState(subAdmin?"":"tamil nadu")
+  
   const [allTickets, setAllTickets] = React.useState(allTicketsAvailable)
   React.useEffect(() => {
     if (selectState) {

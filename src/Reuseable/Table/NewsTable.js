@@ -137,7 +137,7 @@ export default function NewsTable() {
         <DropDownIcon />
       ))
   })
-  console.log(rows);
+  // console.log(rows);
   const stickyhead = {
     background: "#F2F4F8",
     fontSize: "16px",

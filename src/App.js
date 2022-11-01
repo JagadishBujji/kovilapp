@@ -76,10 +76,10 @@ export default function App() {
             element={user || subAdmin ? <TicketsDetails /> : <Navigate to="/" />}
             // element={<TicketsDetails />}
           />
-          <Route
+          {/* <Route
             path="assigntickets/:id"
             element={user || subAdmin ? <AssignTicket /> : <Navigate to="/" />}
-          />
+          /> */}
           <Route
             path="newstable"
             element={user  ? <NewsTable /> : <Navigate to="/" />}
@@ -88,6 +88,8 @@ export default function App() {
             path="complaintstypetable"
             element={user ? <ComplaintTypeTable /> : <Navigate to="/" />}
           />
+        <Route path="*"
+        element={user? <Tickets/>:<Navigate to="/"/>}/>
         </Route> 
       </Routes> 
     </div>

@@ -4,10 +4,16 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { getAuth, deleteUser } from "firebase/auth";
+import { deleteDoc, doc } from 'firebase/firestore';
+import { db } from '../../services/firebase';
 
-export default function UserDropDown({row}) {
+
+export default function UserDropDown({ row }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
+  console.log(row);
   const open = Boolean(anchorEl);
   // console.log(row);
   const handleClick = (event) => {
@@ -16,13 +22,43 @@ export default function UserDropDown({row}) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const [isPending, setIsPending] = useState();
+
+  const handleDelete = async () => { 
+    const auth = getAuth();
+    const user = auth.currentUser;
+    setIsPending(true)
+    await deleteUser(user).then(async () => {
+
+      setIsPending(true)
+      await deleteDoc(doc(db, "admins", row.doc_id))
+        .then(() => {
+          setIsPending(false)
+          alert("user deleted")
+          setAnchorEl(null);
+          navigate(`/kovil/home-post`)
+        }).catch((err) => {
+          setIsPending(false)
+
+          alert(err)
+          setAnchorEl(null);
+
+        })
+    }).catch((error) => {
+      setIsPending(false)
+
+      alert(error)
+      setAnchorEl(null);
+
+    }); 
+  }
 
   return (
     <div>
       <span
         onClick={handleClick}
       >
-       <MoreVertIcon />
+        <MoreVertIcon />
       </span>
       <Menu
         id="basic-menu"
@@ -32,15 +68,15 @@ export default function UserDropDown({row}) {
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
-        sx={{ml: 3}}
+        sx={{ ml: 3 }}
       >
-        <MenuItem sx={{align:"center"}} onClick={()=>{
-            navigate(`/kovil/editUser/${row.id}`)
+        <MenuItem sx={{ align: "center" }} onClick={() => {
+          navigate(`/kovil/editUser/${row.id}`)
         }}><i class="fas fa-edit mr-2"></i>Edit</MenuItem>
-        <MenuItem sx={{align:"center"}} onClick={handleClose}><i class="fas fa-trash mr-2"></i>Delete</MenuItem>
-        <MenuItem sx={{align:"center"}} onClick={handleClose}><i class="fas fa-eye-slash mr-2"></i>Disable</MenuItem>
-        <MenuItem  sx={{align:"center"}} onClick={()=>{
-            navigate(`/kovil/userdetails/${row.id}`)
+        <MenuItem disabled={isPending} sx={{ align: "center" }} onClick={handleDelete}><i class="fas fa-trash mr-2"></i>Delete</MenuItem>
+        <MenuItem sx={{ align: "center" }} onClick={handleClose}><i class="fas fa-eye-slash mr-2"></i>Disable</MenuItem>
+        <MenuItem  sx={{ align: "center" }} onClick={() => {
+          navigate(`/kovil/userdetails/${row.id}`)
         }}><i class="fas fa-eye mr-2"></i>View</MenuItem>
       </Menu>
     </div>

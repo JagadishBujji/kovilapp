@@ -1,49 +1,93 @@
 import { Card, } from "@mui/material";
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import Button from "@mui/material/Button";
-import { useState } from "react";
-import { collection,updateDoc,doc, addDoc, serverTimestamp } from "firebase/firestore"; 
-import { db } from "../../services/firebase"; 
+import { useState, useEffect } from "react";
+import { collection, updateDoc, doc, addDoc, serverTimestamp, getDocs } from "firebase/firestore";
+import { db } from "../../services/firebase";
+import axios from 'axios'
 
 const NewsModal = (props) => {
-  console.log(props.editData)
-  const user=JSON.parse(localStorage.getItem("user"));
-  const userEmail=user.email
-  const userId=user.uid
-  const [news,setNews]=useState(props.editData?.article)
-  const date=new Date();
+  // console.log(props.editData)
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userEmail = user.email
+  const [isPending, setIsPending] = useState(false)
+  const userId = user.uid
+  const [allUsers, setAllUsers] = useState();
+  const [news, setNews] = useState(props.editData?.article)
+  const date = new Date();
   // console.log(date)
-  const day=date.getDate();
-  const month=date.getMonth();
-  const year=date.getFullYear();
-  const dd=`${day}-${month}-${year}` 
+  const day = date.getDate();
+  const month = date.getMonth();
+  const year = date.getFullYear();
+  const dd = `${day}-${month}-${year}`
   // console.log(milliseconds)
-  const handleSubmit=async(e)=>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  var milliseconds = (new Date).getTime();
+    var milliseconds = (new Date).getTime();
 
     // console.log(news,userEmail,dd,userId)
-    try{
-      const docRef = await addDoc(collection(db, "short_news"), {
-  
-        posted_on:dd,
-        published_by:userEmail,
-        news,
-        posted_on_timestamp:milliseconds
-      });
-      console.log("Document written with ID: ", docRef.id);
-      props.setCount(props.count+1)
-      alert("News added successfully")
-      props.onCancel()
-    }catch(err){
-      props.setCount(props.count+1)
-      console.log(err);
-      alert(err);
-      props.onCancel()
+    // try {
+    //   const docRef = await addDoc(collection(db, "short_news"), {
 
-    }
+    //     posted_on: dd,
+    //     published_by: userEmail,
+    //     news,
+    //     posted_on_timestamp: milliseconds
+    //   });
 
-// Add a new document with a generated id.
+    //   console.log("Document written with ID: ", docRef.id);
+    //   props.setCount(props.count + 1)
+    //   alert("News added successfully")
+    //   props.onCancel()
+    // } catch (err) {
+    //   props.setCount(props.count + 1)
+    //   console.log(err);
+    //   alert(err);
+    //   props.onCancel()
+
+    // }
+    await addDoc(collection(db, "short_news"), {
+      posted_on: dd,
+      published_by: userEmail,
+      news,
+      posted_on_timestamp: milliseconds
+    })
+      .then(async(res) => {
+        await axios.post("https://fcm.googleapis.com/fcm/send", {
+          "notification": {
+            "title": "New",
+            "body": "Hey there, a new news is added.",
+            "click_action": "http://localhost:3000/",
+            "icon": "http://url-to-an-icon/icon.png"
+          },
+          "registration_ids": allUsers
+        }, {
+          headers: {
+            "Content-Type": "application/json",
+            // "Authorization": "key=AAAAujeDNFk:APA91bFTPFchdLLWS_6Tp4LsLe14M8QX9pvLOMfUv9ILl-l3O7SGCRuVSbaOsqZvNrYRlxlRc22ygeOxHXN_85SxPsOKZG6l7H3l9WRbHJ3LWJHypuFM6kwPeZhcKTMlgnMx85tNHDt-"
+            "Authorization": process.env.REACT_APP_MESSAGING_KEY
+          }
+        }).then((res) => {
+          console.log(res);
+          props.setCount(props.count + 1)
+          alert("News added successfully")
+          props.onCancel()
+        }).catch((err) => {
+          props.setCount(props.count + 1)
+          console.log(err);
+          alert(err);
+          props.onCancel()
+        })
+
+      }).catch((err) => {
+        props.setCount(props.count + 1)
+        console.log(err);
+        alert(err);
+        props.onCancel()
+
+      })
+
+    // Add a new document with a generated id.
 
   }
   const save = {
@@ -62,63 +106,87 @@ const NewsModal = (props) => {
     color: "#f17116",
     m: 2,
     "&:hover": {
-        borderColor: "#f17116",
+      borderColor: "#f17116",
       color: "#f17116",
     },
 
   };
-  const handleUpdate=async()=>{
-    const docRef=doc(db,"short_news",props.editData.ID)
-   
-    await updateDoc(docRef,{
-      news:news
-    })
-    .then((res)=>{
-      console.log(res);
-      props.setCount(props.count+1) 
-      alert("updated successfully")
-      props.onCancel()
+  const handleUpdate = async () => {
+    const docRef = doc(db, "short_news", props.editData.ID)
 
-    }).catch((err)=>{
-      console.log(err);
-      alert(err);
-      props.onCancel()
+    await updateDoc(docRef, {
+      news: news
     })
+      .then((res) => {
+        console.log(res);
+        props.setCount(props.count + 1)
+        alert("updated successfully")
+        props.onCancel()
+
+      }).catch((err) => {
+        console.log(err);
+        alert(err);
+        props.onCancel()
+      })
   }
+  useEffect(() => {
+    const getUser = async () => {
+      setIsPending(true)
+      await getDocs(collection(db, "userProfile"))
+        .then((querySnapshot) => {
+          let arr = []
+          querySnapshot.forEach((doc) => {
+            let data = doc.data();
+            // console.log(data)
+            arr.push(data.fcm_token)
+          });
+          setAllUsers(arr);
+          setIsPending(false)
+
+        })
+        .catch((e) => {
+          setIsPending(false)
+
+          console.log(e)
+        });
+    }
+    getUser();
+  }, [])
+  // console.log(allUsers)
   return (
     <form onSubmit={handleSubmit}>
-    <Card sx={{ p: 3 }} className="Newsmodal">
+      <Card sx={{ p: 3 }} className="Newsmodal">
         <div className="row user-tabs">
-        <h4>Add News</h4>
-        <span className = "crossBtn" onClick={props.onCancel}><b>X</b></span>
-      </div>
-      <TextareaAutosize
-      aria-label="minimum height"
-      minRows={8}
-      value={news}
-      onChange={(e)=>{
-        setNews(e.target.value)
-      }}
-      placeholder=""
-      style={{ width: 500 }}
-    />
-      <div className="row complaints-btn ">
-      {props.forWhat? 
-      <Button variant="contained" sx={save} 
-      type="button" onClick={handleUpdate}>
-       Update
-     </Button>:
-     <Button variant="contained" sx={save} 
-        type="submit">
-          Save
-        </Button>
-        }
-        <Button variant="outlined"  type="button" sx={cancel} onClick={props.onSave}>
-          Cancel
-        </Button>
+          <h4>Add News</h4>
+          <span className="crossBtn" onClick={props.onCancel}><b>X</b></span>
+        </div>
+        <TextareaAutosize
+          aria-label="minimum height"
+          minRows={8}
+          value={news}
+          onChange={(e) => {
+            setNews(e.target.value)
+          }}
+          placeholder=""
+          style={{ width: 500 }}
+        />
+        <div className="row complaints-btn ">
+          {props.forWhat ?
+            <Button variant="contained" sx={save}
+              type="button" onClick={handleUpdate}>
+              Update
+            </Button> :
+            <Button variant="contained" sx={save}
+              type="submit" disabled={isPending}>
+              Save
+            </Button>
+          }
+          <Button variant="outlined" type="button" sx={cancel} onClick={props.onSave}>
+            Cancel
+          </Button>
 
-      </div>
-    </Card>
+        </div>
+      </Card>
     </form>
   );
 };

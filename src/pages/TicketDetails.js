@@ -15,6 +15,7 @@ import {
 import { db } from "../services/firebase";
 import AssignSelect from "../Reuseable/SelectField/AssignSelect";
 import TicketImage from "../Reuseable/ImageModal/TicketImage";
+import BasicSelect from "../Reuseable/DropDown/TicketStatus";
 
 const TicketsDetails = () => {
   const navigate = useNavigate();
@@ -42,27 +43,53 @@ const TicketsDetails = () => {
   }, [count]);
   console.log(data);
   const [subAdmins, setSubAdmins] = useState();
+  const subadmin = JSON.parse(localStorage.getItem("subadmin"))
   useEffect(() => {
-    const fetchData = async () => {
-      await getDocs(collection(db, "userProfile"))
-        .then((querySnapshot) => {
-          let subAd = [];
-          querySnapshot.forEach((doc) => {
-            let data = doc.data();
-            const rl = data.role;
-            const nD = {
-              id: doc.id,
-              ...data,
-            };
-            if (rl?.toLowerCase() === "sub-admin") {
-              subAd.push(nD);
-            }
-          });
-          setSubAdmins(subAd);
-        })
-        .catch((e) => console.log(e));
-    };
-    fetchData();
+    if (!subadmin) {
+      const fetchData = async () => {
+        await getDocs(collection(db, "admins"))
+          .then((querySnapshot) => {
+            let subAd = [];
+            querySnapshot.forEach((doc) => {
+              let data = doc.data();
+              const rl = data.role;
+              const nD = {
+                id: doc.id,
+                ...data,
+              };
+              if (rl?.toLowerCase() === "sub-admin") {
+                subAd.push(nD);
+              }
+            });
+            setSubAdmins(subAd);
+          })
+          .catch((e) => console.log(e));
+      };
+      fetchData();
+    }
+    else {
+      const fetchData = async () => {
+        await getDocs(collection(db, "admins"))
+          .then((querySnapshot) => {
+            let subAd = [];
+            querySnapshot.forEach((doc) => {
+              let data = doc.data();
+              const rl = data.role;
+              const nD = {
+                id: doc.id,
+                ...data,
+              };
+              if (rl?.toLowerCase() === "sub-admin" && data.doc_id !== subadmin.uid) {
+                subAd.push(nD);
+              }
+            });
+            setSubAdmins(subAd);
+          })
+          .catch((e) => console.log(e));
+      };
+      fetchData();
+
+    }
   }, []);
   // console.log(subAdmins);
   const handleModal = () => {
@@ -71,40 +98,48 @@ const TicketsDetails = () => {
   const deleteBack = () => {
     setOpenModal(false);
   };
-
+  console.log(selectedSubAdmin);
+  const [isPending,setIsPending]=useState(false)
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     console.log(selectedSubAdmin, assignDate, data.doc_id);
     const docRef = doc(db, "Complaints", data.doc_id);
-    const docRef2 = doc(db, "userProfile", selectedSubAdmin.id);
-
+    const docRef2 = doc(db, "admins", selectedSubAdmin.doc_id);
+    const subAdminName = selectedSubAdmin.first_name + " " + selectedSubAdmin.last_name
     try {
+      setIsPending(true)
       await updateDoc(docRef, {
-        status: "In-Progress",
-        sub_admin_uid: selectedSubAdmin.id,
+        status: "Open",
+        sub_admin_uid: selectedSubAdmin.doc_id,
         assinged_date: assignDate,
+        sub_admin_name: subAdminName
       });
-      if (selectedSubAdmin.current_ticket) {
-        const newSCT = [...selectedSubAdmin.current_ticket, data];
-        await updateDoc(docRef2, {
-          current_ticket: newSCT,
-        });
+      // if (selectedSubAdmin.current_ticket) {
+      //   const newSCT = [...selectedSubAdmin.current_ticket, data];
+      //   await updateDoc(docRef2, {
+      //     current_ticket: newSCT,
+      //   });
+      //   alert("Sub admin has been assigned successfully");
+      //   navigate("/kovil/tickets");
+      // } else {
+      //   const newSCT = [data];
+      //   await updateDoc(docRef2, {
+      //     current_ticket: newSCT,
+      //   });
+      
         alert("Sub admin has been assigned successfully");
+      setIsPending(false)
+
         navigate("/kovil/tickets");
-      } else {
-        const newSCT = [data];
-        await updateDoc(docRef2, {
-          current_ticket: newSCT,
-        });
-        alert("Sub admin has been assigned successfully");
-        navigate("/kovil/tickets");
-      }
+      // }
       // await  updateDoc(docRef2,{
       //   current_ticket:data.doc_id
       // })
       // alert("Sub admin has been assigned successfully")
       // navigate('/kovil/tickets')
     } catch (err) {
+      setIsPending(false)
+
       alert("error occured");
     }
   };
@@ -168,7 +203,8 @@ const TicketsDetails = () => {
               <Card sx={{ p: 2 }}>
                 <div className="row user-tabs">
                   {/* <h5>{data?.doc_id}</h5> */}
-                  <Button variant="outlined">open</Button>
+                  {data  && <BasicSelect count={count} setCount={setCount} data={data} />}
+
                 </div>
                 {/* <div className="row  user-tabs">
                 <div className="row user-name">
@@ -177,6 +213,12 @@ const TicketsDetails = () => {
                 </div>
                 <Button variant="outlined">Admin</Button>
               </div> */}
+                <div>
+                  <p>Current status</p>
+                  <p>
+                    <b>{data?.status}</b>
+                  </p>
+                </div>
                 <div>
                   <p>Complaint</p>
                   <p>
@@ -208,7 +250,7 @@ const TicketsDetails = () => {
                   </p>
                 </div>
                 <div>
-                  <p>Due Date</p>
+                  <p>Assigned Date</p>
                   <p>
                     <b>{data?.assinged_date}</b>
                   </p>
@@ -284,14 +326,14 @@ const TicketsDetails = () => {
                   {data?.files?.length > 0 ? (
                     data?.files?.map((fs) => (
                       // <img
-                      
+
                       //   src={fs}
                       //   alt="compliant image"
                       //   width="80"
                       //   height="80"
                       //   className="img-upload"
                       // />
-                     <TicketImage source={fs}/>
+                      <TicketImage source={fs} />
                     ))
                   ) : (
                     <p>No image found</p>
@@ -332,24 +374,26 @@ const TicketsDetails = () => {
                   <Button sx={tabs} variant="outlined" onClick={handleModal}>
                     Add Feedback
                   </Button>
-                  <Button
+                  {/* <Button
                     sx={tab}
                     variant="contained"
                     onClick={() => navigate(`/kovil/assigntickets/${docId}`)}
                   >
                     Reassign Tickets
-                  </Button>
-
-                  {/* {data?.sub_admin_uid?
-                 <Button variant="contained" disabled>Ticket is already assigned</Button>
-                  :
-                  <Button variant="contained" onClick={()=>setShowAdmin(!showAdmin)}>Assign Tickets</Button>}
-                   */}
+                  </Button> */}
+                  {data?.status === "Closed" ?
+                    <Button variant="contained" disabled> Ticket is closed</Button>
+                    :
+                   <>
+                   
+                   <Button variant="contained" onClick={() => setShowAdmin(!showAdmin)}>ReAssign Tickets</Button>
+                  </>
+                  }
                 </div>
               </Card>
 
               {showAdmin && (
-                <div className="col-md-7">
+                <div className="col-md-8">
                   <form onSubmit={handleFormSubmit}>
                     <Card sx={{ mt: 5, p: 2 }}>
                       <div>
@@ -382,13 +426,17 @@ const TicketsDetails = () => {
                         />
                       </div>
                       <div>
+
+
                         <Button
                           type="submit"
+                          disabled={isPending} 
                           variant="contained"
                           sx={{ mt: 3, ml: 13, background: "#ff6000" }}
                         >
                           Assign To Sub-Admin
                         </Button>
+
                       </div>
                     </Card>
                   </form>

@@ -136,12 +136,13 @@ const UserDetails = () => {
                 </h5>
                 <p>#KAT09</p>
               </div>
-              {data?.current_ticket?
+              {data?.current_ticket?.length>0 ?
               data.current_ticket.map((cc)=>(
                 
-              <div onClick={()=>{
-                alert("hello")
-              }} className="row Userdetails">
+              <div
+              onClick={() => navigate(`/kovil/ticketsdetails/${cc.doc_id}`)}
+              
+              className="row Userdetails">
                 <div >
                   <p>Posted On</p>
                   <p><b>{cc.posted_on}</b></p>
@@ -168,9 +169,50 @@ const UserDetails = () => {
               :
               <p>No current ticket available</p>}
             </Card>
-            <Card sx={{mt: 5}}>
+            {/* <Card sx={{mt: 5}}>
                 <PreviousTickets/>
-            </Card>
+            </Card> */}
+            <br/>
+            <Card sx={{ p: 2 }}>
+              <div>
+                <h5>
+                  <b>Previous Ticket</b>
+                </h5>
+                <p>#KAT09</p>
+              </div>
+            {data?.closed_ticket?
+              data.closed_ticket.map((cc)=>(
+                
+              <div
+              onClick={() => navigate(`/kovil/ticketsdetails/${cc.doc_id}`)}
+              
+              className="row Userdetails">
+                <div >
+                  <p>Posted On</p>
+                  <p><b>{cc.posted_on}</b></p>
+                </div>
+                {/* <div>
+                  <p>Due Date</p>
+                  <p><b>28-05-2022</b></p>
+                </div> */}
+                <div>
+                  <p>Admin</p>
+                  <p>#KAU02 Srivatsav</p>
+                </div> 
+                <div>
+                  <p>Compalint Type</p>
+                  <p><b>{cc.complaint_type}</b></p>
+                </div>
+                <div>
+                  <p>Message</p>
+                  <p><b>{cc.message}</b></p>
+                </div>
+                 
+              </div>
+              ))
+              :
+              <p>No closed ticket available</p>}
+              </Card>
           </div>
         </div>
       </Box>

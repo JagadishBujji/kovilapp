@@ -35,7 +35,7 @@ const columns = [
     format: (value) => value.toFixed(2),
   },
   {
-    id: "subadmin",
+    id: "sub_admin_name",
     label: "Sub-Admin",
     minWidth: 120,
     align: "left",
@@ -147,7 +147,9 @@ export default function TicketTable({ tickets }) {
 
                         
                           {column.id === "actions" ? (
-                            <TicketsDropDown onNavigate={()=>navigate("kovil/assigntickets/4TL5j9ZbJV5d0NpSqlt2")} onPress={() => navigate(`/kovil/ticketsdetails/${row.doc_id}`)} />
+                            <TicketsDropDown
+                             onNavigate={()=>navigate("kovil/assigntickets/4TL5j9ZbJV5d0NpSqlt2")}
+                              onPress={() => navigate(`/kovil/ticketsdetails/${row.doc_id}`)} />
                           ) : column.format && typeof value === "number" ? (
                             column.format(value)
                           ) : (

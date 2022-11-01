@@ -325,12 +325,12 @@ const AddUser = () => {
                         .then(async(res) => {
                            
                           setIsPending(true) 
-                          await axios.post("http://localhost:5000/sendMail", {
-                            email: formData.email,
-                            password: formData.password,
-                            name:formData.firstName
-                          })
-                            .then((res) => {
+                          // await axios.post("http://localhost:5000/sendMail", {
+                          //   email: formData.email,
+                          //   password: formData.password,
+                          //   name:formData.firstName
+                          // })
+                          //   .then((res) => {
                               setIsPending(false)
                               alert("user created")
                               navigate("/kovil/user-post")
@@ -340,7 +340,7 @@ const AddUser = () => {
                               console.log(err);
                             })
 
-                        })
+                        // })
  
                 })
             })
@@ -370,6 +370,7 @@ const AddUser = () => {
                 email: formData.email,
                 aadhar: formData.aadhar,
                 dob: formData.dob,
+                doc_id:userId,
                 uid: userId,
                 password: formData.password,
                 zipcode: formData.zipcode,
@@ -382,13 +383,13 @@ const AddUser = () => {
               
                   .then((res) => {
                      
-                    setIsPending(true) 
-                    axios.post("http://localhost:5000/sendMail", {
-                      email: formData.email,
-                      password: formData.password,
-                      name:formData.firstName
-                    })
-                      .then((res) => {
+                    // setIsPending(true) 
+                    // axios.post("http://localhost:5000/sendMail", {
+                    //   email: formData.email,
+                    //   password: formData.password,
+                    //   name:formData.firstName
+                    // })
+                    //   .then((res) => {
                         setIsPending(false)
                         alert("user created")
                         navigate("/kovil/user-post")
@@ -398,7 +399,7 @@ const AddUser = () => {
                         console.log(err);
                       })
 
-                  })
+                  // })
  
           })
           .catch((err) => {
