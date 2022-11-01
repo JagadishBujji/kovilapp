@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import TicketsBack from "../Reuseable/TicketsBack";
 import TicketsModalBox from "../Reuseable/TicketsModalBox";
 import { useNavigate, useParams } from "react-router-dom";
-import ReactAudioPlayer from "react-audio-player";
 import {
   collection,
   doc,

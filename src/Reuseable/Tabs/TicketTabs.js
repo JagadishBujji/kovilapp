@@ -81,9 +81,6 @@ export default function TicketTabs({ tickets }) {
           
           
           />
-          <Tab sx={tab} label= {`New & Not Assigned [${tickets ? tickets.closed.length : 3}]`}{...a11yProps(3)} 
-          
-          />
         </Tabs>
       </Box>
       {tickets === null ? (
