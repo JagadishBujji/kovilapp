@@ -586,7 +586,7 @@ a {
   padding: 1rem;
   text-align: center;
   width: 35rem;
-  height: 18rem;
+  height: 25rem;
   z-index: 10;
   position: fixed;
   top: 20vh;
@@ -597,6 +597,16 @@ a {
   justify-content: end;
   margin:5px
 }
+.Pass-inner{
+  width:220px;
+  margin: 10px;
+}
+.passwordtext{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
 .cancelButton{
   border-color: #f17116;
   color:#f17116;
