@@ -18,6 +18,7 @@ export default function BasicMenu({data,count,setCount}) {
   };
   const handleClose = () => {
     setOpenModal(false);
+    setAnchorEl(null);
   };
 
   const editHandler = () => {

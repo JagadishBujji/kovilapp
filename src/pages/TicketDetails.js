@@ -237,7 +237,7 @@ const TicketsDetails = () => {
                   </p>
                 </div>
                 <div>
-                  <p>Admin</p>
+                  <p>Temple</p>
                   <p>
                     <b>{data?.temple_name}</b>
                   </p>
@@ -385,7 +385,7 @@ const TicketsDetails = () => {
                     :
                    <>
                    
-                   <Button variant="contained" onClick={() => setShowAdmin(!showAdmin)}>ReAssign Tickets</Button>
+                   <Button variant="contained" sx={save} onClick={() => setShowAdmin(!showAdmin)}>ReAssign Tickets</Button>
                   </>
                   }
                 </div>
