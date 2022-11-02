@@ -45,13 +45,13 @@ const Login = () => {
             if (role === "admin") {
               setIsPending(false);
 
-              localStorage.setItem("user", JSON.stringify(user));
+              localStorage.setItem("user", JSON.stringify(data));
               window.location.reload();
             }
             else if (role === "sub-admin") {
               setIsPending(false);
 
-              localStorage.setItem("subadmin", JSON.stringify(user));
+              localStorage.setItem("subadmin", JSON.stringify(data));
               window.location.reload();
             }
           }).catch((err) => {

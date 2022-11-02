@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 const UserDetails = () => {
   const docId=useParams().id
+  const subadmin=JSON.parse(localStorage.getItem("subadmin"))
   const [data, setData] = useState(); 
   const [count,setCount]=useState(0) 
   useEffect(() => {
@@ -69,7 +70,7 @@ const UserDetails = () => {
                  {!data?.profilePic && <Avatar sx={{ width: 60, height: 60, mr: 1 }} />}
                  <p className="m-0">{data?.first_name} {data?.last_name}</p>
                 </div>
-                <Button variant="contained" sx={save}>Admin</Button>
+                <Button variant="contained" sx={save}>{data?.role==="Sub-Admin"? "Subadmin":"Admin"}</Button>
               </div>
               <div>
                 <p>Mobile Number</p>
@@ -128,7 +129,7 @@ const UserDetails = () => {
             </Card>
           </div>
 
-          <div className="col-md-7">
+        {data?.role==="Sub-Admin" &&  <div className="col-md-7">
             <Card sx={{ p: 2 }}>
               <div>
                 <h5>
@@ -213,7 +214,7 @@ const UserDetails = () => {
               :
               <p>No closed ticket available</p>}
               </Card>
-          </div>
+          </div>}
         </div>
       </Box>
     </Stack>

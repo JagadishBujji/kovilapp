@@ -29,7 +29,7 @@ export default function BasicSelect({formData,setFormData}) {
           onChange={handleChange}
           
         >
-          <MenuItem value={"Admin"}>Admin</MenuItem>
+          {/* <MenuItem value={"Admin"}>Admin</MenuItem> */}
           <MenuItem value={"Sub-Admin"}>Sub-Admin</MenuItem>
         
         </Select>
