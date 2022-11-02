@@ -11,13 +11,28 @@ import { useState } from "react";
 import UserModal from "../Reuseable/UserModal/UserModal";
 import TicketsBack from "../Reuseable/TicketsBack";
 import { useNavigate } from "react-router-dom";
-import { doc, addDoc, collection, serverTimestamp, setDoc } from 'firebase/firestore'
+import {
+  doc,
+  addDoc,
+  collection,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
 import { auth, db } from "../services/firebase";
-import { ref, uploadBytes, getDownloadURL, listAll, list } from 'firebase/storage'
-import country_state_district from 'country_state_district'
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  listAll,
+  list,
+} from "firebase/storage";
+import country_state_district from "country_state_district";
 import { v4 } from "uuid";
 import { storage } from "../services/firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import axios from "axios";
 
 const AddUser = () => {
@@ -26,20 +41,20 @@ const AddUser = () => {
   const [previewImage, setPreviewImage] = useState();
   const [uImage, setUImage] = useState();
   const handleImage = (img) => {
-    setUImage(img)
+    setUImage(img);
     const reader = new FileReader();
-    reader.readAsDataURL(img)
+    reader.readAsDataURL(img);
     reader.onloadend = () => {
-      setPreviewImage(reader.result)
-    }
-  }
+      setPreviewImage(reader.result);
+    };
+  };
   const [error, setError] = useState();
-  const [setPassword, setPasswordError] = useState()
+  const [setPassword, setPasswordError] = useState();
   React.useEffect(() => {
-    const states = country_state_district.getAllStates()
-    setAllStates(states)
-  }, [])
-  const pass = Math.floor(Math.random() * 10000000000)
+    const states = country_state_district.getAllStates();
+    setAllStates(states);
+  }, []);
+  const pass = Math.floor(Math.random() * 10000000000);
   // console.log(pass)
   const [formData, setFormData] = useState({
     firstName: "",
@@ -54,29 +69,28 @@ const AddUser = () => {
     dob: "",
     district: "",
     password: pass,
-    bjp_id:""
-
-  })
+    bjp_id: "",
+  });
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-  const [isPending, setIsPending] = useState(false)
+  const [isPending, setIsPending] = useState(false);
   const [stateClicked, setStateClicked] = useState();
   const handleClick = () => {
-    setShowModal(true)
-  }
+    setShowModal(true);
+  };
   const handleCancel = () => {
-    setShowModal(false)
-  }
+    setShowModal(false);
+  };
   const deleteHandle = () => {
-    navigate("/kovil/user-post")
-  }
+    navigate("/kovil/user-post");
+  };
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
   //   if (formData.mobile.length === 10 && formData.alternateNumber.length === 10) {
   //     if (uImage) {
   //       setIsPending(true)
   //       const imageRef = ref(storage, `images/${uImage.name + v4()}`);
-  //       await 
+  //       await
   //       uploadBytes(imageRef, uImage).then((snapshot) => {
   //         getDownloadURL(snapshot.ref).then((url) => {
   //           const imageURL = url
@@ -131,7 +145,7 @@ const AddUser = () => {
   //   }
 
   // }
-// ******recent
+  // ******recent
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
   //   console.log(formData)
@@ -180,8 +194,8 @@ const AddUser = () => {
   //                       role: formData.role
   //                     })
   //                       .then(async(res) => {
-                           
-  //                         // setIsPending(true) 
+
+  //                         // setIsPending(true)
   //                         // await axios.post("http://localhost:5000/sendMail", {
   //                         //   email: formData.email,
   //                         //   password: formData.password,
@@ -209,11 +223,11 @@ const AddUser = () => {
   //           console.log(err.code);
   //         });
   //     }
-  //     else { 
+  //     else {
   //       setIsPending(true);
   //       await createUserWithEmailAndPassword(auth, formData.email, formData.password)
   //         .then((res) => {
-  //           setIsPending(true); 
+  //           setIsPending(true);
   //           const userId = res.user.uid
   //           console.log(userId)
   //           setDoc(doc(db, "userProfile", userId),
@@ -245,8 +259,8 @@ const AddUser = () => {
   //                 role: formData.role
   //               })
   //                 .then((res) => {
-                     
-  //                   // setIsPending(true) 
+
+  //                   // setIsPending(true)
   //                   // axios.post("http://localhost:5000/sendMail", {
   //                   //   email: formData.email,
   //                   //   password: formData.password,
@@ -282,140 +296,140 @@ const AddUser = () => {
   // }
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData)
-    if (formData.mobile.length === 10 && formData.alternateNumber.length === 10) {
+    console.log(formData);
+    if (
+      formData.mobile.length === 10 &&
+      formData.alternateNumber.length === 10
+    ) {
       if (uImage) {
         setIsPending(true);
-        await createUserWithEmailAndPassword(auth, formData.email, formData.password)
+        await createUserWithEmailAndPassword(
+          auth,
+          formData.email,
+          formData.password
+        )
           .then((res) => {
             setIsPending(true);
 
-            const userId = res.user.uid
-            console.log(userId)
+            const userId = res.user.uid;
+            console.log(userId);
             const imageRef = ref(storage, `images/${uImage.name + v4()}`);
             uploadBytes(imageRef, uImage).then((snapshot) => {
-              getDownloadURL(snapshot.ref)
-                .then((url) => {
-                  setIsPending(true);
+              getDownloadURL(snapshot.ref).then((url) => {
+                setIsPending(true);
 
-                  const imageURL = url
-                  setDoc(doc(db, "admins", userId),
-                    {
-                      first_name: formData.firstName,
-                      last_name: formData.lastName,
-                      role: formData.role,
-                      state: formData.state,
-                      district: formData.district,
-                      phone_number: formData.mobile,
-                      alternate_number: formData.alternateNumber,
-                      email: formData.email,
-                      aadhar: formData.aadhar,
-                      doc_id:userId,
-                      dob: formData.dob,
-                      uid: userId,
-                      password: formData.password,
-                      zipcode: formData.zipcode,
-                      profilePic: imageURL,
-                      bjp_id:formData.bjp_id,
-                      timestamp: serverTimestamp(),
-                      is_password_changed:false,
-                    }
-                  )
-                     
-                        .then(async(res) => {
-                           
-                          setIsPending(true) 
-                          // await axios.post("http://localhost:5000/sendMail", {
-                          //   email: formData.email,
-                          //   password: formData.password,
-                          //   name:formData.firstName
-                          // })
-                          //   .then((res) => {
-                              setIsPending(false)
-                              alert("user created")
-                              navigate("/kovil/user-post")
-                              console.log(res);
-                            }).catch((err) => {
-                              alert(err)
-                              console.log(err);
-                            })
-
-                        // })
- 
+                const imageURL = url;
+                setDoc(doc(db, "admins", userId), {
+                  first_name: formData.firstName,
+                  last_name: formData.lastName,
+                  role: formData.role,
+                  state: formData.state,
+                  district: formData.district,
+                  phone_number: formData.mobile,
+                  alternate_number: formData.alternateNumber,
+                  email: formData.email,
+                  aadhar: formData.aadhar,
+                  doc_id: userId,
+                  dob: formData.dob,
+                  uid: userId,
+                  password: formData.password,
+                  zipcode: formData.zipcode,
+                  profilePic: imageURL,
+                  bjp_id: formData.bjp_id,
+                  timestamp: serverTimestamp(),
+                  is_password_changed: false,
                 })
-            })
-          })
-          .catch((err) => {
-            alert(err);
-            setIsPending(false);
-            console.log(err.code);
-          });
-      }
-      else { 
-        setIsPending(true);
-        await createUserWithEmailAndPassword(auth, formData.email, formData.password)
-          .then((res) => {
-            setIsPending(true); 
-            const userId = res.user.uid
-            console.log(userId)
-            setDoc(doc(db, "admins", userId),
-              {
-                first_name: formData.firstName,
-                last_name: formData.lastName,
-                role: formData.role,
-                state: formData.state,
-                district: formData.district,
-                phone_number: formData.mobile,
-                alternate_number: formData.alternateNumber,
-                email: formData.email,
-                aadhar: formData.aadhar,
-                dob: formData.dob,
-                doc_id:userId,
-                uid: userId,
-                password: formData.password,
-                zipcode: formData.zipcode,
-                profilePic: "",
-                bjp_id:formData.bjp_id,
-                timestamp: serverTimestamp(),
-                is_password_changed:false
-              }
-            )
-              
-                  .then((res) => {
-                     
-                    // setIsPending(true) 
-                    // axios.post("http://localhost:5000/sendMail", {
+                  .then(async (res) => {
+                    setIsPending(true);
+                    // await axios.post("http://localhost:5000/sendMail", {
+                    // await axios.post("https://kovilapp.in/sendMail", {
                     //   email: formData.email,
                     //   password: formData.password,
                     //   name:formData.firstName
                     // })
                     //   .then((res) => {
-                        setIsPending(false)
-                        alert("user created")
-                        navigate("/kovil/user-post")
-                        console.log(res);
-                      }).catch((err) => {
-                        alert(err)
-                        console.log(err);
-                      })
+                    setIsPending(false);
+                    alert("user created");
+                    navigate("/kovil/user-post");
+                    console.log(res);
+                  })
+                  .catch((err) => {
+                    alert(err);
+                    console.log(err);
+                  });
 
-                  // })
- 
+                // })
+              });
+            });
           })
           .catch((err) => {
             alert(err);
             setIsPending(false);
             console.log(err.code);
           });
+      } else {
+        setIsPending(true);
+        await createUserWithEmailAndPassword(
+          auth,
+          formData.email,
+          formData.password
+        )
+          .then((res) => {
+            setIsPending(true);
+            const userId = res.user.uid;
+            console.log(userId);
+            setDoc(doc(db, "admins", userId), {
+              first_name: formData.firstName,
+              last_name: formData.lastName,
+              role: formData.role,
+              state: formData.state,
+              district: formData.district,
+              phone_number: formData.mobile,
+              alternate_number: formData.alternateNumber,
+              email: formData.email,
+              aadhar: formData.aadhar,
+              dob: formData.dob,
+              doc_id: userId,
+              uid: userId,
+              password: formData.password,
+              zipcode: formData.zipcode,
+              profilePic: "",
+              bjp_id: formData.bjp_id,
+              timestamp: serverTimestamp(),
+              is_password_changed: false,
+            })
+              .then((res) => {
+                // setIsPending(true)
+                // axios.post("http://localhost:5000/sendMail", {
+                // await axios.post("https://kovilapp.in/sendMail", {
+                //   email: formData.email,
+                //   password: formData.password,
+                //   name:formData.firstName
+                // })
+                //   .then((res) => {
+                setIsPending(false);
+                alert("user created");
+                navigate("/kovil/user-post");
+                console.log(res);
+              })
+              .catch((err) => {
+                alert(err);
+                console.log(err);
+              });
 
+            // })
+          })
+          .catch((err) => {
+            alert(err);
+            setIsPending(false);
+            console.log(err.code);
+          });
       }
-
+    } else {
+      alert("enter valid mobile number");
     }
-    else {
-      alert("enter valid mobile number")
-    }
+  };
 
-  }
   const save = {
     backgroundColor: "#f17116",
     color: "#fff",
@@ -423,7 +437,6 @@ const AddUser = () => {
       backgroundColor: "#f17116",
       color: "#fff",
     },
-
   };
 
   const uploadImage = () => {
@@ -435,18 +448,21 @@ const AddUser = () => {
         });
       });
     }
-  }
-
+  };
 
   return (
     <>
       <Stack>
-        <h1 >
-          <span className="navigateArrow"
+        <h1>
+          <span
+            className="navigateArrow"
             onClick={() => {
-              navigate("/kovil/user-post")
+              navigate("/kovil/user-post");
             }}
-          >Users</span>  <i class="fas fa-chevron-right"></i> Add User{" "}
+          >
+            Users
+          </span>{" "}
+          <i class="fas fa-chevron-right"></i> Add User{" "}
         </h1>
         <form onSubmit={handleSubmit}>
           <Box>
@@ -457,17 +473,30 @@ const AddUser = () => {
               <Box sx={{ p: 3 }}>
                 <div className="row">
                   <div className="col-md-6 picture">
-                    {previewImage ? <img src={previewImage} width="150" alt="user image" /> : <Avatar sx={{ width: 56, height: 56 }} />}
+                    {previewImage ? (
+                      <img src={previewImage} width="150" alt="user image" />
+                    ) : (
+                      <Avatar sx={{ width: 56, height: 56 }} />
+                    )}
                     <span>
                       <form action="/action_page.php">
-                        <input type="file" onChange={(e) => {
-                          handleImage(e.target.files[0]);
-                        }} accept="image/*" id="myFile" name="filename" />
+                        <input
+                          type="file"
+                          onChange={(e) => {
+                            handleImage(e.target.files[0]);
+                          }}
+                          accept="image/*"
+                          id="myFile"
+                          name="filename"
+                        />
                       </form>
                     </span>
                   </div>
                   <div className="col-md-6">
-                    <SelectField formData={formData} setFormData={setFormData} />
+                    <SelectField
+                      formData={formData}
+                      setFormData={setFormData}
+                    />
                   </div>
                 </div>
                 <div className="row">
@@ -479,8 +508,8 @@ const AddUser = () => {
                       onChange={(e) => {
                         setFormData({
                           ...formData,
-                          firstName: e.target.value
-                        })
+                          firstName: e.target.value,
+                        });
                       }}
                       variant="outlined"
                       fullWidth
@@ -498,13 +527,12 @@ const AddUser = () => {
                       label="Enter Last Name"
                       variant="outlined"
                       required
-
                       fullWidth
                       onChange={(e) => {
                         setFormData({
                           ...formData,
-                          lastName: e.target.value
-                        })
+                          lastName: e.target.value,
+                        });
                       }}
                       type="text"
                       sx={{
@@ -523,12 +551,11 @@ const AddUser = () => {
                       variant="outlined"
                       fullWidth
                       required
-
                       onChange={(e) => {
                         setFormData({
                           ...formData,
-                          mobile: e.target.value
-                        })
+                          mobile: e.target.value,
+                        });
                       }}
                       type="number"
                       sx={{
@@ -544,13 +571,12 @@ const AddUser = () => {
                       label="Enter Alternate Mobile Number"
                       variant="outlined"
                       required
-
                       fullWidth
                       onChange={(e) => {
                         setFormData({
                           ...formData,
-                          alternateNumber: e.target.value
-                        })
+                          alternateNumber: e.target.value,
+                        });
                       }}
                       type="number"
                     />
@@ -562,13 +588,12 @@ const AddUser = () => {
                   variant="outlined"
                   fullWidth
                   required
-
                   type="email"
                   onChange={(e) => {
                     setFormData({
                       ...formData,
-                      email: e.target.value
-                    })
+                      email: e.target.value,
+                    });
                   }}
                   sx={{
                     mb: 2,
@@ -585,12 +610,11 @@ const AddUser = () => {
                       variant="outlined"
                       fullWidth
                       required
-
                       onChange={(e) => {
                         setFormData({
                           ...formData,
-                          aadhar: e.target.value
-                        })
+                          aadhar: e.target.value,
+                        });
                       }}
                       type="tel"
                       sx={{
@@ -604,15 +628,14 @@ const AddUser = () => {
                     <TextField
                       id="outlined-basic"
                       required
-
                       label=""
                       variant="outlined"
                       fullWidth
                       onChange={(e) => {
                         setFormData({
                           ...formData,
-                          dob: e.target.value
-                        })
+                          dob: e.target.value,
+                        });
                       }}
                       type="date"
                       sx={{
@@ -625,17 +648,29 @@ const AddUser = () => {
                 </div>
                 <div className="row">
                   <div className="col-md-6 picture">
-                    <StateSelect allStates={allStates} setStateClicked={setStateClicked} formData={formData} setFormData={setFormData} />
+                    <StateSelect
+                      allStates={allStates}
+                      setStateClicked={setStateClicked}
+                      formData={formData}
+                      setFormData={setFormData}
+                    />
                   </div>
-                  {stateClicked ? <div className="col-md-6 picture">
-                    <DistrictSelect allStates={allStates} stateClicked={stateClicked} formData={formData} setFormData={setFormData} />
-                  </div> :
+                  {stateClicked ? (
+                    <div className="col-md-6 picture">
+                      <DistrictSelect
+                        allStates={allStates}
+                        stateClicked={stateClicked}
+                        formData={formData}
+                        setFormData={setFormData}
+                      />
+                    </div>
+                  ) : (
                     <p>Select a state to view district</p>
-                  }
+                  )}
                 </div>
                 <div className="row">
                   <div className="col-md-6 picture">
-                  <TextField
+                    <TextField
                       id="outlined-basic"
                       label="BJP ID"
                       variant="outlined"
@@ -643,15 +678,15 @@ const AddUser = () => {
                       onChange={(e) => {
                         setFormData({
                           ...formData,
-                          bjp_id: e.target.value
-                        })
+                          bjp_id: e.target.value,
+                        });
                       }}
                       type="text"
                       sx={{
                         fontSize: "14px",
                         fontWeight: "900",
                         fontFamily: "sans-serif",
-                        mb:8
+                        mb: 8,
                       }}
                     />
                   </div>
@@ -668,31 +703,34 @@ const AddUser = () => {
                       variant="outlined"
                       fullWidth
                       required
-
                       onChange={(e) => {
                         setFormData({
                           ...formData,
-                          zipcode: e.target.value
-                        })
+                          zipcode: e.target.value,
+                        });
                       }}
                       type="tel"
                       sx={{
                         fontSize: "14px",
                         fontWeight: "900",
                         fontFamily: "sans-serif",
-                        mt: 4
+                        mt: 4,
                       }}
                     />
-
                   </div>
                 </div>
                 <div className="row okbutton">
                   <Button variant="text" sx={{ mr: 2 }} onClick={handleClick}>
                     Cancel
                   </Button>
-                  <Button type="submit"
+                  <Button
+                    type="submit"
                     disabled={isPending}
-                    variant="contained" sx={save}>Create User</Button>
+                    variant="contained"
+                    sx={save}
+                  >
+                    Create User
+                  </Button>
                 </div>
                 {showModal && (
                   <UserModal onConfirm={deleteHandle} onCancel={handleCancel} />
