@@ -46,50 +46,6 @@ function createData( date, published, article, more) {
   return {  date, published, article, more };
 }
 
-// const rows = [
-//   createData(
-//     "#06",
-//     "Oct. 11, 2022",
-//     "None",
-//     "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
-//     <DropDownIcon />
-//   ),
-//   createData(
-//     "#05",
-//     "Oct. 11, 2022",
-//     "None",
-//     "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
-//     <DropDownIcon />
-//   ),
-//   createData(
-//     "#04",
-//     "Oct. 11, 2022",
-//     "None",
-//     "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
-//     <DropDownIcon />
-//   ),
-//   createData(
-//     "#03",
-//     "Oct. 11, 2022",
-//     "None",
-//     "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
-//     <DropDownIcon />
-//   ),
-//   createData(
-//     "#02",
-//     "Oct. 11, 2022",
-//     "None",
-//     "short news 3 , demo, short news 3 , demo short news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 , demoshort news 3 …",
-//     <DropDownIcon />
-//   ),
-//   createData(
-//     "#01",
-//     "Oct. 11, 2022",
-//     "None",
-//     "Happy Dusserra to all",
-//     <DropDownIcon />
-//   ),
-// ];
 
 export default function NewsTable() {
   const [page, setPage] = React.useState(0);

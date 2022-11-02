@@ -17,6 +17,7 @@ export default function ComplaintDropDown(props) {
   };
   const handleClose = () => {
     setOpenModal(false);
+    setAnchorEl(null);
   };
 
   const editHandler = () => {

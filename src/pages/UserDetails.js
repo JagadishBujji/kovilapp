@@ -135,7 +135,7 @@ const UserDetails = () => {
                 <h5>
                   <b>Current Ticket</b>
                 </h5>
-                <p>#KAT09</p>
+                {/* <p>#KAT09</p> */}
               </div>
               {data?.current_ticket?.length>0 ?
               data.current_ticket.map((cc)=>(
@@ -179,7 +179,7 @@ const UserDetails = () => {
                 <h5>
                   <b>Previous Ticket</b>
                 </h5>
-                <p>#KAT09</p>
+                {/* <p>#KAT09</p> */}
               </div>
             {data?.closed_ticket?
               data.closed_ticket.map((cc)=>(
