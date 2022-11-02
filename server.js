@@ -14,14 +14,22 @@ app.use(express.static(path.join(__dirname, "build")));
 app.use(cors());
 
 let transporter = nodemailer.createTransport({
-  host: "email-smtp.ap-south-1.amazonaws.com",
-  service: "amazonaws.com",
-  secure: true, // true for 465, false for other ports
+  service: "gmail",
   auth: {
-    user: "AKIA5HE2R77PRXSWSEXK", // generated ethereal user
-    pass: "BGD8k2+XBmyCyiv9vTDoy/ez8Gx/JeZpdEOwTSb1XaHe", // generated ethereal password
+    user: "dummymail00197@gmail.com",
+    pass: "xifiojbgnkvboffp",
   },
 });
+
+// let transporter = nodemailer.createTransport({
+//   host: "email-smtp.ap-south-1.amazonaws.com",
+//   service: "amazonaws.com",
+//   secure: true, // true for 465, false for other ports
+//   auth: {
+//     user: "AKIA5HE2R77PRXSWSEXK", // generated ethereal user
+//     pass: "BGD8k2+XBmyCyiv9vTDoy/ez8Gx/JeZpdEOwTSb1XaHe", // generated ethereal password
+//   },
+// });
 
 app.get("/test", (req, res) => {
   res.send("success");
@@ -31,18 +39,18 @@ app.get("/test", (req, res) => {
 app.post("/sendMail", (req, res) => {
   transporter
     .sendMail({
-      from: "info@kovilapp.in", // sender address
+      from: "dummymail00197@gmail.com", // sender address
       to: req.body.email, // list of receivers
       subject: "Temporary password - KOVIL ✔", // Subject line
       html: `<b>Hi ${req.body.name}, your temporary password for subadmin login is- ${req.body.password}</b>`, // html body
     })
-    .then((res) => {
-      console.log(res);
+    .then((result) => {
+      console.log(result);
       res.status(200).send("success");
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).send("failure");
+      res.status(500).sendStatus(500).send("failure");
     });
 });
 
