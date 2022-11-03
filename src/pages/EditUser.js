@@ -26,8 +26,8 @@ const EditUser = () => {
   const [previewImage, setPreviewImage] = useState();
   const [oldImage, setOldImage] = useState();
   const [uImage, setUImage] = useState();
-  console.log(previewImage)
-  console.log(oldImage)
+  // console.log(previewImage)
+  // console.log(oldImage)
   const handleImage = (img) => {
     setUImage(img)
     const reader = new FileReader();

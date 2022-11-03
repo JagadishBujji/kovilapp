@@ -29,7 +29,7 @@ export const getDistrictTotal=(type,tickets)=>{
         }  
         evals.push(neA) 
     } 
-    console.log(evals)
+    // console.log(evals)
     let lod=[]
     evals.map((ev)=>{
         let obj={
@@ -44,7 +44,7 @@ export const getDistrictTotal=(type,tickets)=>{
     //     districtTotal:evals.fd?.length,
     //     templesTotal:evals.tep?.length
     // }
-    console.log(lod)
+    // console.log(lod)
     return lod
 }
 

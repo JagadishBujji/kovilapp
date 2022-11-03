@@ -11,6 +11,7 @@ import { useState } from "react";
 import UserModal from "../Reuseable/UserModal/UserModal";
 import TicketsBack from "../Reuseable/TicketsBack";
 import { useNavigate } from "react-router-dom";
+import CryptoJS from 'crypto-js'
 import {
   doc,
   addDoc,
@@ -55,6 +56,8 @@ const AddUser = () => {
     setAllStates(states);
   }, []);
   const pass = Math.floor(Math.random() * 10000000000);
+  // var ciphertext = CryptoJS.AES.encrypt(String(pass), '123243').toString();
+  // console.log(ciphertext)
   // console.log(pass)
   const [formData, setFormData] = useState({
     firstName: "",
@@ -341,17 +344,25 @@ const AddUser = () => {
                 })
                   .then(async (res) => {
                     setIsPending(true);
-                    // await axios.post("http://localhost:5000/sendMail", {
+                    var ciphertext = CryptoJS.AES.encrypt(String(formData.password), 'kovilapp').toString();
+
+                    await axios.post("http://localhost:5001/sendMail", {
                     // await axios.post("https://kovilapp.in/sendMail", {
-                    //   email: formData.email,
-                    //   password: formData.password,
-                    //   name:formData.firstName
-                    // })
+                      email: formData.email,
+                      password: ciphertext,
+                      name:formData.firstName
+                    })
+                    .then((res)=>{
+                      setIsPending(false);
+                      alert("user created");
+                      navigate("/kovil/user-post");
+                      console.log(res);
+                    }).catch((err)=>{
+                      alert(err);
+                    console.log(err);
+                    })
                     //   .then((res) => {
-                    setIsPending(false);
-                    alert("user created");
-                    navigate("/kovil/user-post");
-                    console.log(res);
+                   
                   })
                   .catch((err) => {
                     alert(err);
@@ -398,19 +409,26 @@ const AddUser = () => {
               timestamp: serverTimestamp(),
               is_password_changed: false,
             })
-              .then((res) => {
-                // setIsPending(true)
-                // axios.post("http://localhost:5000/sendMail", {
+              .then(async(res) => {
+                setIsPending(true)
+                var ciphertext = CryptoJS.AES.encrypt(String(formData.password), 'kovilapp').toString();
+                await axios.post("http://localhost:5001/sendMail", {
                 // await axios.post("https://kovilapp.in/sendMail", {
-                //   email: formData.email,
-                //   password: formData.password,
-                //   name:formData.firstName
-                // })
+                  email: formData.email,
+                  password: ciphertext,
+                  name:formData.firstName
+                })
+                .then((res)=>{
+                  setIsPending(false);
+                  alert("user created");
+                  navigate("/kovil/user-post");
+                  console.log(res);
+                }).catch((err)=>{
+                  alert(err);
+                console.log(err);
+                })
                 //   .then((res) => {
-                setIsPending(false);
-                alert("user created");
-                navigate("/kovil/user-post");
-                console.log(res);
+               
               })
               .catch((err) => {
                 alert(err);

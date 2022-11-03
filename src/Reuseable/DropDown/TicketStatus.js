@@ -14,12 +14,53 @@ import { useNavigate } from 'react-router-dom';
 
 export default function BasicSelect({ data, count, setCount }) {
     const [status, setStatus] = React.useState('');
-    const admin = JSON.parse(localStorage.getItem("admin"));
+    const admin = JSON.parse(localStorage.getItem("user"));
     const navigate=useNavigate();
+    // console.log(admin)
+    const [ticUser,setTicUser]=React.useState();
     const subadmin = JSON.parse(localStorage.getItem("subadmin"));
     const handleChange = (event) => {
         setStatus(event.target.value);
     };
+    // console.log(data);
+    // await axios.post("https://fcm.googleapis.com/fcm/send", {
+    //     "notification": {
+    //         "title": "Status",
+    //         "body": "Hey buddy, a new feedback is added to your ticket",
+    //         "click_action": "http://localhost:3000/",
+    //         "icon": "http://url-to-an-icon/icon.png"
+    //     },
+    //     "to": data.fcm_token
+    // }, {
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //          "Authorization": process.env.REACT_APP_MESSAGING_KEY
+    //     }
+    // }).then((res) => {
+    //     console.log(res);
+    //     props.setCount(props.count + 1)
+    //     alert("feedback added successfully")
+    //     props.closeAllModal()
+    // }).catch((err) => {
+    //     console.log(err.response);
+    // })
+    useEffect(() => {
+        const getUser = async () => {
+            // console.log(data.user_uid)
+            const docRef = doc(db, "userProfile", data.user_uid)
+            try {
+                const docSnap = await getDoc(docRef);
+                // console.log(docSnap.data())
+                //   console.log(docSnap.data());
+                setTicUser(docSnap.data());
+            } catch (err) {
+                alert("Invalid user id")
+                console.log(err)
+            }
+        }
+        getUser();
+    }, [])
+    // console.log(ticUser)
     const [ad, setAd] = React.useState();
     useEffect(() => {
         if(subadmin)

@@ -18,6 +18,10 @@ export default function InputAdornments(props) {
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
+    props.setFormData({
+      ...props.formData,
+      confirmPassword:event.target.value
+    })
   };
 
   const handleClickShowPassword = () => {
@@ -37,12 +41,13 @@ export default function InputAdornments(props) {
         <FormControl sx={{ mb: 2, width: '57ch' }} variant="outlined">
           <InputLabel
           required
-          htmlFor="outlined-adornment-password">Confirmpassword</InputLabel>
+          htmlFor="outlined-adornment-password">Confirm password</InputLabel>
           <OutlinedInput
             id="outlined-adornment-password"
             type={values.showPassword ? 'text' : 'password'}
             value={values.password}
             onChange={handleChange('password')}
+            
             endAdornment={
               <InputAdornment position="end">
                 <IconButton

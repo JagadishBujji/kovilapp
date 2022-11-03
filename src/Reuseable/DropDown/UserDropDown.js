@@ -13,7 +13,7 @@ import { db } from '../../services/firebase';
 export default function UserDropDown({ row }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
-  console.log(row);
+  // console.log(row);
   const open = Boolean(anchorEl);
   // console.log(row);
   const handleClick = (event) => {

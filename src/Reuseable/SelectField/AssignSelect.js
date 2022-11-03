@@ -11,7 +11,7 @@ export default function AssignSelect({subAdmins,setSelectedSubAdmin}) {
 
   const handleChange = (event) => {
     setAge(event.target.value);
-    console.log(event.target.value)
+    // console.log(event.target.value)
     setSelectedSubAdmin(event.target.value)
   };
  

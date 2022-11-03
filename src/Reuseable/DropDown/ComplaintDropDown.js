@@ -11,7 +11,7 @@ export default function ComplaintDropDown(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openModal, setOpenModal] = useState(false);
   const open = Boolean(anchorEl);
-  console.log(props.data);
+  // console.log(props.data);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };

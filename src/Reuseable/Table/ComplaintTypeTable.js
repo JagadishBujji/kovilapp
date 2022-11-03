@@ -107,7 +107,7 @@ export default function ComplaintTypeTable() {
     };
     getType()
   }, [count]);
-  console.log(allTypes);
+  // console.log(allTypes);
   let rows=[]
   allTypes?.map((as,index)=>{ 
     rows.push(createData(

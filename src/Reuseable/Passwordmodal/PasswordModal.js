@@ -34,14 +34,19 @@ const PasswordModal = (props) => {
   const [formData, setFormData] = useState({
     currentPassword: "",
     newPassword: "",
+    confirmPassword:"",
   });
-  console.log(props.data);
+  // console.log(props.data);
+  const [isPending,setIsPending]=useState(false)
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log( typeof(formData.currentPassword) , typeof(props.data.password));
     // console.log(formData.currentPassword===props.data.password)
     const pd = String(props.data.password);
+    if(formData.confirmPassword===formData.newPassword)
+    {
     if (formData.currentPassword === pd) {
+      setIsPending(true);
       // const docRef = doc(db, "userProfile", props.data.uid);
       const docRef2 = doc(db, "admins", props.data.uid);
       await updatePassword(user, formData.newPassword)
@@ -57,11 +62,16 @@ const PasswordModal = (props) => {
             //         is_password_changed: true,
             //       })
             .then(() => {
+              
               props.setIsPasswordChanged("changed");
               alert("password updated");
+      setIsPending(false);
+
             })
             .catch((err) => {
               alert(err);
+      setIsPending(false);
+
             });
           // })
           // .catch((err) => {
@@ -70,11 +80,18 @@ const PasswordModal = (props) => {
         })
         .catch((error) => {
           alert(error);
+      setIsPending(false);
+
         });
       // Set the "capital" field of the city 'DC'
     } else {
       alert("enter current password correctly");
+
     }
+  }
+  else{
+    alert("New password and comfirm password does not match")
+  }
   };
   return (
     <>
@@ -124,13 +141,14 @@ const PasswordModal = (props) => {
           />
 </div>
           <div>
-            <InputAdornments/>
+            <InputAdornments formData={formData} setFormData={setFormData}/>
           </div>
  
           <Button
             type="submit"
             variant="contained"
             sx={save}
+            disabled={isPending}
             onClick={props.onCancel}
           >
             Save

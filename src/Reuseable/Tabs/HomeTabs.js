@@ -76,14 +76,14 @@ const getSubAdmin=async()=>{
   if (docSnap.exists()) {
     const data=docSnap.data();
     setSubAdminData(data)
-    console.log(data)
+    // console.log(data)
     if(data.is_password_changed){
       setIsPasswordChanged("passwordChanged")
     }
     else if(!data.is_password_changed){
       setIsPasswordChanged("notChanged")
     }
-    console.log("Document data:", docSnap.data());
+    // console.log("Document data:", docSnap.data());
 
   } else {
     // doc.data() will be undefined in this case
@@ -94,7 +94,7 @@ getSubAdmin()
 
     }
   },[])
-console.log(isPasswordChanged)
+// console.log(isPasswordChanged)
   useEffect(() => {
     if(!subAdmin)
     {

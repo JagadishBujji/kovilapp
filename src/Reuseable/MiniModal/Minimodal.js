@@ -6,8 +6,8 @@ import axios from "axios";
 
 
 const MiniModal = (props) => {
-    console.log(props)
-    console.log(props.data.doc_id)
+    // console.log(props)
+    // console.log(props.data.doc_id)
     const date = new Date().getDate();
     const [data, setData] = useState();
     const month = new Date().getMonth();
@@ -18,7 +18,7 @@ const MiniModal = (props) => {
         date: currentDate,
         msg: props.feedBack
     }
-    console.log(newFeedBack)
+    // console.log(newFeedBack)
     const handleClick = async () => {
         const docRef = doc(db, "Complaints", props.data.doc_id)
         if (props.data.allFeedbacks) {
@@ -43,8 +43,7 @@ const MiniModal = (props) => {
                         }, {
                             headers: {
                                 "Content-Type": "application/json",
-                                // "Authorization": "key=AAAAujeDNFk:APA91bFTPFchdLLWS_6Tp4LsLe14M8QX9pvLOMfUv9ILl-l3O7SGCRuVSbaOsqZvNrYRlxlRc22ygeOxHXN_85SxPsOKZG6l7H3l9WRbHJ3LWJHypuFM6kwPeZhcKTMlgnMx85tNHDt-"
-                                "Authorization": process.env.REACT_APP_MESSAGING_KEY
+                                 "Authorization": process.env.REACT_APP_MESSAGING_KEY
                             }
                         }).then((res) => {
                             console.log(res);

@@ -61,7 +61,7 @@ export default function UserTab() {
         // doc.data() is never undefined for query doc snapshots
         // console.log(doc.id, " => ", doc.data());
         let data=doc.data()
-        console.log(data)
+        // console.log(data)
         const nD={
           id:doc.id,
           ...data

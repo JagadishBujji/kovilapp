@@ -3,8 +3,14 @@ const path = require("path");
 const cors = require("cors");
 const nodemailer = require("nodemailer");
 const bodyParser = require("body-parser");
+var CryptoJS = require("crypto-js"); 
+// var http = require('http');
+
+// var urlencode = require('urlencode');
+
 // const fs = require("fs");
 // const {generate} = require('./generateZoomSignature');
+
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -35,14 +41,19 @@ app.get("/test", (req, res) => {
   res.send("success");
 });
 
-// send mail with defined transport object
-app.post("/sendMail", (req, res) => {
-  transporter
+
+
+app.post("/sendMail",async (req, res) => {
+  console.log(req.body)
+  var bytes  = CryptoJS.AES.decrypt(req.body.password, 'kovilapp');
+  var originalText = bytes.toString(CryptoJS.enc.Utf8);
+  // console.log(originalText)
+ await transporter
     .sendMail({
       from: "dummymail00197@gmail.com", // sender address
       to: req.body.email, // list of receivers
       subject: "Temporary password - KOVIL ✔", // Subject line
-      html: `<b>Hi ${req.body.name}, your temporary password for subadmin login is- ${req.body.password}</b>`, // html body
+      html: `<b>Hi ${req.body.name}, your temporary password for subadmin login is- ${originalText}</b>`, // html body
     })
     .then((result) => {
       console.log(result);

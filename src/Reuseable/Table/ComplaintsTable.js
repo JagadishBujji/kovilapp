@@ -51,7 +51,7 @@ function createData(
 // ];
 
 export default function ComplaintsTable({data}) {
-  console.log(data);
+  // console.log(data);
   let rows=[];
   data?.map((ds)=>{
     rows.push(createData(ds.complaint_type,ds.districtTotal,ds.templeTotal,1,ds.templeTotal))

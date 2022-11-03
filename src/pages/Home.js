@@ -11,7 +11,7 @@ const Home = () => {
   const auth = getAuth();
 
   const user = auth.currentUser;
-  console.log(user)
+  // console.log(user)
  const navigate = useNavigate();
   useEffect(()=> {
     navigate("/kovil/home-post")

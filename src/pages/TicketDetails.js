@@ -40,7 +40,7 @@ const TicketsDetails = () => {
 
     getDetails();
   }, [count]);
-  console.log(data);
+  // console.log(data);
   const [subAdmins, setSubAdmins] = useState();
   const subadmin = JSON.parse(localStorage.getItem("subadmin"))
   useEffect(() => {
@@ -97,7 +97,7 @@ const TicketsDetails = () => {
   const deleteBack = () => {
     setOpenModal(false);
   };
-  console.log(selectedSubAdmin);
+  // console.log(selectedSubAdmin);
   const [isPending,setIsPending]=useState(false)
   const handleFormSubmit = async (e) => {
     e.preventDefault();

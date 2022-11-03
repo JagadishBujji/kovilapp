@@ -15,7 +15,8 @@ import { getDoc, doc, query, collection, where, getDocs } from "firebase/firesto
 import axios from "axios";
 import firebaseApp from "../services/firebase";
 import { getMessaging, getToken } from 'firebase/messaging'
- 
+import CryptoJS from "crypto-js";
+
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -29,17 +30,17 @@ const Login = () => {
   const [isPending, setIsPending] = useState(false)
   const handleClick = async (e) => {
     e.preventDefault();
-    console.log("formData: ", formData);
+    // console.log("formData: ", formData);
     setIsPending(true);
     await signInWithEmailAndPassword(auth, formData.email, formData.password)
       .then((res) => {
         const user = res.user;
-        console.log(user);
-        console.log(formData.email);
+        // console.log(user);
+        // console.log(formData.email);
         const docRef = doc(db, "admins", user.uid)
         getDoc(docRef)
           .then((res) => {
-            console.log(res.data())
+            // console.log(res.data())
             const data = res.data()
             const role = data.role.toLowerCase();
             if (role === "admin") {
@@ -137,29 +138,34 @@ const Login = () => {
       border: "1px solid #ff6000",
     },
   };
+  // const pass = Math.floor(Math.random() * 10000000000);
+  // var ciphertext = CryptoJS.AES.encrypt(String(pass), 'kovilapp').toString();
+  // console.log(ciphertext)
+  // // console.log(pass)
   // const sendNotification = async () => {
-  //   // c4bD7v8zQ-S80EOyMxEjSi:APA91bEKE8EwA8psXCODTDwKnEPh_8-QIIqkMyP7buE1Jhdg5l38nBd8hmMEzfYvELjQvBhVKI9SrSdEDbADy67TCFrexmzDa5JQIoZu08oSvhj1xUgKCpD1eEKbSUXpsUuyuTNf_5jw
-  //   await axios.post("https://fcm.googleapis.com/fcm/send", {
-  //     "notification": {
-  //       "title": "Firebase",
-  //       "body": "Firebase is awesome",
-  //       "click_action": "http://localhost:3000/",
-  //       "icon": "http://url-to-an-icon/icon.png"
-  //     },
-  //     "to": "c4bD7v8zQ-S80EOyMxEjSi:APA91bEKE8EwA8psXCODTDwKnEPh_8-QIIqkMyP7buE1Jhdg5l38nBd8hmMEzfYvELjQvBhVKI9SrSdEDbADy67TCFrexmzDa5JQIoZu08oSvhj1xUgKCpD1eEKbSUXpsUuyuTNf_5jw"
-  //   },{
-  //     headers:{
-  //         "Content-Type": "application/json",
-  //         // "Authorization": "key=AAAAujeDNFk:APA91bFTPFchdLLWS_6Tp4LsLe14M8QX9pvLOMfUv9ILl-l3O7SGCRuVSbaOsqZvNrYRlxlRc22ygeOxHXN_85SxPsOKZG6l7H3l9WRbHJ3LWJHypuFM6kwPeZhcKTMlgnMx85tNHDt-"
-  //           "Authorization":process.env.REACT_APP_MESSAGING_KEY
-  //       }
-  //   }).then((res)=>{
-  //     console.log(res);
-  //   }).catch((err)=>{
-  //     console.log(err.response);
+  //   const num=[917639758020]
+  //   var url = `https://api.textlocal.in/send/?apikey=wJyfpBVDtbg-rnMp7JmQ23XtMqxpH9K2CPbbbgCP9V&numbers=${num}&sender=TXTLCL&message='+encodeURIComponent('hello world')`
+  //  await axios.get(url)
+
+  //   .then(function (response) {
+
+  //   // handle success
+
+  //   console.log("------ SMS Gateway Response ------");
+
+  //   console.log(response.data);
+
+  //   })
+
+  //   .catch(function (error) {
+
+  //   // handle error
+
+  //   console.log(error);
+
   //   })
   // }
-  console.log(process.env)
+  // console.log(process.env)
 
   return (
     <>
