@@ -15,7 +15,7 @@ import { getDoc, doc, query, collection, where, getDocs } from "firebase/firesto
 import axios from "axios";
 import firebaseApp from "../services/firebase";
 import { getMessaging, getToken } from 'firebase/messaging'
-import CryptoJS from "crypto-js";
+import CryptoJS from "crypto-js"; 
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -142,29 +142,33 @@ const Login = () => {
   // var ciphertext = CryptoJS.AES.encrypt(String(pass), 'kovilapp').toString();
   // console.log(ciphertext)
   // // console.log(pass)
-  // const sendNotification = async () => {
-  //   const num=[917639758020]
-  //   var url = `https://api.textlocal.in/send/?apikey=wJyfpBVDtbg-rnMp7JmQ23XtMqxpH9K2CPbbbgCP9V&numbers=${num}&sender=TXTLCL&message='+encodeURIComponent('hello world')`
-  //  await axios.get(url)
+  const sendNotification = async () => {
+    const num=[917639758020]
+    const name="prabhu"
+    const id=432432423
+    const status="inprogess"
+    const mess= `Dear ${name}, ticket no ${id} ticket status has been changed to ${status} - KovilApp Team`
+    var url = `https://api.textlocal.in/send/?apikey=wJyfpBVDtbg-rnMp7JmQ23XtMqxpH9K2CPbbbgCP9V&numbers=${num}&sender=TXTLCL&message='+encodeURIComponent(${mess})`
+   await axios.get(url)
 
-  //   .then(function (response) {
+    .then(function (response) {
 
-  //   // handle success
+    // handle success
 
-  //   console.log("------ SMS Gateway Response ------");
+    console.log("------ SMS Gateway Response ------");
 
-  //   console.log(response.data);
+    console.log(response.data);
 
-  //   })
+    })
 
-  //   .catch(function (error) {
+    .catch(function (error) {
 
-  //   // handle error
+    // handle error
 
-  //   console.log(error);
+    console.log(error);
 
-  //   })
-  // }
+    })
+  }
   // console.log(process.env)
 
   return (
@@ -175,7 +179,7 @@ const Login = () => {
         </div>
         <div className="col-md-7 login-from">
           <div className="container login">
-            {/* <button onClick={sendNotification} >send notification</button> */}
+            <button onClick={sendNotification} >send notification</button>
 
             <h2>Login</h2>
             <p>Enter your credentials to access your account</p>

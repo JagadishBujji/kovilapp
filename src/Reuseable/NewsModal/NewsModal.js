@@ -55,7 +55,7 @@ const NewsModal = (props) => {
       .then(async(res) => {
         await axios.post("https://fcm.googleapis.com/fcm/send", {
           "notification": {
-            "title": "New",
+            "title": "News",
             "body": "Hey there, a new news is added.",
             "click_action": "http://localhost:3000/",
             "icon": "http://url-to-an-icon/icon.png"

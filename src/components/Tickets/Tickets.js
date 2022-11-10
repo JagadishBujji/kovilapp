@@ -88,7 +88,7 @@ const Tickets = () => {
       getTic();
     }
   }, []);
-
+console.log(tickets)
   return (
     <>
       <Card sx={{ padding: "20px" }} variant="outlined">

@@ -12,7 +12,7 @@ import TicketsDropDown from "../TicketsDropDown/TicketsDropDown";
 
 const columns = [
   // { id: "doc_id", label: "ID", minWidth: 120 },
-  { id: "city", label: "District Name", minWidth: 120 },
+  { id: "district", label: "District Name", minWidth: 120 },
   {
     id: "temple_name",
     label: "Temple",
