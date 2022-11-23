@@ -107,6 +107,17 @@ const Navbar = () => {
 
                 Complaint Type
               </NavLink>}
+             {user && <NavLink
+                className={({ isActive }) =>
+                  isActive ? "activelink" : "nav-link "
+                }
+                to="/kovil/political"
+              >
+
+                <i class="fas fa-pager mr-1"></i>
+
+                Political
+              </NavLink>}
 
 
               {/* <li classNameName="nav-item">

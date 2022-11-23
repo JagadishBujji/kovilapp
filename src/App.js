@@ -18,6 +18,7 @@ import NewsTable from "./Reuseable/Table/NewsTable";
 import ComplaintTypeTable from "./Reuseable/Table/ComplaintTypeTable";
 import ComplaintsField from "./pages/ComplaintsField";
 import EditUser from "./pages/EditUser";
+import Political from "./Reuseable/Table/Political";
 // import EventPosts from "./components/EventPost/EventPosts";
 
 export default function App() {
@@ -87,6 +88,10 @@ export default function App() {
           <Route
             path="complaintstypetable"
             element={user ? <ComplaintTypeTable /> : <Navigate to="/" />}
+          />
+          <Route
+            path="political"
+            element={user ? <Political /> : <Navigate to="/" />}
           />
         <Route path="*"
         element={user? <Tickets/>:<Navigate to="/"/>}/>
