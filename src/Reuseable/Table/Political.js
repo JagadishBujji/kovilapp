@@ -12,23 +12,31 @@ import { Card } from "@mui/material";
 import { useState } from "react";
 import ComplaintsField from "../../pages/ComplaintsField";
 import TicketsBack from "../TicketsBack";
-import { collection, doc, getDoc, getDocs, orderBy, query } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import { db } from "../../services/firebase";
 import ComplaintDropDown from "../DropDown/ComplaintDropDown";
 import Loader from "../Loader/Loader";
+import PoliticalAdd from "../../pages/PoliticalAdd";
 
 const columns = [
   { id: "sno", label: "Sl.No", minWidth: 100 },
+  { id: "state", label: "State", minWidth: 100 },
   { id: "policital", label: "Political District Name", minWidth: 100 },
   { id: "district", label: "District Name", minWidth: 100 },
-  { id: "state", label: "state", minWidth: 100 },
+
   { id: "pincode", label: "PinCode", minWidth: 100 },
 ];
 
-function createData(sno, policital, district, state, pincode) {
-  return { sno, policital, district, state, pincode };
+function createData(sno, state, policital, district, pincode) {
+  return { sno, state, policital, district, pincode };
 }
-
 
 // const rows = [
 //   createData("01", "Noise", "" ),
@@ -42,7 +50,6 @@ export default function Political() {
   // const [refresh, setRefresh] = useState(0);
   // const [isLoading, setIsLoading] = useState(true);
 
-  
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -86,38 +93,35 @@ export default function Political() {
   const handleCancel = () => {
     setOpen(false);
   };
-  const [allTypes,setAllTypes]=useState();
-  const [count,setCount]=React.useState(0);
+  const [allTypes, setAllTypes] = useState();
+  const [count, setCount] = React.useState(0);
   React.useEffect(() => {
     const getType = async () => {
-      await getDocs(query(collection(db, "complaint_types"),orderBy("posted_on","desc")))
-      .then((querySnapshot) => {
-        let arr=[]
-        querySnapshot.forEach((doc) => {
-          let data = doc.data();
-          // console.log(doc.id);
-          const obj={
-            doc_id:doc.id,
-            ...data
-          }
-          arr.push(obj)
-        });
-        setAllTypes(arr); 
-      })
-      .catch((e) => console.log(e));
-       
+      await getDocs(
+        query(collection(db, "complaint_types"), orderBy("posted_on", "desc"))
+      )
+        .then((querySnapshot) => {
+          let arr = [];
+          querySnapshot.forEach((doc) => {
+            let data = doc.data();
+            // console.log(doc.id);
+            const obj = {
+              doc_id: doc.id,
+              ...data,
+            };
+            arr.push(obj);
+          });
+          setAllTypes(arr);
+        })
+        .catch((e) => console.log(e));
     };
-    getType()
+    getType();
   }, [count]);
   // console.log(allTypes);
-  let rows=[]
-  allTypes?.map((as,index)=>{ 
-    rows.push(createData(
-      index, 
-      as.complaint_type,
-      as.doc_id
-    ))
-})
+  let rows = [];
+  allTypes?.map((as, index) => {
+    rows.push(createData(index, as.complaint_type, as.doc_id));
+  });
   return (
     <>
       <Paper sx={{ width: "87%", ml: 5 }}>
@@ -126,14 +130,15 @@ export default function Political() {
             <Button variant="contained" sx={save} onClick={handleChange}>
               Add New
             </Button>
-            {open &&  
-              <ComplaintsField forWhat="createType"
+            {open && (
+              <PoliticalAdd
+                forWhat="createType"
                 onCancel={handleCancel}
                 count={count}
                 setCount={setCount}
               />
-            }
-            {open && <TicketsBack onCancel={handleCancel}/>}
+            )}
+            {open && <TicketsBack onCancel={handleCancel} />}
           </div>
           <TableContainer sx={{ maxHeight: 440 }}>
             <Table stickyHeader aria-label="sticky table">
@@ -172,9 +177,9 @@ export default function Political() {
                             >
                               {column.id === "more" ? (
                                 <ComplaintDropDown
-                                data={row}
-                                count={count}
-                                setCount={setCount}
+                                  data={row}
+                                  count={count}
+                                  setCount={setCount}
                                   onCancel={handleCancel}
                                 />
                               ) : column.format && typeof value === "number" ? (

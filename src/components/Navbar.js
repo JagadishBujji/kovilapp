@@ -2,7 +2,6 @@ import { DriveEta } from "@mui/icons-material";
 import React from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 
-
 // import ChatIcon from "@mui/icons-material/Chat";
 // import AccountMenu from "../.././src/Reuseable/AccountMenu";
 
@@ -10,7 +9,7 @@ const Navbar = () => {
   function open() {
     document.getElementById("mySidebar").style.display = "block";
   }
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
   const handleClick = () => {
     // alert("hello")
@@ -30,9 +29,7 @@ const Navbar = () => {
 
           <a className="navbar-brand" href="#/">
             {/* <img src="images/logo.png" alt="" classNameName="Logo-img"  /> */}
-            <h1 style={{ fontFamily: "aladin" }}>
-              Kovil App
-            </h1>
+            <h1 style={{ fontFamily: "aladin" }}>Kovil App</h1>
           </a>
 
           <button
@@ -62,17 +59,18 @@ const Navbar = () => {
                 Dashboard
               </NavLink>
 
-              {user && <NavLink
-                className={({ isActive }) =>
-                  isActive ? "activelink" : "nav-link"
-                }
-                to="/kovil/user-post"
-              >
-                {/* <i classNameName="fas fa-briefcase mr-3 "></i> */}
-                <i className="fas fa-user-friends mr-1"></i>
-                Users
-              </NavLink>
-              }
+              {user && (
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "activelink" : "nav-link"
+                  }
+                  to="/kovil/user-post"
+                >
+                  {/* <i classNameName="fas fa-briefcase mr-3 "></i> */}
+                  <i className="fas fa-user-friends mr-1"></i>
+                  Users
+                </NavLink>
+              )}
 
               <NavLink
                 className={({ isActive }) =>
@@ -84,41 +82,40 @@ const Navbar = () => {
                 <i className="fas fa-ticket-alt mr-1"></i>
                 Tickets
               </NavLink>
-              {user &&  <NavLink
-                className={({ isActive }) =>
-                  isActive ? "activelink" : "nav-link "
-                }
-                to="/kovil/newstable"
-              >
+              {user && (
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "activelink" : "nav-link "
+                  }
+                  to="/kovil/newstable"
+                >
+                  <i className="fas fa-newspaper mr-1"></i>
+                  News
+                </NavLink>
+              )}
 
-                <i className="fas fa-newspaper mr-1"></i>
-
-                News
-              </NavLink>}
-
-             {user && <NavLink
-                className={({ isActive }) =>
-                  isActive ? "activelink" : "nav-link "
-                }
-                to="/kovil/complaintstypetable"
-              >
-
-                <i class="fas fa-pager mr-1"></i>
-
-                Complaint Type
-              </NavLink>}
-             {user && <NavLink
-                className={({ isActive }) =>
-                  isActive ? "activelink" : "nav-link "
-                }
-                to="/kovil/political"
-              >
-
-                <i class="fas fa-pager mr-1"></i>
-
-                Political
-              </NavLink>}
-
+              {user && (
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "activelink" : "nav-link "
+                  }
+                  to="/kovil/complaintstypetable"
+                >
+                  <i class="fas fa-pager mr-1"></i>
+                  Complaint Type
+                </NavLink>
+              )}
+              {user && (
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "activelink" : "nav-link "
+                  }
+                  to="/kovil/political"
+                >
+                  <i class="fas fa-landmark mr-1"></i>
+                  Political
+                </NavLink>
+              )}
 
               {/* <li classNameName="nav-item">
                 <Link classNameName="nav-link   px-4" to="user-profile">
