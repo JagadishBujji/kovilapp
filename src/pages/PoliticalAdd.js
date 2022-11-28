@@ -7,6 +7,8 @@ import { db } from "../services/firebase";
 import "../../src/styles.css";
 
 import PoliticalState from "../Reuseable/SelectField/PoliticalState";
+import DistrictName from "../Reuseable/SelectField/DistrictName";
+import Pincode from "../Reuseable/SelectField/Pincode";
 // Add a new document with a generated id.
 
 const PoliticalAdd = (props) => {
@@ -76,8 +78,6 @@ const PoliticalAdd = (props) => {
     }
   };
 
-
-
   return (
     <form onSubmit={handleSubmit}>
       <Card sx={{ p: 3 }} className="complaintmodal">
@@ -101,32 +101,8 @@ const PoliticalAdd = (props) => {
             }}
             type="text"
           />
-          <TextField
-            id="outlined-basic"
-            required
-            label="District Name"
-            variant="outlined"
-            value={complaintType}
-            fullWidth
-            onChange={(e) => {
-              setCompliantType(e.target.value);
-            }}
-            type="text"
-            sx={{mt: 2}}
-          />
-          <TextField
-            id="outlined-basic"
-            required
-            label="Pincode"
-            variant="outlined"
-            value={complaintType}
-            fullWidth
-            onChange={(e) => {
-              setCompliantType(e.target.value);
-            }}
-            type="number"
-            sx={{mt: 2}}
-          />
+          <DistrictName/>
+          <Pincode/>
         </div>
         <div className="row complaints-btn ">
           <Button type="submit" variant="contained" sx={save}>
