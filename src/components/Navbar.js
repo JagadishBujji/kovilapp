@@ -106,7 +106,24 @@ const Navbar = () => {
                 <i class="fas fa-pager mr-1"></i>
 
                 Complaint Type
-              </NavLink>}
+              </NavLink>
+              
+              
+              }
+               {user && <NavLink
+                className={({ isActive }) =>
+                  isActive ? "activelink" : "nav-link "
+                }
+                to="/kovil/addDistrict"
+              >
+
+                <i class="fas fa-pager mr-1"></i>
+
+                Add District
+              </NavLink>
+              
+              
+              }
 
 
               {/* <li classNameName="nav-item">

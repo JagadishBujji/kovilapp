@@ -56,6 +56,8 @@ const [isPending,setIsPending]=useState(false)
       .catch((e) => console.log(e));
     }
     fetchData()
+  console.log(data)
+
   }, []);
   // console.log(assignDate)
   const dm=new Date(assignDate)
@@ -74,7 +76,6 @@ const [isPending,setIsPending]=useState(false)
   //   result.setDate(result.getDate() + days);
   //   return result;
   // }
-  console.log(subAdmins)
   const handleFormSubmit=async(e)=>{
     e.preventDefault();
     console.log(selectedSubAdmin.id,assignDate,data.doc_id)

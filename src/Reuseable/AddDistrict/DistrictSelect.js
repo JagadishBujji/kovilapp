@@ -45,7 +45,10 @@ export default function DistrictSelect({ allStates, formData, setFormData, state
     setAllDistricts(districts)
 
   }, [stateClicked])
-
+  const styles={
+    width:"200px",
+    margin:"20px"
+  }
   // console.log(allDistricts)
   return (
     <FormControl fullWidth>
