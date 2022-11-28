@@ -88,7 +88,6 @@ const PoliticalAdd = (props) => {
           </span>
         </div>
         <div className="scroll">
-          <PoliticalState />
           <TextField
             id="outlined-basic"
             required
@@ -101,8 +100,9 @@ const PoliticalAdd = (props) => {
             }}
             type="text"
           />
-          <DistrictName/>
-          <Pincode/>
+          <PoliticalState />
+          <DistrictName />
+          <Pincode />
         </div>
         <div className="row complaints-btn ">
           <Button type="submit" variant="contained" sx={save}>
