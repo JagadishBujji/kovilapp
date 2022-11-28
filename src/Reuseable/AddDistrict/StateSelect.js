@@ -8,17 +8,18 @@ import Select from "@mui/material/Select";
 export default function StateSelect({allStates, formData,setFormData,setStateClicked}) {
   const [age, setAge] = React.useState("");
   
-
-  console.log(allStates)
   const handleChange = (event) => { 
     setAge(event.target.value);
     setStateClicked(event.target.value)
     setFormData({
       ...formData,
       state:event.target.value
-    })
+    }) 
   };
-
+  const styles={
+    width:"20%",
+    margin:"20px"
+  }
   return (
     <FormControl fullWidth>
       <InputLabel id="demo-simple-select-label">State</InputLabel>

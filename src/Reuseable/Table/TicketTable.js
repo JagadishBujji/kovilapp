@@ -49,7 +49,7 @@ const columns = [
     format: (value) => value.toFixed(2),
   },
   {
-    id: "date",
+    id: "due_date",
     label: "Due-Date",
     minWidth: 120,
     align: "center",

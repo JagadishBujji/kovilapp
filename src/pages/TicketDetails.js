@@ -97,7 +97,9 @@ const TicketsDetails = () => {
   const deleteBack = () => {
     setOpenModal(false);
   };
-  // console.log(selectedSubAdmin);
+  console.log(selectedSubAdmin);
+  console.log(data)
+
   const [isPending,setIsPending]=useState(false)
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -125,11 +127,30 @@ const TicketsDetails = () => {
       //   await updateDoc(docRef2, {
       //     current_ticket: newSCT,
       //   });
-      
-        alert("Sub admin has been assigned successfully");
+      const apikey = 'wJyfpBVDtbg-rnMp7JmQ23XtMqxpH9K2CPbbbgCP9V';
+                  const username = selectedSubAdmin.first_name;
+                  const mobile = selectedSubAdmin.phone_number;
+                  const ticketId=data.doc_id;
+                  const otp=1232131
+                  console.log(mobile)
+                  const sender = 'KVLAPP';
+                   var mss=`Dear ${username}, Ticket no ${ticketId} has been assigned to you. Please take necessary action and respond within 24 Hours – KovilApp Team`
+                  // var temp=`Dear ${username}, Ticket no ${ticketId} has been assigned to you. Please take necessary action and respond within 24 Hours – KovilApp Team`
+                  // const ms='Dear '+username+', Ticket no '+ticketId+' has been assigned to you. Please take necessary action and respond within 24 Hours - KovilApp Team'
+                  // var message = 'Dear '+username+' - Namaskaram! Please enter the OTP: '+otp+' in your Kovil App to create your account. Thank you!';
+                  var url = 'https://api.textlocal.in/send/?apikey='+apikey+'&numbers='+mobile+'&sender='+sender+'&message='+encodeURIComponent(mss);
+                  fetch (url).then(response => response.json())
+                  .then(data =>{
+                  console.log(data)
+                  alert("Sub admin has been assigned successfully");
       setIsPending(false)
 
-        navigate("/kovil/tickets");
+        navigate("/kovil/tickets"); 
+                }).catch((err)=>{
+                  alert(err);
+                  console.log(err);
+                })
+       
       // }
       // await  updateDoc(docRef2,{
       //   current_ticket:data.doc_id

@@ -14,12 +14,12 @@ const TicketImage = (props) => {
 
   const [fileType,setFileType]=useState()
 
-  console.log(props)
+  // console.log(props)
   useEffect(()=>{
       const file=props.source
       const arr=file.split(".")
       const extension=arr[arr.length-1]
-      console.log(extension)
+      // console.log(extension)
       if(extension==="jpg" || extension==="png"){
           setFileType("image")
       }

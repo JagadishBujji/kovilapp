@@ -353,10 +353,27 @@ const AddUser = () => {
                       name:formData.firstName
                     })
                     .then((res)=>{
-                      setIsPending(false);
-                      alert("user created");
-                      navigate("/kovil/user-post");
-                      console.log(res);
+                      // const apikey = 'wJyfpBVDtbg-rnMp7JmQ23XtMqxpH9K2CPbbbgCP9V';
+                      // const username = formData.firstName;
+                      // const mobile = formData.phone_number;
+                      // const otp = formData.password; 
+                      // const sender = 'KVLAPP';
+                      // var message = 'Dear '+username+' - Namaskaram! Please enter the OTP: '+otp+' in your Kovil App to create your account. Thank you!';
+                      // var url = 'https://api.textlocal.in/send/?apikey='+apikey+'&numbers='+mobile+'&sender='+sender+'&message='+encodeURIComponent(message);
+                      // fetch (url).then(response => response.json())
+                      // .then(data =>{
+                        setIsPending(false);
+                        alert("user created");
+                        navigate("/kovil/user-post");
+                        console.log(res);
+                        // console.log(data)
+                      // } 
+                      // ).catch((err)=>{
+                      //   console.log(err);
+                      //   alert(err);
+                      // })
+                    
+                     
                     }).catch((err)=>{
                       alert(err);
                     console.log(err);
@@ -419,10 +436,26 @@ const AddUser = () => {
                   name:formData.firstName
                 })
                 .then((res)=>{
+                  // const apikey = 'wJyfpBVDtbg-rnMp7JmQ23XtMqxpH9K2CPbbbgCP9V';
+                  // const username = formData.firstName;
+                  // const mobile = formData.phone_number;
+                  // const otp = formData.password; 
+                  // const sender = 'KVLAPP';
+                  // var message = 'Dear '+username+' - Namaskaram! Please enter the OTP: '+otp+' in your Kovil App to create your account. Thank you!';
+                  // var url = 'https://api.textlocal.in/send/?apikey='+apikey+'&numbers='+mobile+'&sender='+sender+'&message='+encodeURIComponent(message);
+                  // fetch (url).then(response => response.json())
+                  // .then(data =>{
+                  // console.log(data)
                   setIsPending(false);
                   alert("user created");
                   navigate("/kovil/user-post");
                   console.log(res);
+                // }).catch((err)=>{
+                //   alert(err);
+                //   console.log(err);
+                // })
+                
+                  
                 }).catch((err)=>{
                   alert(err);
                 console.log(err);
