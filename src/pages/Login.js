@@ -16,6 +16,7 @@ import axios from "axios";
 import firebaseApp from "../services/firebase";
 import { getMessaging, getToken } from 'firebase/messaging'
 import CryptoJS from "crypto-js"; 
+import { MenuItem, Select } from "@mui/material";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -153,7 +154,7 @@ const Login = () => {
 //   const name="prabhu"
 //   // var m8='Dear '+username+', Namaskaram, Welcome to Kovil App. You have been successfully registered. Login to continue. - KovilApp Team'
 //   // var m7='Dear '+username+' Namaskaram, Your ticket no '+tno+' has been created and assigned to the concerned team. Your complaint will be resolved within 3 working days. Please check the KovilApp for status. - KovilApp Team'
-//   // var m6='Dear '+name+', Ticket no '+ticket+' has been assigned to you. Please take necessary action and respond within 24 Hours – KovilApp Team'
+//   var m6='Dear '+name+', Ticket no '+ticket+' has been assigned to you. Please take necessary action and respond within 24 Hours -- KovilApp Team'
 //   // var m5='Dear '+username+', Ticket no '+tno+' has been assigned to '+name+' - Ph no: '+mobile+'. Please take necessary action and respond within 36 Hours – KovilApp Team'
 // //   // var m4='Dear '+username+', Namaskaram, Your ticket no '+tno+' status has been changed to '+status+'. Please check the KovilApp for details. - KovilApp Team'
 // //   // var m3='Dear '+username+', ticket no '+tno+' ticket status has been changed to '+status+' - KovilApp Team'
@@ -168,9 +169,56 @@ const Login = () => {
 
 //   }
   // console.log(process.env)
+// const [da,setDa]=useState();
+// const [pd,setPd]=useState();
+// const [pc,setPc]=useState();
+//   useEffect(()=>{
+//     const getSuperAdmin=async()=>{
+//       const docRef=collection(db,"political_districts");
+//       const q=query(docRef,where("district","==","vellore"));
+//       const  querySnapshot=await getDocs(q);
+//       let arr=[]
+//        querySnapshot.forEach((doc)=>{
+//           // console.log(doc.data())
+//           const document=doc;
+//           const obj={
+//               doc_id:document.id,
+//               ...document.data()
+//           }
+//           console.log(obj)  
+//           arr.push(obj)
+//       })
+//       setDa(arr);
+//   }
+//    getSuperAdmin();
 
+//   },[])
+//   useEffect(()=>{
+//     const getSuperAdmin=async()=>{
+//       const docRef=collection(db,"political_districts");
+//       const q=query(docRef,where("politicalDistrict","==",pd));
+//       const  querySnapshot=await getDocs(q);
+ 
+//        querySnapshot.forEach((doc)=>{
+//           // console.log(doc.data())
+//           const document=doc;
+//           const obj={
+//               doc_id:document.id,
+//               ...document.data()
+//           }
+//           console.log(obj) 
+//           setPc(obj); 
+//       })
+//   }
+//    getSuperAdmin();
+
+//   },[pd])
+
+
+//  console.log(da)
   return (
     <>
+ 
       <div class="container row m-auto loginmainbanner">
         <div className="col-md-5 kovil-login">
           <img src="/images/Picture1.jpg" alt="" className="login-img" />

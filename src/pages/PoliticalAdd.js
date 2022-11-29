@@ -108,7 +108,7 @@ const PoliticalAdd = (props) => {
 const handleSubmit=async(e)=>{
   e.preventDefault() 
   console.log(formData);
-  console.log(formData)
+  // console.log(formData)
   setIsPending(true);
   await addDoc(collection(db, "political_districts"),formData).then((res)=>{
     // setCount(count+1)

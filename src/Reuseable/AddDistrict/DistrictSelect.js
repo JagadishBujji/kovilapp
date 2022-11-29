@@ -30,9 +30,15 @@ export default function DistrictSelect({setDistrictClicked, allStates, formData,
   // console.log(stateClicked)
   const handleChange = (event) => {
     setAge(event.target.value);
+    let fm=event.target.value
+    fm=fm.toLowerCase();
+    // setFormData({
+    //   ...formData,
+    //   district: event.target.value
+    // })
     setFormData({
       ...formData,
-      district: event.target.value
+      district: fm
     })
     setDistrictClicked(event.target.value)
   };
@@ -58,7 +64,8 @@ export default function DistrictSelect({setDistrictClicked, allStates, formData,
         required
         labelId="demo-simple-select-label"
         id="demo-simple-select"
-        value={formData.district}
+        // value={formData.district}
+        value={age}
         label="State"
         onChange={handleChange}
       >
