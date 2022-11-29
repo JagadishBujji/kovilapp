@@ -17,6 +17,7 @@ import { ref, uploadBytes, getDownloadURL, listAll, list } from 'firebase/storag
 import country_state_district from 'country_state_district'
 import { v4 } from "uuid";
 import { storage } from "../services/firebase";
+import EditDistrict from "../Reuseable/Edit/EditDistrict";
 
 const EditUser = () => {
   const docId = useParams().id;
@@ -238,7 +239,7 @@ const EditUser = () => {
 
   return (
     <>
-      <Stack>
+      {/* <Stack>
         <h1 >
           <span className="navigateArrow"
             onClick={() => {
@@ -491,6 +492,272 @@ const EditUser = () => {
                   </Button>
                   {data && <Button type="submit"
                     disabled={isPending}
+                    variant="contained" sx={save}>Update User</Button>}
+                </div>
+                {showModal && (
+                  <UserModal onConfirm={deleteHandle} onCancel={handleCancel} />
+                )}
+                {showModal && <TicketsBack />}
+              </Box>
+            </Card>
+          </Box>
+        </form>
+      </Stack> */}
+        <Stack>
+        <h1 >
+          <span className="navigateArrow"
+            onClick={() => {
+              navigate("/kovil/user-post")
+            }}
+          >Users</span>  <i class="fas fa-chevron-right"></i> Edit User{" "}
+        </h1>
+        <form onSubmit={handleSubmit}>
+          <Box>
+            <Card sx={{ p: 3 }}>
+              <h1>
+                <b>Edit User</b>
+              </h1>
+              <Box sx={{ p: 3 }}>
+                <div className="row">
+                  <div className="col-md-6 picture">
+                    {previewImage ? <img src={previewImage} width="150" alt="user image" /> : <Avatar sx={{ width: 56, height: 56 }} />}
+                    <span>
+                      <form action="/action_page.php">
+                        <input type="file" onChange={(e) => {
+                          handleImage(e.target.files[0]);
+                        }} accept="image/*" id="myFile" name="filename" />
+                      </form>
+                    </span>
+                  </div>
+                  <div className="col-md-6">
+                    <SelectField formData={formData} setFormData={setFormData} />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6 picture">
+                    <TextField
+                      id="outlined-basic"
+                      //   label="Enter First Name"
+                      required
+                      value={formData.firstName}
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          firstName: e.target.value
+                        })
+                      }}
+                      variant="outlined"
+                      fullWidth
+                      type="text"
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: "900",
+                        fontFamily: "sans-serif",
+                      }}
+                    />
+                  </div>
+                  <div className="col-md-6 picture">
+                    <TextField
+                      id="outlined-basic"
+                      //   label="Enter Last Name"
+                      variant="outlined"
+                      required
+                      value={formData.lastName}
+                      fullWidth
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          lastName: e.target.value
+                        })
+                      }}
+                      type="text"
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: "900",
+                        fontFamily: "sans-serif",
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6 picture">
+                    <TextField
+                      id="outlined-basic"
+                      //   label="Enter Mobile Number"
+                      variant="outlined"
+                      fullWidth
+                      required
+                      value={formData.mobile}
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          mobile: e.target.value
+                        })
+                      }}
+                      type="number"
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: "900",
+                        fontFamily: "sans-serif",
+                      }}
+                    />
+                  </div>
+                  <div className="col-md-6 picture">
+                    <TextField
+                      id="outlined-basic"
+                      //   label="Enter Alternate Mobile Number"
+                      variant="outlined"
+                      required
+                      value={formData.alternateNumber}
+                      fullWidth
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          alternateNumber: e.target.value
+                        })
+                      }}
+                      type="number"
+                    />
+                  </div>
+                </div>
+                <TextField
+                  id="outlined-basic"
+                  //   label="Enter Email ID"
+                  variant="outlined"
+                  fullWidth
+                  required
+                  value={formData.email}
+                  type="email"
+                  disabled
+                  onChange={(e) => {
+                    setFormData({
+                      ...formData,
+                      email: e.target.value
+                    })
+                  }}
+                  sx={{
+                    mb: 2,
+                    fontSize: "14px",
+                    fontWeight: "900",
+                    fontFamily: "sans-serif",
+                  }}
+                />
+                <div className="row">
+                  <div className="col-md-6 picture">
+                    <TextField
+                      id="outlined-basic"
+                      //   label="Enter Aadhar Number"
+                      variant="outlined"
+                      fullWidth
+                      required
+                      value={formData.aadhar}
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          aadhar: e.target.value
+                        })
+                      }}
+                      type="tel"
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: "900",
+                        fontFamily: "sans-serif",
+                      }}
+                    />
+                  </div>
+                  <div className="col-md-6 picture">
+                    <TextField
+                      id="outlined-basic"
+                      required
+                      value={formData.dob}
+                      label=""
+                      variant="outlined"
+                      fullWidth
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          dob: e.target.value
+                        })
+                      }}
+                      type="date"
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: "900",
+                        fontFamily: "sans-serif",
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6 picture">
+                    <StateSelect allStates={allStates} setStateClicked={setStateClicked} formData={formData} setFormData={setFormData} />
+                  </div>
+                  <div className="col-md-6 picture">
+                    {/* <DistrictSelect allStates={allStates} stateClicked={stateClicked} formData={formData} setFormData={setFormData} /> */}
+                 {allStates && formData.state && <EditDistrict allStates={allStates} stateClicked={stateClicked} formData={formData} setFormData={setFormData}  />}
+                  
+                  </div>  
+                 {/* {allStates && formData.state && <EditDistrict allStates={allStates} stateClicked={stateClicked} formData={formData} setFormData={setFormData}  />} */}
+                </div>
+                <div className="row">
+                  <div className="col-md-6 picture">
+                    <TextField
+                      id="outlined-basic"
+                      label={formData.bjp_id ? "" : "BJP_ID"}
+                      value={formData.bjp_id}
+                      variant="outlined"
+                      fullWidth
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          bjp_id: e.target.value
+                        })
+                      }}
+                      type="text"
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: "900",
+                        fontFamily: "sans-serif",
+                        mb: 8
+                      }}
+                    />
+                  </div>
+                  <div className="col-md-6 picture1">
+                    <Button
+                      variant="contained"
+                      sx={{ backgroundColor: "#198754", color: "#fff", mb: 2 }}
+                    >
+                      + Add
+                    </Button><TextField
+                      id="outlined-basic"
+                      //   label="ZipCode"
+                      variant="outlined"
+                      fullWidth
+                      required
+                      value={formData.zipcode}
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          zipcode: e.target.value
+                        })
+                      }}
+                      type="tel"
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: "900",
+                        fontFamily: "sans-serif",
+                      }}
+                    />
+
+                  </div>
+                </div>
+                <div className="row okbutton">
+                  <Button variant="text" sx={{ mr: 2 }} onClick={handleClick}>
+                    Cancel
+                  </Button>
+                  {data && <Button type="submit"
+                    // disabled={isPending}
+                      disabled
                     variant="contained" sx={save}>Update User</Button>}
                 </div>
                 {showModal && (

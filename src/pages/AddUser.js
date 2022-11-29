@@ -1,4 +1,4 @@
-import { Alert, Avatar, Box, Card, Grid } from "@mui/material";
+import { Alert, Avatar, Box, Card, FormControl, Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import * as React from "react";
 import Button from "@mui/material/Button";
@@ -18,6 +18,10 @@ import {
   collection,
   serverTimestamp,
   setDoc,
+  query,
+  getDocs,
+  where,
+  updateDoc,
 } from "firebase/firestore";
 import { auth, db } from "../services/firebase";
 import {
@@ -68,16 +72,20 @@ const AddUser = () => {
     email: "",
     aadhar: "",
     state: "",
-    zipcode: "",
+    // zipcode: "",
     dob: "",
     district: "",
     password: pass,
     bjp_id: "",
+    politicalDistrict:"",
+    pincode:""
   });
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const [isPending, setIsPending] = useState(false);
   const [stateClicked, setStateClicked] = useState();
+  const [pdId,setPdId]=useState();
+  console.log(pdId);
   const handleClick = () => {
     setShowModal(true);
   };
@@ -334,9 +342,10 @@ const AddUser = () => {
                   aadhar: formData.aadhar,
                   doc_id: userId,
                   dob: formData.dob,
+                  politicalDistrict:formData.politicalDistrict,
                   uid: userId,
                   password: formData.password,
-                  zipcode: formData.zipcode,
+                  pincode: formData.pincode,
                   profilePic: imageURL,
                   bjp_id: formData.bjp_id,
                   timestamp: serverTimestamp(),
@@ -347,39 +356,35 @@ const AddUser = () => {
                     var ciphertext = CryptoJS.AES.encrypt(String(formData.password), 'kovilapp').toString();
 
                     await axios.post("http://localhost:5001/sendMail", {
-                    // await axios.post("https://kovilapp.in/sendMail", {
+                      // await axios.post("https://kovilapp.in/sendMail", {
                       email: formData.email,
                       password: ciphertext,
-                      name:formData.firstName
+                      name: formData.firstName
                     })
-                    .then((res)=>{
-                      // const apikey = 'wJyfpBVDtbg-rnMp7JmQ23XtMqxpH9K2CPbbbgCP9V';
-                      // const username = formData.firstName;
-                      // const mobile = formData.phone_number;
-                      // const otp = formData.password; 
-                      // const sender = 'KVLAPP';
-                      // var message = 'Dear '+username+' - Namaskaram! Please enter the OTP: '+otp+' in your Kovil App to create your account. Thank you!';
-                      // var url = 'https://api.textlocal.in/send/?apikey='+apikey+'&numbers='+mobile+'&sender='+sender+'&message='+encodeURIComponent(message);
-                      // fetch (url).then(response => response.json())
-                      // .then(data =>{
-                        setIsPending(false);
-                        alert("user created");
-                        navigate("/kovil/user-post");
-                        console.log(res);
-                        // console.log(data)
-                      // } 
-                      // ).catch((err)=>{
-                      //   console.log(err);
-                      //   alert(err);
-                      // })
+                      .then(async(res1) => {
+                        const washingtonRef = doc(db, "political_districts", pdId);
+                        await updateDoc(washingtonRef, {
+                          sub_admin_uid: userId
+                          }).then((res2)=>{
+                            setIsPending(false);
+                            alert("user created");
+                            navigate("/kovil/user-post");
+                            console.log(res2);
+                          }).catch((err)=>{
+                            console.log(err)
+                            alert(err)
+                          })
+
                     
-                     
-                    }).catch((err)=>{
-                      alert(err);
-                    console.log(err);
-                    })
+                       
+
+
+                      }).catch((err) => {
+                        alert(err);
+                        console.log(err);
+                      })
                     //   .then((res) => {
-                   
+
                   })
                   .catch((err) => {
                     alert(err);
@@ -419,49 +424,45 @@ const AddUser = () => {
               dob: formData.dob,
               doc_id: userId,
               uid: userId,
+              politicalDistrict:formData.politicalDistrict,
               password: formData.password,
-              zipcode: formData.zipcode,
+              pincode: formData.pincode,
               profilePic: "",
               bjp_id: formData.bjp_id,
               timestamp: serverTimestamp(),
               is_password_changed: false,
             })
-              .then(async(res) => {
+              .then(async (res) => {
                 setIsPending(true)
                 var ciphertext = CryptoJS.AES.encrypt(String(formData.password), 'kovilapp').toString();
                 await axios.post("http://localhost:5001/sendMail", {
-                // await axios.post("https://kovilapp.in/sendMail", {
+                  // await axios.post("https://kovilapp.in/sendMail", {
                   email: formData.email,
                   password: ciphertext,
-                  name:formData.firstName
+                  name: formData.firstName
                 })
-                .then((res)=>{
-                  // const apikey = 'wJyfpBVDtbg-rnMp7JmQ23XtMqxpH9K2CPbbbgCP9V';
-                  // const username = formData.firstName;
-                  // const mobile = formData.phone_number;
-                  // const otp = formData.password; 
-                  // const sender = 'KVLAPP';
-                  // var message = 'Dear '+username+' - Namaskaram! Please enter the OTP: '+otp+' in your Kovil App to create your account. Thank you!';
-                  // var url = 'https://api.textlocal.in/send/?apikey='+apikey+'&numbers='+mobile+'&sender='+sender+'&message='+encodeURIComponent(message);
-                  // fetch (url).then(response => response.json())
-                  // .then(data =>{
-                  // console.log(data)
-                  setIsPending(false);
-                  alert("user created");
-                  navigate("/kovil/user-post");
-                  console.log(res);
-                // }).catch((err)=>{
-                //   alert(err);
-                //   console.log(err);
-                // })
-                
-                  
-                }).catch((err)=>{
-                  alert(err);
-                console.log(err);
-                })
+                  .then(async(res) => {
+                    console.log(res);
+                    const washingtonRef = doc(db, "political_districts", pdId);
+                        await updateDoc(washingtonRef, {
+                          sub_admin_uid: userId
+                          }).then((res2)=>{
+                            setIsPending(false);
+                            alert("user created");
+                            navigate("/kovil/user-post");
+                            console.log(res2);
+                          }).catch((err)=>{
+                            console.log(err)
+                            alert(err)
+                          })
+
+
+                  }).catch((err) => {
+                    alert(err);
+                    console.log(err);
+                  })
                 //   .then((res) => {
-               
+
               })
               .catch((err) => {
                 alert(err);
@@ -500,6 +501,55 @@ const AddUser = () => {
       });
     }
   };
+
+  const [da, setDa] = useState();
+  const [pd, setPd] = useState();
+  const [pc, setPc] = useState();
+
+  React.useEffect(() => {
+    const getSuperAdmin = async () => {
+      const docRef = collection(db, "political_districts");
+      const q = query(docRef, where("district", "==", formData.district.toLowerCase()));
+      const querySnapshot = await getDocs(q);
+      let arr = []
+      querySnapshot.forEach((doc) => {
+        // console.log(doc.data())
+        const document = doc;
+        const obj = {
+          doc_id: document.id,
+          ...document.data()
+        }
+        console.log(obj)
+        arr.push(obj)
+      })
+      setDa(arr);
+    }
+    getSuperAdmin();
+
+  }, [formData.district])
+  console.log(pc)
+
+  
+ React.useEffect(()=>{
+    const getSuperAdmin=async()=>{
+      const docRef=collection(db,"political_districts");
+      const q=query(docRef,where("politicalDistrict","==",pd));
+      const  querySnapshot=await getDocs(q);
+ 
+       querySnapshot.forEach((doc)=>{
+          // console.log(doc.data())
+          const document=doc;
+          const obj={
+              doc_id:document.id,
+              ...document.data()
+          }
+          console.log(obj) 
+          setPc(obj); 
+      })
+  }
+   getSuperAdmin();
+
+  },[pd,formData.district])
 
   return (
     <>
@@ -720,6 +770,62 @@ const AddUser = () => {
                   )}
                 </div>
                 <div className="row">
+                <div className="col-md-6 picture">
+                  {formData.district ? ( 
+                      <FormControl fullWidth>
+      <InputLabel id="demo-simple-select-label">Political district</InputLabel>
+
+                      <Select required
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="Political district"
+                        onChange={(e) => {
+                          setPd(e.target.value.politicalDistrict)
+                          setFormData({
+                            ...formData,
+                            politicalDistrict:e.target.value.politicalDistrict
+                          })
+                          setPdId(e.target.value.doc_id)
+                        }}>
+                        {da &&
+                          da.map((ad) => (
+                            <MenuItem value={ad}>{ad.politicalDistrict}</MenuItem>
+                          ))
+                        }
+                      </Select>
+                      </FormControl> 
+                  ) : (
+                    <p>Select a district to view political state</p>
+                  )}
+                  </div>
+                  <div className="col-md-6 picture">
+                  {pc ? ( 
+                      <FormControl fullWidth>
+      <InputLabel id="demo-simple-select-label">Pincode</InputLabel>
+
+                      <Select required
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="Pincode"
+                        onChange={(e) => {
+                          setFormData({...formData,
+                            pincode:e.target.value})
+                        }}
+                        >
+                        {pc &&
+                          pc.pincode.map((ad) => (
+                            <MenuItem value={ad}>{ad}</MenuItem>
+                          ))
+                        }
+                      </Select>
+                      </FormControl> 
+                  ) : (
+                    <p>Select a district to view political state</p>
+                  )}
+                  </div>
+                </div>
+
+                <div className="row">
                   <div className="col-md-6 picture">
                     <TextField
                       id="outlined-basic"
@@ -748,7 +854,7 @@ const AddUser = () => {
                     >
                       + Add
                     </Button>
-                    <TextField
+                    {/* <TextField
                       id="outlined-basic"
                       label="ZipCode"
                       variant="outlined"
@@ -767,7 +873,7 @@ const AddUser = () => {
                         fontFamily: "sans-serif",
                         mt: 4,
                       }}
-                    />
+                    /> */}
                   </div>
                 </div>
                 <div className="row okbutton">
