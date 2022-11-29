@@ -148,8 +148,8 @@ const handleSubmit=async(e)=>{
   })
  } 
   return (
-    <form onSubmit={handleSubmit}>
-      <Card sx={{ p: 3 }} className="complaintmodal">
+    <form onSubmit={handleSubmit} >
+      <Card sx={{ p: 3, height: "75vh" }} className="complaintmodal">
         <div className="row user-tabs">
           <h4>Add Political District</h4>
           <span className="crossBtn" onClick={props.onCancel}>
