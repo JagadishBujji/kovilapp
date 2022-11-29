@@ -15,6 +15,7 @@ body {
   line-height: 1.6;
   color: #1a1a1a;
   overflow-x: hidden;
+  background-color: #F5F5F5;
 }
 
 a {
@@ -33,7 +34,8 @@ a {
 }
 
 .App {
-  background: #f5f5f5;
+  background: #F5F5F5;
+  height: 100vh;
 }
 
 .css-1gsv261 {
@@ -1207,9 +1209,9 @@ a {
   } */
 }
 
-.css-ctcgil-MuiPaper-root-MuiCard-root{
+/* .css-ctcgil-MuiPaper-root-MuiCard-root{
   height: 75vh;
-}
+} */
 
 .scroll{
   overflow-y: scroll;
