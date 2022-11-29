@@ -7,7 +7,7 @@ import Select from "@mui/material/Select";
 import country_state_district from 'country_state_district'
 
 
-export default function DistrictSelect({ allStates, formData, setFormData, stateClicked }) {
+export default function DistrictSelect({setDistrictClicked, allStates, formData, setFormData, stateClicked }) {
   const [age, setAge] = React.useState("");
   const [allDistricts, setAllDistricts] = React.useState()
   // React.useEffect(()=>{
@@ -34,6 +34,7 @@ export default function DistrictSelect({ allStates, formData, setFormData, state
       ...formData,
       district: event.target.value
     })
+    setDistrictClicked(event.target.value)
   };
 
   const ds = allStates.filter((as) => {

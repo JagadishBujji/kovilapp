@@ -5,7 +5,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-export default function DistrictName() {
+export default function DistrictName({selectState}) {
+  console.log(selectState);
   const [age, setAge] = React.useState("");
 
   const handleChange = (event) => {

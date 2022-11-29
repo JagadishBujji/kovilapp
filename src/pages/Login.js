@@ -153,17 +153,17 @@ const Login = () => {
 //   const name="prabhu"
 //   // var m8='Dear '+username+', Namaskaram, Welcome to Kovil App. You have been successfully registered. Login to continue. - KovilApp Team'
 //   // var m7='Dear '+username+' Namaskaram, Your ticket no '+tno+' has been created and assigned to the concerned team. Your complaint will be resolved within 3 working days. Please check the KovilApp for status. - KovilApp Team'
-//   // var m6='Dear '+username+', Ticket no '+tno+' has been assigned to you. Please take necessary action and respond within 24 Hours – KovilApp Team'
+//   // var m6='Dear '+name+', Ticket no '+ticket+' has been assigned to you. Please take necessary action and respond within 24 Hours – KovilApp Team'
 //   // var m5='Dear '+username+', Ticket no '+tno+' has been assigned to '+name+' - Ph no: '+mobile+'. Please take necessary action and respond within 36 Hours – KovilApp Team'
-//   // var m4='Dear '+username+', Namaskaram, Your ticket no '+tno+' status has been changed to '+status+'. Please check the KovilApp for details. - KovilApp Team'
-//   // var m3='Dear '+username+', ticket no '+tno+' ticket status has been changed to '+status+' - KovilApp Team'
-//   // var m10='Dear '+username+', Namaskaram, Your profile password has been successfully changed - KovilApp Team'
-//   // var m2='Dear '+username+', ticket no '+tno+' status has been changed to {#var#} - KovilApp Team'
-// var mms='Dear '+subadmin+', ticket no '+ticket+' status has been changed to '+status+' - KovilApp Team'
-//   var mess='Dear '+subadmin+', Ticket no '+ticket+' has been assigned to you. Please take necessary action and respond within 24 Hours – KovilApp Team'
+// //   // var m4='Dear '+username+', Namaskaram, Your ticket no '+tno+' status has been changed to '+status+'. Please check the KovilApp for details. - KovilApp Team'
+// //   // var m3='Dear '+username+', ticket no '+tno+' ticket status has been changed to '+status+' - KovilApp Team'
+// //   // var m10='Dear '+username+', Namaskaram, Your profile password has been successfully changed - KovilApp Team'
+// //   // var m2='Dear '+username+', ticket no '+tno+' status has been changed to {#var#} - KovilApp Team'
+// // var mms='Dear '+subadmin+', ticket no '+ticket+' status has been changed to '+status+' - KovilApp Team'
+// //   var mess='Dear '+subadmin+', Ticket no '+ticket+' has been assigned to you. Please take necessary action and respond within 24 Hours – KovilApp Team'
   
 //   // var message = 'Dear '+username+' - Namaskaram! Please enter the OTP: '+otp+' in your Kovil App to create your account. Thank you!';
-//   var url = 'https://api.textlocal.in/send/?apikey='+apikey+'&numbers='+mobile+'&sender='+sender+'&message='+encodeURIComponent(mms);
+//   var url = 'https://api.textlocal.in/send/?apikey='+apikey+'&numbers='+mobile+'&sender='+sender+'&message='+encodeURIComponent(m6);
 //   fetch (url).then(response => response.json()).then(data => console.log(data));
 
 //   }

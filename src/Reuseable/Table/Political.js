@@ -98,17 +98,18 @@ export default function Political() {
   React.useEffect(() => {
     const getType = async () => {
       await getDocs(
-        query(collection(db, "complaint_types"), orderBy("posted_on", "desc"))
+        query(collection(db, "political_districts"), orderBy("posted_on_timestamp", "desc"))
       )
         .then((querySnapshot) => {
           let arr = [];
           querySnapshot.forEach((doc) => {
             let data = doc.data();
-            // console.log(doc.id);
+            console.log(data);
             const obj = {
               doc_id: doc.id,
               ...data,
             };
+            console.log(obj)
             arr.push(obj);
           });
           setAllTypes(arr);
@@ -117,10 +118,15 @@ export default function Political() {
     };
     getType();
   }, [count]);
-  // console.log(allTypes);
+  console.log(allTypes);
   let rows = [];
   allTypes?.map((as, index) => {
-    rows.push(createData(index, as.complaint_type, as.doc_id));
+    console.log(as)
+     let ok=""
+     as.pincode.map((a)=>{
+      ok=ok+" "+a
+     })
+    rows.push(createData(index, as.state, as.politicalDistrict,as.district,ok));
   });
   return (
     <>

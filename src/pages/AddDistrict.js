@@ -119,80 +119,82 @@ const AddDistrict = () => {
   }
 
   return (
+    // <div>
+    //   <h2>Add Political District</h2>
+    //   <form onSubmit={handleSubmit}>
+    //     <div style={{ marginTop: "30px" }} className="row">
+    //       <div className="col-md-3 picture">
+    //         <StateSelect
+    //           allStates={allStates}
+    //           setStateClicked={setStateClicked}
+    //           formData={formData}
+    //           setFormData={setFormData}
+    //         />
+    //       </div>
+    //       {stateClicked ? (
+    //         <div className="col-md-3 picture">
+    //           <DistrictSelect
+    //             allStates={allStates}
+    //             stateClicked={stateClicked}
+    //             formData={formData}
+    //             setFormData={setFormData}
+    //           />
+    //         </div>
+    //       ) : (
+    //         <p style={{ marginTop: "20px", marginRight: "4px" }}>Select a state to view district</p>
+    //       )}
+    //       <div className="col-md-2 picture">
+    //         <input style={{ height: "55px" }} type="text"
+    //           onChange={(e) => {
+    //             setFormData({
+    //               ...formData,
+    //               politicalDistrict: e.target.value
+    //             })
+    //           }}
+    //           required
+    //           value={formData.politicalDistrict}
+    //           placeholder='enter  political district' />
+
+    //       </div>
+    //       <div className="col-md-2 picture">
+    //         <input style={{ height: "55px" }}
+    //           onChange={(e) => {
+    //             setFormData({
+    //               ...formData,
+    //               pincode: e.target.value
+    //             })
+    //           }}
+    //           value={formData.pincode}
+    //           type="text" required placeholder='enter  pincode' />
+
+    //       </div>
+    //       <div className="col-md-2 picture">
+    //         <Button type="submit" variant='contained'>Add District</Button>
+    //       </div>
+    //     </div>
+    //   </form>
+    //   <TableContainer>
+    //     <Table stickyHeader aria-label="sticky table">
+    //       <TableHead>
+    //         <TableRow>
+    //           {columns.map((column) => (
+    //             <TableCell
+    //               key={column.id}
+    //               align={column.align}
+    //               style={{ minWidth: column.minWidth }}
+    //               sx={stickyhead}
+    //             >
+    //               {column.label}
+    //             </TableCell>
+    //           ))}
+    //         </TableRow>
+    //       </TableHead>
+    //     </Table>
+    //   </TableContainer>
+    // </div>
     <div>
-      <h2>Add Political District</h2>
-      {/* <form onSubmit={handleSubmit}>
-        <div style={{ marginTop: "30px" }} className="row">
-          <div className="col-md-3 picture">
-            <StateSelect
-              allStates={allStates}
-              setStateClicked={setStateClicked}
-              formData={formData}
-              setFormData={setFormData}
-            />
-          </div>
-          {stateClicked ? (
-            <div className="col-md-3 picture">
-              <DistrictSelect
-                allStates={allStates}
-                stateClicked={stateClicked}
-                formData={formData}
-                setFormData={setFormData}
-              />
-            </div>
-          ) : (
-            <p style={{ marginTop: "20px", marginRight: "4px" }}>Select a state to view district</p>
-          )}
-          <div className="col-md-2 picture">
-            <input style={{ height: "55px" }} type="text"
-              onChange={(e) => {
-                setFormData({
-                  ...formData,
-                  politicalDistrict: e.target.value
-                })
-              }}
-              required
-              value={formData.politicalDistrict}
-              placeholder='enter  political district' />
-
-          </div>
-          <div className="col-md-2 picture">
-            <input style={{ height: "55px" }}
-              onChange={(e) => {
-                setFormData({
-                  ...formData,
-                  pincode: e.target.value
-                })
-              }}
-              value={formData.pincode}
-              type="text" required placeholder='enter  pincode' />
-
-          </div>
-          <div className="col-md-2 picture">
-            <Button disabled={isPending} type="submit" variant='contained'>Add District</Button>
-          </div>
-        </div>
-      </form>
-      <TableContainer>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                  sx={stickyhead}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-        </Table>
-      </TableContainer> */}
+      
     </div>
-
 
   )
 }
