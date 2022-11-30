@@ -17,7 +17,7 @@ export default function StateOption({setSelectState}) {
   const [allStates,setAllStates]=useState(State.getStatesOfCountry("IN"))
   const handleChange = (event) => {
     setAge(event.target.value);
-    console.log(event.target.value)
+    // console.log(event.target.value)
     setSelectState(event.target.value)
   }; 
 

@@ -27,7 +27,7 @@ const UserModal = (props) => {
         <div className="Minimodal">
         <p>Do you want to Cancel?</p>
         <Button variant="contained" sx={save} onClick={props.onConfirm}>
-          Save
+          Ok
         </Button>
         <Button variant="outlined" sx={cancel} onClick={props.onCancel}>
           Cancel

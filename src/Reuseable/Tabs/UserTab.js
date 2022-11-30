@@ -50,6 +50,7 @@ export default function UserTab() {
   const [adminData,setAdminData]=React.useState();
   const [subAdmin,setSubAdmin]=React.useState();
   const [isLoading, setIsLoading] = useState(true);
+  console.log(allData);
    React.useEffect(() => {
     const fetchData = async () => {
 

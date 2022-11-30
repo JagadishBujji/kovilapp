@@ -9,7 +9,7 @@ export default function StateSelect({allStates, formData,setFormData,setStateCli
   const [age, setAge] = React.useState("");
   
 
-  console.log(allStates)
+  // console.log(allStates)
   const handleChange = (event) => { 
     setAge(event.target.value);
     setStateClicked(event.target.value)
@@ -18,7 +18,7 @@ export default function StateSelect({allStates, formData,setFormData,setStateCli
       state:event.target.value
     })
   };
-
+  // console.log(formData.state);
   return (
     <FormControl fullWidth>
       <InputLabel id="demo-simple-select-label">State</InputLabel>

@@ -1,4 +1,4 @@
-import { Alert, Avatar, Box, Card, Grid } from "@mui/material";
+import { Alert, Avatar, Box, Card, FormControl, Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import * as React from "react";
 import Button from "@mui/material/Button";
@@ -11,13 +11,14 @@ import { useState } from "react";
 import UserModal from "../Reuseable/UserModal/UserModal";
 import TicketsBack from "../Reuseable/TicketsBack";
 import { useNavigate, useParams } from "react-router-dom";
-import { doc, addDoc, collection, getDoc, serverTimestamp, setDoc } from 'firebase/firestore'
+import { doc, addDoc, collection, getDoc, serverTimestamp, setDoc, query, where, getDocs, updateDoc } from 'firebase/firestore'
 import { db } from "../services/firebase";
 import { ref, uploadBytes, getDownloadURL, listAll, list } from 'firebase/storage'
 import country_state_district from 'country_state_district'
 import { v4 } from "uuid";
 import { storage } from "../services/firebase";
 import EditDistrict from "../Reuseable/Edit/EditDistrict";
+import { useEffect } from "react";
 
 const EditUser = () => {
   const docId = useParams().id;
@@ -55,11 +56,12 @@ const EditUser = () => {
     dob: "",
     uid: "",
     password: "",
-    zipcode: "",
+    pincode: "",
     profilePic: "",
     bjp_id: "",
     is_password_changed: "",
     timestamp: "",
+    politicalDistrict:""
   })
   React.useEffect(() => {
     const getDetails = async () => {
@@ -78,7 +80,8 @@ const EditUser = () => {
           email: ds.email,
           aadhar: ds.aadhar,
           state: ds.state,
-          zipcode: ds.zipcode,
+          pincode: ds.pincode,
+          politicalDistrict:ds.politicalDistrict,
           doc_id: ds.doc_id,
           dob: ds.dob,
           district: ds.district,
@@ -116,6 +119,10 @@ const EditUser = () => {
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData)
+    console.log(pdId)
+    if(formData.politicalDistrict)
+    {
     if (formData.mobile.length === 10 && formData.alternateNumber.length === 10) {
       
         if(previewImage===oldImage)
@@ -135,8 +142,9 @@ const EditUser = () => {
                   doc_id:formData.doc_id,
                   dob: formData.dob,
                   uid:formData.uid,
+                  politicalDistrict:formData.politicalDistrict,
                   password:formData.password,
-                  zipcode: formData.zipcode,
+                  pincode: formData.pincode,
                   profilePic: formData.profilePic,
                   bjp_id:formData.bjp_id, 
                   timestamp:serverTimestamp(),
@@ -144,11 +152,24 @@ const EditUser = () => {
 
                 }
               )
-              .then((res) => {
+              .then(async(res) => {
                 // console.log(res);
+
+                const washingtonRef = doc(db, "political_districts", pdId);
+                await updateDoc(washingtonRef, {
+                  sub_admin_uid: formData.uid,
+                  sub_admin_name:formData.firstName
+                  }).then((res2)=>{
+                  
                 setIsPending(false)
                 alert("user updated")
-                navigate("/kovil/user-post")
+                navigate("/kovil/user-post") 
+                  }).catch((err)=>{
+                    console.log(err)
+                    alert(err)
+                  })
+
+
               }).catch((err) => {
                 setIsPending(false)
                 console.log(err);
@@ -179,7 +200,8 @@ const EditUser = () => {
               dob: formData.dob,
               uid:formData.uid,
               password:formData.password,
-              zipcode: formData.zipcode,
+              politicalDistrict:formData.politicalDistrict,
+              pincode: formData.pincode,
               profilePic: imageURL,
               bjp_id:formData.bjp_id,
               timestamp:serverTimestamp(),
@@ -187,11 +209,23 @@ const EditUser = () => {
 
             }
           )
-          .then((res) => {
-            console.log(res);
-            setIsPending(false)
+          .then(async(res) => {
+            const washingtonRef = doc(db, "political_districts", pdId);
+            await updateDoc(washingtonRef, {
+              sub_admin_uid: formData.uid,
+              sub_admin_name:formData.firstName
+              }).then((res2)=>{
+                setIsPending(false)
             alert("user updated")
             navigate("/kovil/user-post")
+                console.log(res2);
+              }).catch((err)=>{
+                console.log(err)
+                alert(err)
+              })
+
+            console.log(res);
+           
           }).catch((err) => {
             setIsPending(false)
             console.log(err);
@@ -210,11 +244,63 @@ const EditUser = () => {
     else {
       alert("enter valid mobile number")
     }
-
+    }
+    else{
+      alert("please select political district")
+    }
 }
 
+const [da, setDa] = useState();
+const [pd, setPd] = useState(formData.politicalDistrict);
+const [pc, setPc] = useState();
+const [pdId,setPdId]=useState();
 
+useEffect(()=>{
 
+  const getSuperAdmin = async () => {
+    const docRef = collection(db, "political_districts");
+    const q = query(docRef, where("district", "==", formData.district.toLowerCase()));
+    const querySnapshot = await getDocs(q);
+    let arr = []
+    querySnapshot.forEach((doc) => {
+      // console.log(doc.data())
+      const document = doc;
+      const obj = {
+        doc_id: document.id,
+        ...document.data()
+      }
+      // console.log(obj)
+      arr.push(obj)
+    })
+    setDa(arr);
+  }
+  getSuperAdmin();
+
+},[formData.district])
+// console.log(da);
+// console.log(formData.politicalDistrict)
+React.useEffect(()=>{
+  const getSuperAdmin=async()=>{
+    const docRef=collection(db,"political_districts");
+    // console.log(pd)
+    const q=query(docRef,where("politicalDistrict","==",formData.politicalDistrict));
+    const  querySnapshot=await getDocs(q);
+
+     querySnapshot.forEach((doc)=>{
+        // console.log(doc.data())
+        const document=doc;
+        const obj={
+            doc_id:document.id,
+            ...document.data()
+        }
+        // console.log(obj) 
+        setPc(obj); 
+    })
+}
+ getSuperAdmin();
+
+},[pd,formData.district])
+// console.log(pc);
   const save = {
     backgroundColor: "#f17116",
     color: "#fff",
@@ -230,11 +316,12 @@ const EditUser = () => {
       const imageRef = ref(storage, `images/${uImage.name + v4()}`);
       uploadBytes(imageRef, uImage).then((snapshot) => {
         getDownloadURL(snapshot.ref).then((url) => {
-          console.log(url);
+          // console.log(url);
         });
       });
     }
   }
+  // console.log(formData.politicalDistrict)
 
 
   return (
@@ -701,6 +788,62 @@ const EditUser = () => {
                 </div>
                 <div className="row">
                   <div className="col-md-6 picture">
+                     <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">{formData.politicalDistrict}</InputLabel>
+                     
+                      <Select 
+                      required 
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="Political district" 
+                        onChange={(e) => {
+                          setPd(e.target.value.politicalDistrict)
+                          setFormData({
+                            ...formData,
+                            politicalDistrict:e.target.value.politicalDistrict,
+                            pincode:""
+                          
+                          })
+                          setPdId(e.target.value.doc_id)
+                        }}  
+                        
+                        >
+                        {da &&
+                          da.map((ad) => (
+                            <MenuItem value={ad}>{ad.politicalDistrict}</MenuItem>
+                          ))
+                        }
+                      </Select>
+                       
+                      </FormControl> 
+                   </div>
+                  <div className="col-md-6 picture">
+                  <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">{formData.pincode}</InputLabel>
+
+                      <Select required
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="Pincode"
+                        onChange={(e) => {
+                          setFormData({...formData,
+                            pincode:e.target.value})
+                        }}
+                        value={formData.pincode}
+                        >
+                        {pc &&
+                          pc.pincode.map((ad) => (
+                            <MenuItem value={ad}>{ad}</MenuItem>
+                          ))
+                        }
+                      </Select>
+                      </FormControl> 
+                  </div>  
+                 {/* {allStates && formData.state && <EditDistrict allStates={allStates} stateClicked={stateClicked} formData={formData} setFormData={setFormData}  />} */}
+                </div>
+                
+                <div className="row">
+                  <div className="col-md-6 picture">
                     <TextField
                       id="outlined-basic"
                       label={formData.bjp_id ? "" : "BJP_ID"}
@@ -722,7 +865,7 @@ const EditUser = () => {
                       }}
                     />
                   </div>
-                  <div className="col-md-6 picture1">
+                  {/* <div className="col-md-6 picture1">
                     <Button
                       variant="contained"
                       sx={{ backgroundColor: "#198754", color: "#fff", mb: 2 }}
@@ -749,15 +892,15 @@ const EditUser = () => {
                       }}
                     />
 
-                  </div>
+                  </div> */}
                 </div>
                 <div className="row okbutton">
                   <Button variant="text" sx={{ mr: 2 }} onClick={handleClick}>
                     Cancel
                   </Button>
                   {data && <Button type="submit"
-                    // disabled={isPending}
-                      disabled
+                    disabled={isPending}
+                      // disabled
                     variant="contained" sx={save}>Update User</Button>}
                 </div>
                 {showModal && (

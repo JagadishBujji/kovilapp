@@ -32,19 +32,22 @@ export default function EditDistrict({ allStates, formData, setFormData, stateCl
     setAge(event.target.value);
     setFormData({
       ...formData,
-      district: event.target.value
+      district: event.target.value,
+      politicalDistrict:"",
+      pincode:"",
     })
   };
 
   const ds = allStates.filter((as) => {
     return as.name === formData.state
   })
-  console.log(ds);
+  // console.log(ds);
 //   // console.log(ds[0].id)
   React.useEffect(() => {
     let districts = country_state_district.getDistrictsByStateId(ds[0].id);
     setAllDistricts(districts)
     console.log(districts)
+   
   }, [formData.state])
 
   // console.log(allDistricts)

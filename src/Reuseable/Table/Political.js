@@ -104,12 +104,12 @@ export default function Political() {
           let arr = [];
           querySnapshot.forEach((doc) => {
             let data = doc.data();
-            console.log(data);
+            // console.log(data);
             const obj = {
               doc_id: doc.id,
               ...data,
             };
-            console.log(obj)
+            // console.log(obj)
             arr.push(obj);
           });
           setAllTypes(arr);
@@ -118,10 +118,10 @@ export default function Political() {
     };
     getType();
   }, [count]);
-  console.log(allTypes);
+  // console.log(allTypes);
   let rows = [];
   allTypes?.map((as, index) => {
-    console.log(as)
+    // console.log(as)
      let ok=""
      as.pincode.map((a)=>{
       ok=ok+" "+a

@@ -43,7 +43,7 @@ export default function DistrictSelect({ allStates, formData, setFormData, state
   React.useEffect(() => {
     let districts = country_state_district.getDistrictsByStateId(ds[0].id);
     setAllDistricts(districts)
-
+  
   }, [stateClicked])
 
   // console.log(allDistricts)

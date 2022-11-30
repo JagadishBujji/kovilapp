@@ -9,6 +9,9 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useNavigate } from "react-router-dom";
 import UserDropDown from "../DropDown/UserDropDown";
+import { collection, getDocs, query } from "firebase/firestore";
+import { db } from "../../services/firebase";
+import { useEffect } from "react";
 
 const columns = [
   // { id: "id", label: "ID", minWidth: 170 },
@@ -37,7 +40,7 @@ const columns = [
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "open",
+    id: "assigned",
     label: "Open",
     minWidth: 100,
     align: "left",
@@ -139,7 +142,71 @@ function createData(
 // ];
 
 export default function UserTable({allData}) {
+  const [tic,setTic]=React.useState();
   const navigate = useNavigate();
+  allData?.map((ad)=>{
+    if(ad.closed_ticket)
+    { 
+      ad.close=ad.closed_ticket.length
+    }
+    if(ad.current_ticket)
+    {
+      ad.progress=ad.current_ticket.length
+    }
+    if(ad.assigned)
+    {
+      console.log(ad)
+    }
+    else{
+      ad.assigned=0;
+      ad.close=0;
+      ad.progress=0
+    } 
+   
+  })
+
+  React.useEffect(()=>{
+    const getNews = async () => {
+      await getDocs(query(collection(db, "Complaints")))
+      .then((querySnapshot) => {
+        let arr=[]
+        querySnapshot.forEach((doc) => {
+          let data = doc.data();
+          // console.log(doc.id);
+          const obj={
+            doc_id:doc.id,
+            ...data
+          }
+          arr.push(obj) 
+          allData?.map((ad)=>{
+            if(ad.doc_id===data.sub_admin_uid)
+            {
+              if(ad.assigned)
+              {
+                ad.assigned=ad.assigned+1 
+              }
+              else{
+                ad.assigned=1 
+              }
+            }
+          })
+        });
+        console.log(arr);
+        setTic(arr);
+      })
+      .catch((e) => console.log(e));
+       
+    };
+    getNews()
+  },[])
+  console.log(tic) 
+  // allData?.map((ms)=>{
+  //   tic?.map((ad)=>{
+  //     console.log(ms.doc_id,ad.sub_admin_uid)
+  //   })
+  // })
+   
+
   const [rows, setRows] = React.useState(allData);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);

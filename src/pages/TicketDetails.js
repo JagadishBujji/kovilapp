@@ -97,8 +97,8 @@ const TicketsDetails = () => {
   const deleteBack = () => {
     setOpenModal(false);
   };
-  console.log(selectedSubAdmin);
-  console.log(data)
+  // console.log(selectedSubAdmin);
+  // console.log(data)
 
   const [isPending,setIsPending]=useState(false)
   const handleFormSubmit = async (e) => {

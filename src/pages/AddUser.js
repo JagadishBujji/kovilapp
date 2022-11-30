@@ -355,8 +355,8 @@ const AddUser = () => {
                     setIsPending(true);
                     var ciphertext = CryptoJS.AES.encrypt(String(formData.password), 'kovilapp').toString();
 
-                    await axios.post("http://localhost:5001/sendMail", {
-                      // await axios.post("https://kovilapp.in/sendMail", {
+                    // await axios.post("http://localhost:5001/sendMail", {
+                      await axios.post("https://kovilapp.in/sendMail", {
                       email: formData.email,
                       password: ciphertext,
                       name: formData.firstName
@@ -364,7 +364,8 @@ const AddUser = () => {
                       .then(async(res1) => {
                         const washingtonRef = doc(db, "political_districts", pdId);
                         await updateDoc(washingtonRef, {
-                          sub_admin_uid: userId
+                          sub_admin_uid: userId,
+                          sub_admin_name:formData.firstName
                           }).then((res2)=>{
                             setIsPending(false);
                             alert("user created");
@@ -435,8 +436,8 @@ const AddUser = () => {
               .then(async (res) => {
                 setIsPending(true)
                 var ciphertext = CryptoJS.AES.encrypt(String(formData.password), 'kovilapp').toString();
-                await axios.post("http://localhost:5001/sendMail", {
-                  // await axios.post("https://kovilapp.in/sendMail", {
+                // await axios.post("http://localhost:5001/sendMail", {
+                  await axios.post("https://kovilapp.in/sendMail", {
                   email: formData.email,
                   password: ciphertext,
                   name: formData.firstName
@@ -445,7 +446,8 @@ const AddUser = () => {
                     console.log(res);
                     const washingtonRef = doc(db, "political_districts", pdId);
                         await updateDoc(washingtonRef, {
-                          sub_admin_uid: userId
+                          sub_admin_uid: userId,
+                          sub_admin_name:formData.firstName
                           }).then((res2)=>{
                             setIsPending(false);
                             alert("user created");

@@ -115,7 +115,7 @@ const MiniModal = (props) => {
     }
     useEffect(() => {
         const getUser = async () => {
-            console.log(props.data.user_uid)
+            // console.log(props.data.user_uid)
             const docRef = doc(db, "userProfile", props.data.user_uid)
             try {
                 const docSnap = await getDoc(docRef);

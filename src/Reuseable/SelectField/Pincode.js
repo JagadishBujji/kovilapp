@@ -14,12 +14,12 @@ export default function Pincode({ getPin, setPincode, setPoliticalDistrict, dist
   const [isPending, setIsPending] = useState(false);
   // console.log(skill);
   React.useEffect(() => {
-    console.log(districtClicked)
+    // console.log(districtClicked)
     const getData = async () => {
       setIsPending(true);
       await axios.get(`https://api.postalpincode.in/postoffice/${districtClicked}`)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           const data = res.data
           const hf = data[0].PostOffice
           // console.log(hf)

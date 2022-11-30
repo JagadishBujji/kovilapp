@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 const ImageModal = (props) => {
     const [fileType,setFileType]=useState()
 
-    console.log(props)
+    // console.log(props)
     useEffect(()=>{
         const file=props.source
         const arr=file.split(".")

@@ -19,9 +19,9 @@ export default function BasicSelect({ data, count, setCount }) {
     const navigate = useNavigate();
     // console.log(admin)
     const [ticUser, setTicUser] = React.useState();
-    console.log(ticUser)
+    // console.log(ticUser)
     const [now,setNow]=React.useState()
-    console.log(data)
+    // console.log(data)
     const [superAdmin,setSuperAdmin]=React.useState()
     const subadmin = JSON.parse(localStorage.getItem("subadmin"));
     const handleChange = (event) => {
@@ -55,7 +55,7 @@ export default function BasicSelect({ data, count, setCount }) {
             const docRef = doc(db, "userProfile", data.user_uid)
             try {
                 const docSnap = await getDoc(docRef);
-                console.log(docSnap.data())
+                // console.log(docSnap.data())
                 //   console.log(docSnap.data());
                 setTicUser(docSnap.data());
             } catch (err) {
@@ -65,7 +65,7 @@ export default function BasicSelect({ data, count, setCount }) {
         }
         getUser();
     }, [])
-    console.log(ticUser)
+    // console.log(ticUser)
     const [ad, setAd] = React.useState();
     useEffect(() => {
         if (subadmin) {
@@ -122,7 +122,7 @@ export default function BasicSelect({ data, count, setCount }) {
                     doc_id:document.id,
                     ...document.data()
                 }
-                console.log(obj)
+                // console.log(obj)
                 setSuperAdmin(obj)
             })
         }
@@ -136,7 +136,7 @@ export default function BasicSelect({ data, count, setCount }) {
     //     console.log(addToClosedTicket(ad.closed_ticket,data))
     //   }
     const [isPending, setIsPending] = React.useState(false);
-    console.log(ad);
+    // console.log(ad);
  
 
 //     const handleSubmit = async (e) => {
