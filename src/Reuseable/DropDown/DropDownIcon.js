@@ -10,9 +10,11 @@ import { deleteDoc, doc, setDoc } from 'firebase/firestore';
 import { db } from '../../services/firebase';    
 
 export default function BasicMenu({data,count,setCount}) {
+  // console.log(data);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openModal, setOpenModal] = useState(false);
   const open = Boolean(anchorEl);
+  const [isPending,setIsPending]=useState(false);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -32,7 +34,9 @@ export default function BasicMenu({data,count,setCount}) {
   };
 
   const handleDelete=async()=>{
-    await deleteDoc(doc(db,"short_news",data.ID))
+    // await deleteDoc(doc(db,"short_news",data.ID))
+    setIsPending(true)
+    await deleteDoc(doc(db,"short_news",data.more.props.doc_id))
     .then((res)=>{
       console.log(res)
       setCount(count+1)
@@ -47,6 +51,8 @@ export default function BasicMenu({data,count,setCount}) {
     setAnchorEl(null);
 
 
+    }).finally(()=>{
+      setIsPending(false)
     })
   }
 
@@ -66,7 +72,7 @@ export default function BasicMenu({data,count,setCount}) {
       >
         <MenuItem onClick={editHandler}>Edit</MenuItem>
         {/* <MenuItem onClick={deleteHandler}>Delete</MenuItem> */}
-        <MenuItem onClick={handleDelete}>Delete</MenuItem>
+        <MenuItem disabled={isPending} onClick={handleDelete}>Delete</MenuItem>
 
       </Menu>
       {openModal && <NewsModal count={count} setCount={setCount} editData={data} forWhat="edit" onSave={handleClose} onCancel={handleClose}/>}

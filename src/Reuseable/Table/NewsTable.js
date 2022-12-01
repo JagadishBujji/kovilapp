@@ -90,7 +90,7 @@ export default function NewsTable() {
         as.posted_on,
         as.published_by,
         as.news,
-        <DropDownIcon />
+        <DropDownIcon doc_id={as.doc_id} />
       ))
   })
   // console.log(rows);

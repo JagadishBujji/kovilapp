@@ -2,7 +2,7 @@ import { Card, } from "@mui/material";
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import Button from "@mui/material/Button";
 import { useState, useEffect } from "react";
-import { collection, updateDoc, doc, addDoc, serverTimestamp, getDocs } from "firebase/firestore";
+import { collection, updateDoc, doc, addDoc, serverTimestamp, getDocs, setDoc } from "firebase/firestore";
 import { db } from "../../services/firebase";
 import axios from 'axios'
 
@@ -20,6 +20,7 @@ const NewsModal = (props) => {
   const month = date.getMonth();
   const year = date.getFullYear();
   const dd = `${day}-${month}-${year}`
+
   // console.log(milliseconds)
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,12 +47,22 @@ const NewsModal = (props) => {
     //   props.onCancel()
 
     // }
+    const uid=crypto.randomUUID(); 
+    setIsPending(true);
     await addDoc(collection(db, "short_news"), {
       posted_on: dd,
       published_by: userEmail,
       news,
-      posted_on_timestamp: milliseconds
+      posted_on_timestamp: milliseconds,
     })
+   
+    // await setDoc(doc(db,"short_news",uid),{
+    //   posted_on: dd,
+    //   published_by: userEmail,
+    //   news,
+    //   posted_on_timestamp: milliseconds,
+    //   doc_id:uid
+    // })
       .then(async(res) => {
         await axios.post("https://fcm.googleapis.com/fcm/send", {
           "notification": {
@@ -64,8 +75,7 @@ const NewsModal = (props) => {
         }, {
           headers: {
             "Content-Type": "application/json",
-            // "Authorization": "key=AAAAujeDNFk:APA91bFTPFchdLLWS_6Tp4LsLe14M8QX9pvLOMfUv9ILl-l3O7SGCRuVSbaOsqZvNrYRlxlRc22ygeOxHXN_85SxPsOKZG6l7H3l9WRbHJ3LWJHypuFM6kwPeZhcKTMlgnMx85tNHDt-"
-            "Authorization": process.env.REACT_APP_MESSAGING_KEY
+             "Authorization": process.env.REACT_APP_MESSAGING_KEY
           }
         }).then((res) => {
           console.log(res);
@@ -85,6 +95,8 @@ const NewsModal = (props) => {
         alert(err);
         props.onCancel()
 
+      }).finally(()=>{
+        setIsPending(false);
       })
 
     // Add a new document with a generated id.
@@ -111,11 +123,19 @@ const NewsModal = (props) => {
     },
 
   };
-  const handleUpdate = async () => {
-    const docRef = doc(db, "short_news", props.editData.ID)
 
+  const handleUpdate = async () => {
+    // console.log(props)
+    var milliseconds = (new Date).getTime();
+
+    // const docRef = doc(db, "short_news", props.editData.ID)
+    const docRef = doc(db, "short_news", props.editData.more.props.doc_id)
+
+  
+    setIsPending(true);
     await updateDoc(docRef, {
-      news: news
+      news: news,
+      posted_on_timestamp: milliseconds,
     })
       .then((res) => {
         console.log(res);
@@ -127,6 +147,8 @@ const NewsModal = (props) => {
         console.log(err);
         alert(err);
         props.onCancel()
+      }).finally(()=>{
+        setIsPending(false);
       })
   }
   useEffect(() => {
@@ -173,7 +195,9 @@ const NewsModal = (props) => {
         <div className="row complaints-btn ">
           {props.forWhat ?
             <Button variant="contained" sx={save}
-              type="button" onClick={handleUpdate}>
+              type="button"
+              disabled={isPending}
+              onClick={handleUpdate}>
               Update
             </Button> :
             <Button variant="contained" sx={save}

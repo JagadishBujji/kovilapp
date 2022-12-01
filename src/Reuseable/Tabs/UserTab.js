@@ -50,7 +50,7 @@ export default function UserTab() {
   const [adminData,setAdminData]=React.useState();
   const [subAdmin,setSubAdmin]=React.useState();
   const [isLoading, setIsLoading] = useState(true);
-  console.log(allData);
+  // console.log(allData);
    React.useEffect(() => {
     const fetchData = async () => {
 
@@ -67,7 +67,7 @@ export default function UserTab() {
           id:doc.id,
           ...data
         }
-        // console.log(nD)
+        console.log(nD)
         all.push(nD)
         
         const rl=doc.data().role;

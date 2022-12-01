@@ -152,19 +152,13 @@ export default function UserTable({allData}) {
     if(ad.current_ticket)
     {
       ad.progress=ad.current_ticket.length
-    }
-    if(ad.assigned)
-    {
-      console.log(ad)
-    }
-    else{
-      ad.assigned=0;
+    } 
+    else{ 
       ad.close=0;
       ad.progress=0
-    } 
-   
+    }  
   })
-
+ 
   React.useEffect(()=>{
     const getNews = async () => {
       await getDocs(query(collection(db, "Complaints")))
@@ -178,18 +172,19 @@ export default function UserTable({allData}) {
             ...data
           }
           arr.push(obj) 
-          allData?.map((ad)=>{
-            if(ad.doc_id===data.sub_admin_uid)
-            {
-              if(ad.assigned)
-              {
-                ad.assigned=ad.assigned+1 
-              }
-              else{
-                ad.assigned=1 
-              }
-            }
-          })
+          
+          // allData?.map((ad)=>{
+          //   if(ad.doc_id===data.sub_admin_uid)
+          //   {
+          //     if(ad.assigned)
+          //     {
+          //       ad.assigned=ad.assigned+1 
+          //     }
+          //     else{
+          //       ad.assigned=1 
+          //     }
+          //   }
+          // })
         });
         console.log(arr);
         setTic(arr);
@@ -200,11 +195,7 @@ export default function UserTable({allData}) {
     getNews()
   },[])
   console.log(tic) 
-  // allData?.map((ms)=>{
-  //   tic?.map((ad)=>{
-  //     console.log(ms.doc_id,ad.sub_admin_uid)
-  //   })
-  // })
+ 
    
 
   const [rows, setRows] = React.useState(allData);
