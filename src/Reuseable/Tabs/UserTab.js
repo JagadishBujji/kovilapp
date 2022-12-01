@@ -10,6 +10,7 @@ import { db } from "../../services/firebase";
 import { SafetyDividerOutlined } from "@mui/icons-material";
 import Loader from "../Loader/Loader";
 import { useState } from "react";
+import EndUserTable from "../Table/EndUserTable";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -46,49 +47,50 @@ function a11yProps(index) {
 
 export default function UserTab() {
   const [value, setValue] = React.useState(0);
-  const [allData,setAllData]=React.useState()
-  const [adminData,setAdminData]=React.useState();
-  const [subAdmin,setSubAdmin]=React.useState();
+  const [allData, setAllData] = React.useState();
+  const [adminData, setAdminData] = React.useState();
+  const [subAdmin, setSubAdmin] = React.useState();
+  const [endUser, setEndUser] = React.useState();
   const [isLoading, setIsLoading] = useState(true);
   // console.log(allData);
-   React.useEffect(() => {
+  React.useEffect(() => {
     const fetchData = async () => {
-
-      const querySnapshot = await getDocs(query(collection(db, "admins"),orderBy("timestamp","desc")));
-      let all=[]
-      let ad=[]
-        let sad=[]
+      const querySnapshot = await getDocs(
+        query(collection(db, "admins"), orderBy("timestamp", "desc"))
+      );
+      let all = [];
+      let ad = [];
+      let sad = [];
+      let end = [];
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         // console.log(doc.id, " => ", doc.data());
-        let data=doc.data()
+        let data = doc.data();
         // console.log(data)
-        const nD={
-          id:doc.id,
-          ...data
-        }
-        console.log(nD)
-        all.push(nD)
-        
-        const rl=doc.data().role;
+        const nD = {
+          id: doc.id,
+          ...data,
+        };
+        console.log(nD);
+        all.push(nD);
+
+        const rl = doc.data().role;
         // console.log(rl?.toLowerCase())
-        if(rl?.toLowerCase()==="admin")
-        {
-            ad.push(nD)
-        }
-        else if(rl?.toLowerCase()==="sub-admin")
-        {
+        if (rl?.toLowerCase() === "admin") {
+          ad.push(nD);
+        } else if (rl?.toLowerCase() === "sub-admin") {
           sad.push(nD);
         }
       });
       setAllData(all);
       setAdminData(ad);
       setSubAdmin(sad);
+      setEndUser(end);
       setIsLoading(false);
-    }
-    fetchData()
+    };
+    fetchData();
     // console.log(allData);
-  }, [])
+  }, []);
   // console.log(subAdmin)
   // console.log(adminData);
   const handleChange = (event, newValue) => {
@@ -111,29 +113,49 @@ export default function UserTab() {
   };
   return (
     <>
-    {isLoading && <Loader />}
-    <Box sx={{ width: "100%" }}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          <Tab sx={tab} label={`All [${allData?.length}]`} {...a11yProps(0)} />
-          <Tab sx={tab} label={`Admin [${adminData?.length}]`} {...a11yProps(1)} />
-          <Tab sx={tab} label={`SubAdmin [${subAdmin?.length}]`} {...a11yProps(2)} />
-        </Tabs>
+      {isLoading && <Loader />}
+      <Box sx={{ width: "100%" }}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+          >
+            <Tab
+              sx={tab}
+              label={`All [${allData?.length}]`}
+              {...a11yProps(0)}
+            />
+            <Tab
+              sx={tab}
+              label={`Admin [${adminData?.length}]`}
+              {...a11yProps(1)}
+            />
+            <Tab
+              sx={tab}
+              label={`SubAdmin [${subAdmin?.length}]`}
+              {...a11yProps(2)}
+            />
+            <Tab
+              sx={tab}
+              label={`Enduser [${endUser?.length}]`}
+              {...a11yProps(3)}
+            />
+          </Tabs>
+        </Box>
+        <TabPanel value={value} index={0}>
+          {allData && <UserTable allData={allData} />}
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          {adminData && <UserTable allData={adminData} />}
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          {subAdmin && <UserTable allData={subAdmin} />}
+        </TabPanel>
+        <TabPanel value={value} index={3}>
+          {endUser && <EndUserTable allData={endUser} />}
+        </TabPanel>
       </Box>
-      <TabPanel value={value} index={0}>
-     { allData &&  <UserTable allData={allData} />}
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-      {adminData &&  <UserTable allData={adminData} />}
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        {subAdmin && <UserTable allData={subAdmin} />}
-      </TabPanel>
-    </Box>
     </>
   );
 }

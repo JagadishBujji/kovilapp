@@ -24,6 +24,7 @@ import { db } from "../../services/firebase";
 import ComplaintDropDown from "../DropDown/ComplaintDropDown";
 import Loader from "../Loader/Loader";
 import PoliticalAdd from "../../pages/PoliticalAdd";
+import PoliticalDropDown from "../DropDown/PoliticalDropDown";
 
 const columns = [
   { id: "sno", label: "Sl.No", minWidth: 100 },
@@ -32,10 +33,11 @@ const columns = [
   { id: "district", label: "District Name", minWidth: 100 },
 
   { id: "pincode", label: "PinCode", minWidth: 100 },
+  { id: "more" },
 ];
 
-function createData(sno, state, policital, district, pincode) {
-  return { sno, state, policital, district, pincode };
+function createData(sno, state, policital, district, pincode, more) {
+  return { sno, state, policital, district, pincode, more };
 }
 
 // const rows = [
@@ -98,7 +100,10 @@ export default function Political() {
   React.useEffect(() => {
     const getType = async () => {
       await getDocs(
-        query(collection(db, "political_districts"), orderBy("posted_on_timestamp", "desc"))
+        query(
+          collection(db, "political_districts"),
+          orderBy("posted_on_timestamp", "desc")
+        )
       )
         .then((querySnapshot) => {
           let arr = [];
@@ -122,11 +127,13 @@ export default function Political() {
   let rows = [];
   allTypes?.map((as, index) => {
     // console.log(as)
-     let ok=""
-     as.pincode.map((a)=>{
-      ok=ok+" "+a
-     })
-    rows.push(createData(index, as.state, as.politicalDistrict,as.district,ok));
+    let ok = "";
+    as.pincode.map((a) => {
+      ok = ok + " " + a;
+    });
+    rows.push(
+      createData(index, as.state, as.politicalDistrict, as.district, ok)
+    );
   });
   return (
     <>
@@ -182,7 +189,7 @@ export default function Political() {
                               sx={Complaintbody}
                             >
                               {column.id === "more" ? (
-                                <ComplaintDropDown
+                                <PoliticalDropDown
                                   data={row}
                                   count={count}
                                   setCount={setCount}
