@@ -25,33 +25,47 @@ export default function UserDropDown({ row }) {
   const [isPending, setIsPending] = useState();
 
   const handleDelete = async () => { 
-    const auth = getAuth();
-    const user = auth.currentUser;
-    setIsPending(true)
-    await deleteUser(user).then(async () => {
+    // const auth = getAuth();
+    // const user = auth.currentUser;
+    console.log(row.doc_id)
+    // setIsPending(true)
+    // await deleteUser(row.id).then(async () => {
 
+    //   setIsPending(true)
+    //   await deleteDoc(doc(db, "admins", row.doc_id))
+    //     .then(() => {
+    //       setIsPending(false)
+    //       alert("user deleted")
+    //       setAnchorEl(null);
+    //       navigate(`/kovil/home-post`)
+    //     }).catch((err) => {
+    //       setIsPending(false)
+
+    //       alert(err)
+    //       setAnchorEl(null);
+
+    //     })
+    // }).catch((error) => {
+    //   setIsPending(false)
+
+    //   alert(error)
+    //   setAnchorEl(null);
+
+    // }); 
       setIsPending(true)
       await deleteDoc(doc(db, "admins", row.doc_id))
         .then(() => {
           setIsPending(false)
           alert("user deleted")
           setAnchorEl(null);
-          navigate(`/kovil/home-post`)
+          // navigate(`/kovil/home-post`)
         }).catch((err) => {
-          setIsPending(false)
-
+          setIsPending(false) 
           alert(err)
           setAnchorEl(null);
 
         })
-    }).catch((error) => {
-      setIsPending(false)
-
-      alert(error)
-      setAnchorEl(null);
-
-    }); 
-  }
+    } 
 
   return (
     <div>
@@ -72,12 +86,21 @@ export default function UserDropDown({ row }) {
       >
         <MenuItem sx={{ align: "center" }} onClick={() => {
           navigate(`/kovil/editUser/${row.id}`)
-        }}><i class="fas fa-edit mr-2"></i>Edit</MenuItem>
-        <MenuItem disabled={isPending} sx={{ align: "center" }} onClick={handleDelete}><i class="fas fa-trash mr-2"></i>Delete</MenuItem>
-        <MenuItem sx={{ align: "center" }} onClick={handleClose}><i class="fas fa-eye-slash mr-2"></i>Disable</MenuItem>
+        }}
+        hidden={row.role==="admin"}
+        ><i class="fas fa-edit mr-2"></i>Edit</MenuItem>
+        <MenuItem disabled={isPending} sx={{ align: "center" }}
+        
+        hidden={row.role==="admin"}
+        onClick={handleDelete}><i class="fas fa-trash mr-2"></i>Delete</MenuItem>
+        {/* <MenuItem sx={{ align: "center" }} onClick={handleClose}><i class="fas fa-eye-slash mr-2"></i>Disable</MenuItem> */}
         <MenuItem  sx={{ align: "center" }} onClick={() => {
           navigate(`/kovil/userdetails/${row.id}`)
-        }}><i class="fas fa-eye mr-2"></i>View</MenuItem>
+          
+        }}
+        hidden={row.role==="admin"}
+        
+        ><i class="fas fa-eye mr-2"></i>View</MenuItem>
       </Menu>
     </div>
   );

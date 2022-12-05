@@ -58,8 +58,9 @@ const Login = () => {
             }
           }).catch((err) => {
             setIsPending(false);
+            setError("your account has been deleted");
 
-            alert(err)
+              // alert(err)
             console.log(err)
           })
       })

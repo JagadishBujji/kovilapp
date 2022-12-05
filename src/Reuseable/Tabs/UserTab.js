@@ -84,8 +84,7 @@ export default function UserTab() {
       });
       setAllData(all);
       setAdminData(ad);
-      setSubAdmin(sad);
-      setEndUser(end);
+      setSubAdmin(sad); 
       setIsLoading(false);
     };
     fetchData();
@@ -111,6 +110,31 @@ export default function UserTab() {
       outline: "none",
     },
   };
+
+  
+  React.useEffect(() => {
+    const getNews = async () => {
+      await getDocs(query(collection(db, "userProfile")))
+        .then((querySnapshot) => {
+          let arr = [];
+          querySnapshot.forEach((doc) => {
+            let data = doc.data();
+            // console.log(doc.id);
+            const obj = {
+              doc_id: doc.id,
+              ...data,
+            };
+            arr.push(obj);
+ 
+          });
+          console.log(arr);
+          setEndUser(arr);
+        })
+        .catch((e) => console.log(e));
+    };
+    getNews();
+  }, []);
+
   return (
     <>
       {isLoading && <Loader />}

@@ -1,22 +1,24 @@
-import { Card } from "@mui/material";
+import { Card, InputLabel } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useEffect, useState } from "react";
 import { collection, addDoc, setDoc, doc, updateDoc } from "firebase/firestore";
-import { db } from "../services/firebase";
+import { db } from "../../services/firebase";
 import country_state_district from "country_state_district";
 
-import "../../src/styles.css"; 
-import DistrictSelect from '../Reuseable/AddDistrict/DistrictSelect'
-import PoliticalState from "../Reuseable/SelectField/PoliticalState";
-import DistrictName from "../Reuseable/SelectField/DistrictName";
-import Pincode from "../Reuseable/SelectField/Pincode";
-import StateSelect from "../Reuseable/AddDistrict/StateSelect";  
-
+// import "../../src/styles.css"; 
+import "../../../src/styles.css"
+import DistrictSelect from '../AddDistrict/DistrictSelect'
+import PoliticalState from "../SelectField/PoliticalState";
+import DistrictName from "../SelectField/DistrictName";
+import Pincode from "../SelectField/Pincode";
+import StateSelect from "../AddDistrict/StateSelect";   
+import { FormatColorFill } from "@mui/icons-material";
+import EditDistrict from "./EditDistrict";
 
 // Add a new document with a generated id.
 
-const PoliticalModal = (props) => {
+const EditPoliticalModal = (props) => {
   console.log(props.data);
   //   const navigate = useNavigate();
   const [allStates, setAllStates] = useState();
@@ -29,10 +31,10 @@ const PoliticalModal = (props) => {
   const [politicalDistrict,setPoliticalDistrict]=useState();
   var milliseconds = (new Date).getTime();
   const [formData, setFormData] = useState({
-    state: "",
-    district: "",
-    politicalDistrict: "",
-    pincode: "",
+    state: props.data.state,
+    district: props.data.district,
+    politicalDistrict: props.data.politicalDistrict,
+    pincode:props.data.pincode,
     posted_on_timestamp:milliseconds
 
   })
@@ -125,19 +127,7 @@ const handleSubmit=async(e)=>{
   })
 
 }
-  // const getDist=(pc)=>{
-    
-
-
-  //   let arr=[]
-  //   pc.map((p)=>{
-  //     arr.push(p.Pincode);
-  //   })
-  //   setFormData({
-  //     ...formData,
-  //     pincode:arr
-  //   })
-  // }
+ 
   const getPin=(arr)=>{
    let arr2=[]
   arr.map((ar)=>{
@@ -168,7 +158,7 @@ const handleSubmit=async(e)=>{
             <br/>
               <br/>
             {stateClicked ? ( 
-              <DistrictSelect
+              <EditDistrict
               setDistrictClicked={setDistrictClicked}
                 allStates={allStates}
                 stateClicked={stateClicked}
@@ -187,6 +177,8 @@ const handleSubmit=async(e)=>{
           )}
         
           <br/>
+          {/* <InputLabel id="demo-simple-select-label">{formData?.pincode}</InputLabel> */}
+
           <TextField
             id="outlined-basic"
             required
@@ -221,4 +213,4 @@ const handleSubmit=async(e)=>{
   );
 };
 
-export default PoliticalModal;
+export default EditPoliticalModal;

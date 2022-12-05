@@ -33,19 +33,19 @@ const columns = [
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "assigned",
+    id: "open",
     label: "Assigned",
     minWidth: 100,
     align: "center",
     format: (value) => value.toLocaleString("en-US"),
   },
-  {
-    id: "assigned",
-    label: "Open",
-    minWidth: 100,
-    align: "left",
-    format: (value) =>  value.toLocaleString("en-US"),
-  },
+  // {
+  //   id: "open",
+  //   label: "Open",
+  //   minWidth: 100,
+  //   align: "left",
+  //   format: (value) =>  value.toLocaleString("en-US"),
+  // },
   {
     id: "close",
     label: "Close",
@@ -143,21 +143,53 @@ function createData(
 
 export default function UserTable({allData}) {
   const [tic,setTic]=React.useState();
+  console.log(allData)
   const navigate = useNavigate();
-  allData?.map((ad)=>{
+  // allData?.map((ad)=>{
+  //   console.log(ad?.assigned?.length);
+  //   if(ad.closed_ticket)
+  //   { 
+  //     ad.close=ad.closed_ticket.length
+  //   }
+  //   if(ad.current_ticket)
+  //   {
+  //     ad.progress=ad.current_ticket.length
+  //   } 
+  //   else{ 
+  //     ad.close=0;
+  //     ad.progress=0 
+  //   }  
+  // })
+  useEffect(()=>{
+    
+  allData?.map((ad)=>{ 
     if(ad.closed_ticket)
     { 
       ad.close=ad.closed_ticket.length
-    }
+    } 
+    else{ 
+      ad.close=0; 
+    }  
+  })
+  allData?.map((ad)=>{ 
     if(ad.current_ticket)
-    {
+    { 
       ad.progress=ad.current_ticket.length
     } 
     else{ 
-      ad.close=0;
-      ad.progress=0
+      ad.progress=0; 
     }  
   })
+  allData?.map((ad)=>{ 
+    if(ad.assigned)
+    { 
+      ad.open=ad.assigned.length
+    } 
+    else{ 
+      ad.open=0; 
+    }  
+  })
+},[])
  
   React.useEffect(()=>{
     const getNews = async () => {
@@ -172,7 +204,6 @@ export default function UserTable({allData}) {
             ...data
           }
           arr.push(obj) 
-          
           // allData?.map((ad)=>{
           //   if(ad.doc_id===data.sub_admin_uid)
           //   {
@@ -186,7 +217,7 @@ export default function UserTable({allData}) {
           //   }
           // })
         });
-        console.log(arr);
+        // console.log(arr);
         setTic(arr);
       })
       .catch((e) => console.log(e));
@@ -194,7 +225,7 @@ export default function UserTable({allData}) {
     };
     getNews()
   },[])
-  console.log(tic) 
+  // console.log(tic) 
  
    
 

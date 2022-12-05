@@ -8,9 +8,11 @@ import TicketsBack from "../TicketsBack";
 import { db } from "../../services/firebase";
 import { setDoc, doc, deleteDoc } from "firebase/firestore";
 import PoliticalModal from "../../pages/PoliticalModal";
+import EditPoliticalModal from "../Edit/EditPoliticalModal";
 export default function PoliticalDropDown(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openModal, setOpenModal] = useState(false);
+  const [isPending,setIsPending]=useState()
   const open = Boolean(anchorEl);
   // console.log(props.data);
   const handleClick = (event) => {
@@ -25,11 +27,13 @@ export default function PoliticalDropDown(props) {
     setAnchorEl(null);
     setOpenModal(true);
   };
+  // console.log(props.data)
 
   const deleteHandler = async (e) => {
     // setAnchorEl(null);
     // delete complaint type from db
-    await deleteDoc(doc(db, "complaint_types", props.data.more))
+    setIsPending(true);
+    await deleteDoc(doc(db, "political_districts", props.data.more))
       .then((res) => {
         console.log(res)
         props.setCount(props.count + 1)
@@ -42,6 +46,9 @@ export default function PoliticalDropDown(props) {
         console.log(err);
         handleClose()
         setAnchorEl(null);
+      }).finally(()=>{
+    setIsPending(true);
+
       })
     // alert("Compliant type deleted");
   };
@@ -60,11 +67,11 @@ export default function PoliticalDropDown(props) {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={editHandler}>Edit</MenuItem>
-        <MenuItem onClick={deleteHandler}>Delete</MenuItem>
+        <MenuItem data={props.data} onClick={editHandler}>Edit</MenuItem>
+        <MenuItem disabled={isPending} onClick={deleteHandler}>Delete</MenuItem>
       </Menu>
       {openModal && (
-        <PoliticalModal
+        <EditPoliticalModal
           count={props.count}
           setCount={props.setCount}
           forWhat="editType"

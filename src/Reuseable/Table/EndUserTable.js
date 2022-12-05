@@ -17,6 +17,7 @@ const columns = [
   // { id: "id", label: "ID", minWidth: 170 },
   { id: "first_name", label: "First name", minWidth: 100, align: "left" },
   { id: "last_name", label: "Last name", minWidth: 100, align: "left" },
+  { id: "email", label: "Email", minWidth: 100, align: "left" },
 
   {
     id: "phone_number",
@@ -26,7 +27,7 @@ const columns = [
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "flat",
+    id: "flat_number",
     label: "Flat Number",
     minWidth: 100,
     align: "center",
@@ -34,7 +35,7 @@ const columns = [
   },
 
   {
-    id: "streetname",
+    id: "street_name",
     label: "Street Name",
     minWidth: 100,
     align: "left",
@@ -136,22 +137,11 @@ function createData(
 
 export default function UserTable({ allData }) {
   const [tic, setTic] = React.useState();
-  const navigate = useNavigate();
-  allData?.map((ad) => {
-    if (ad.closed_ticket) {
-      ad.close = ad.closed_ticket.length;
-    }
-    if (ad.current_ticket) {
-      ad.progress = ad.current_ticket.length;
-    } else {
-      ad.close = 0;
-      ad.progress = 0;
-    }
-  });
+ 
 
   React.useEffect(() => {
     const getNews = async () => {
-      await getDocs(query(collection(db, "Complaints")))
+      await getDocs(query(collection(db, "userProfile")))
         .then((querySnapshot) => {
           let arr = [];
           querySnapshot.forEach((doc) => {
@@ -162,19 +152,7 @@ export default function UserTable({ allData }) {
               ...data,
             };
             arr.push(obj);
-
-            // allData?.map((ad)=>{
-            //   if(ad.doc_id===data.sub_admin_uid)
-            //   {
-            //     if(ad.assigned)
-            //     {
-            //       ad.assigned=ad.assigned+1
-            //     }
-            //     else{
-            //       ad.assigned=1
-            //     }
-            //   }
-            // })
+ 
           });
           console.log(arr);
           setTic(arr);
@@ -232,29 +210,8 @@ export default function UserTable({ allData }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {/* {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}  onClick={() => navigate("/kovil/userdetails")} sx={tablebody}>
-                            {column.id === "more" ? (
-                            <DropDownIcon />
-                          ) : column.format && typeof value === "number" ? (
-                            column.format(value)
-                          ) : (
-                            value
-                          )}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })} */}
-            {rows
+          
+            { rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (

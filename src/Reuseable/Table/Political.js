@@ -132,7 +132,7 @@ export default function Political() {
       ok = ok + " " + a;
     });
     rows.push(
-      createData(index, as.state, as.politicalDistrict, as.district, ok)
+      createData(index, as.state, as.politicalDistrict, as.district, ok,as.doc_id)
     );
   });
   return (
