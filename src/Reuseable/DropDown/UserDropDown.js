@@ -58,7 +58,7 @@ export default function UserDropDown({ row }) {
           setIsPending(false)
           alert("user deleted")
           setAnchorEl(null);
-          // navigate(`/kovil/home-post`)
+          navigate(`/kovil/home-post`)
         }).catch((err) => {
           setIsPending(false) 
           alert(err)
