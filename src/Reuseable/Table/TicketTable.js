@@ -27,13 +27,13 @@ const columns = [
     align: "left",
     format: (value) => value.toLocaleString("en-US"),
   },
-  {
-    id: "admin",
-    label: "Admin",
-    minWidth: 120,
-    align: "left",
-    format: (value) => value.toFixed(2),
-  },
+  // {
+  //   id: "admin",
+  //   label: "Admin",
+  //   minWidth: 120,
+  //   align: "left",
+  //   format: (value) => value.toFixed(2),
+  // },
   {
     id: "sub_admin_name",
     label: "Sub-Admin",
@@ -66,6 +66,7 @@ const columns = [
 
 
 export default function TicketTable({ tickets }) {
+  // console.log(tickets)
   const navigate = useNavigate();
   const [page, setPage] = React.useState(0);
   const [rows, setRows] = React.useState(tickets);

@@ -15,17 +15,19 @@ import Pincode from "../SelectField/Pincode";
 import StateSelect from "../AddDistrict/StateSelect";   
 import { FormatColorFill } from "@mui/icons-material";
 import EditDistrict from "./EditDistrict";
+import EditPDistrict from "../EditpoliticalModal/EditPDistrict";
+import EditPincode from "../EditpoliticalModal/EditPincode";
 
 // Add a new document with a generated id.
 
 const EditPoliticalModal = (props) => {
-  console.log(props.data);
+  // console.log(props.data);
   //   const navigate = useNavigate();
   const [allStates, setAllStates] = useState();
   const [stateClicked, setStateClicked] = useState()
   const [count, setCount] = useState(0);
   const [data, setData] = useState();
-  const [districtClicked,setDistrictClicked]=useState()
+  const [districtClicked,setDistrictClicked]=useState(props?.data?.district)
   const [isPending,setIsPending]=useState(false)
   const [pincode,setPincode]=useState();
   const [politicalDistrict,setPoliticalDistrict]=useState();
@@ -42,6 +44,7 @@ const EditPoliticalModal = (props) => {
   useEffect(() => {
     const states = country_state_district.getAllStates();
     setAllStates(states);
+    // setDistrictClicked(props?.data.district)
   }, []);
 
   const save = {
@@ -69,7 +72,7 @@ const EditPoliticalModal = (props) => {
   //   more: undefined,
   // });
   const [complaintType, setCompliantType] = useState(props.data?.complaints);
-  var milliseconds = new Date().getTime();
+  // var milliseconds = new Date().getTime();
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
   //   if (props.forWhat === "createType") {
@@ -111,20 +114,103 @@ const EditPoliticalModal = (props) => {
 const handleSubmit=async(e)=>{
   e.preventDefault() 
   console.log(formData);
-  // console.log(formData)
-  setIsPending(true);
-  await addDoc(collection(db, "political_districts"),formData).then((res)=>{
-    // setCount(count+1)
-    props.setCount(props.count+1)
-    alert("successfully added")
-    props.onCancel();
-    console.log(res);
-  }).catch((err)=>{
-    alert(err);
-    console.log(err)
-  }).finally(()=>{
-  setIsPending(false);
-  })
+  if(formData.state && formData.district && formData.pincode && formData.politicalDistrict)
+  {
+    const typ=typeof(formData.pincode)
+    // console.log(typeof(formData.pincode))
+  if(typ==="string")
+  {
+    // alert("string")
+    const arr=formData.pincode.split(" ") 
+        const fs=arr.slice(1) 
+        formData.pincode=fs
+        console.log(formData)
+        const docRef = doc(db, "political_districts", props.data.more)
+    
+      setIsPending(true);
+      await updateDoc(docRef, formData)
+        .then((res) => {
+          console.log(res);
+          props.setCount(props.count + 1)
+          alert("updated successfully")
+          props.onCancel()
+  
+        }).catch((err) => {
+          console.log(err);
+          alert(err);
+          props.onCancel()
+        }).finally(()=>{
+          setIsPending(false);
+        })
+  }
+  else{
+    const docRef = doc(db, "political_districts", props.data.more)
+  
+    setIsPending(true);
+    await updateDoc(docRef, formData)
+      .then((res) => {
+        console.log(res);
+        props.setCount(props.count + 1)
+        alert("updated successfully")
+        props.onCancel()
+
+      }).catch((err) => {
+        console.log(err);
+        alert(err);
+        props.onCancel()
+      }).finally(()=>{
+        setIsPending(false);
+      })
+  }
+  // if(typeof(formData.pincode=="string"))
+  //   {
+  //     const arr=formData.pincode.split(" ") 
+  //     const fs=arr.slice(1) 
+  //     formData.pincode=fs
+  //     console.log(formData)
+  //     const docRef = doc(db, "political_districts", props.data.more)
+  
+  //   setIsPending(true);
+  //   await updateDoc(docRef, formData)
+  //     .then((res) => {
+  //       console.log(res);
+  //       props.setCount(props.count + 1)
+  //       alert("updated successfully")
+  //       props.onCancel()
+
+  //     }).catch((err) => {
+  //       console.log(err);
+  //       alert(err);
+  //       props.onCancel()
+  //     }).finally(()=>{
+  //       setIsPending(false);
+  //     })
+  //   }
+  //   else if(typeof(formData.pincode=="object")){
+      
+  //   const docRef = doc(db, "political_districts", props.data.more)
+  
+  //   setIsPending(true);
+  //   await updateDoc(docRef, formData)
+  //     .then((res) => {
+  //       console.log(res);
+  //       props.setCount(props.count + 1)
+  //       alert("updated successfully")
+  //       props.onCancel()
+
+  //     }).catch((err) => {
+  //       console.log(err);
+  //       alert(err);
+  //       props.onCancel()
+  //     }).finally(()=>{
+  //       setIsPending(false);
+  //     })
+  //   }
+  }
+  else{
+    alert("select all values")
+  }
+  
 
 }
  
@@ -157,24 +243,19 @@ const handleSubmit=async(e)=>{
             />
             <br/>
               <br/>
-            {stateClicked ? ( 
-              <EditDistrict
+            
+          {formData && allStates &&     <EditPDistrict
               setDistrictClicked={setDistrictClicked}
                 allStates={allStates}
                 stateClicked={stateClicked}
                 formData={formData}
                 setFormData={setFormData}
-              /> 
-          ) : (
-            <p style={{ marginTop: "20px", marginRight: "4px" }}>Select a state to view district</p>
-          )}
+              /> }
+          
           {/* <DistrictName selectState={selectState}/> */}
-          <br/>
-          {districtClicked ? ( 
-                 <Pincode getPin={getPin} pincode={pincode} setPincode={setPincode} setPoliticalDistrict={setPoliticalDistrict} districtClicked={districtClicked}/>
-          ) : (
-            <p style={{ marginTop: "20px", marginRight: "4px" }}>Select a district to view pincodes</p>
-          )}
+          <br/> 
+            {formData &&     <EditPincode getPin={getPin} pincode={pincode} setPincode={setPincode} setPoliticalDistrict={setPoliticalDistrict} formData={formData} districtClicked={districtClicked}/>
+}
         
           <br/>
           {/* <InputLabel id="demo-simple-select-label">{formData?.pincode}</InputLabel> */}

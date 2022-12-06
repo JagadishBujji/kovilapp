@@ -154,14 +154,14 @@ export default function UserTable({ allData }) {
             arr.push(obj);
  
           });
-          console.log(arr);
+          // console.log(arr);
           setTic(arr);
         })
         .catch((e) => console.log(e));
     };
     getNews();
   }, []);
-  console.log(tic);
+  // console.log(tic);
 
   const [rows, setRows] = React.useState(allData);
   const [page, setPage] = React.useState(0);

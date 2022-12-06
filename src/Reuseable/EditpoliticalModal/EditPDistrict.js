@@ -8,27 +8,8 @@ import country_state_district from 'country_state_district'
 
 
 export default function EditPDistrict({ allStates, formData, setFormData, stateClicked }) {
-      const [age, setAge] = React.useState("");
-      console.log(formData)
-  const [allDistricts, setAllDistricts] = React.useState()
-  // React.useEffect(()=>{
-  //   if(formData?.state)
-  //   { 
-  //     let id=0;
-  //      allStates?.map((ms)=>{ 
-  //       if(ms.name===formData.state)
-  //       { 
-  //         id=ms.id
-  //       }
-  //     })
-  //     console.log(id);
-  //   let districts = country_state_district.getDistrictsByStateId(id);
-  //   // console.log(districts)
-  //     setAllDistricts(districts)
-  //   }
-
-  // },[])
-  // console.log(stateClicked)
+      const [age, setAge] = React.useState(""); 
+  const [allDistricts, setAllDistricts] = React.useState() 
   const handleChange = (event) => {
     setAge(event.target.value);
     setFormData({
@@ -47,19 +28,24 @@ export default function EditPDistrict({ allStates, formData, setFormData, stateC
   React.useEffect(() => {
     let districts = country_state_district.getDistrictsByStateId(ds[0].id);
     setAllDistricts(districts)
-    console.log(districts)
+    // console.log(districts)
    
   }, [formData.state])
 
   // console.log(allDistricts)
   return (
+    <>
+      <InputLabel id="demo-simple-select-label">Already selected district {formData.district}</InputLabel>
     <FormControl fullWidth>
       <InputLabel id="demo-simple-select-label">District</InputLabel>
+
       <Select
         required
         labelId="demo-simple-select-label"
         id="demo-simple-select"
         value={formData.district}
+        
+
         label="State"
         onChange={handleChange}
       >
@@ -72,6 +58,6 @@ export default function EditPDistrict({ allStates, formData, setFormData, stateC
         }
       </Select>
     </FormControl>
-    
+    </>    
   );
 }

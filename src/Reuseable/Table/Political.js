@@ -29,15 +29,15 @@ import PoliticalDropDown from "../DropDown/PoliticalDropDown";
 const columns = [
   { id: "sno", label: "Sl.No", minWidth: 100 },
   { id: "state", label: "State", minWidth: 100 },
-  { id: "policital", label: "Political District Name", minWidth: 100 },
+  { id: "politicalDistrict", label: "Political District Name", minWidth: 100 },
   { id: "district", label: "District Name", minWidth: 100 },
 
   { id: "pincode", label: "PinCode", minWidth: 100 },
   { id: "more" },
 ];
 
-function createData(sno, state, policital, district, pincode, more) {
-  return { sno, state, policital, district, pincode, more };
+function createData(sno, state, politicalDistrict, district, pincode, more) {
+  return { sno, state, politicalDistrict, district, pincode, more };
 }
 
 // const rows = [
@@ -170,9 +170,10 @@ export default function Political() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows
+                {allTypes && rows
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => {
+                    // console.log(row);
                     return (
                       <TableRow
                         hover
@@ -181,7 +182,7 @@ export default function Political() {
                         key={row.code}
                       >
                         {columns.map((column) => {
-                          const value = row[column.id];
+                          const value = row[column.id]; 
                           return (
                             <TableCell
                               key={column.id}

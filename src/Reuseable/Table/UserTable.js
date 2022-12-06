@@ -143,7 +143,7 @@ function createData(
 
 export default function UserTable({allData}) {
   const [tic,setTic]=React.useState();
-  console.log(allData)
+  // console.log(allData)
   const navigate = useNavigate();
   // allData?.map((ad)=>{
   //   console.log(ad?.assigned?.length);

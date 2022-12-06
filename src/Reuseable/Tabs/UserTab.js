@@ -71,7 +71,7 @@ export default function UserTab() {
           id: doc.id,
           ...data,
         };
-        console.log(nD);
+        // console.log(nD);
         all.push(nD);
 
         const rl = doc.data().role;
@@ -127,7 +127,7 @@ export default function UserTab() {
             arr.push(obj);
  
           });
-          console.log(arr);
+          // console.log(arr);
           setEndUser(arr);
         })
         .catch((e) => console.log(e));
