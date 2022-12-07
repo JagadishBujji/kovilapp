@@ -1,5 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Aladin&family=Roboto&display=swap");
 
+@font-face {
+  font-family: "Uomo";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Uomo"), url("UomoBold.otf") format("truetype");
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -15,7 +22,7 @@ body {
   line-height: 1.6;
   color: #1a1a1a;
   overflow-x: hidden;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
 }
 
 a {
@@ -34,8 +41,8 @@ a {
 }
 
 .App {
-  background: #F5F5F5;
-  height: 100vh;
+  background: #fff;
+  /* height: 100vh; */
 }
 
 .css-1gsv261 {
@@ -209,7 +216,7 @@ a {
   font-size: 14px;
 } */
 
- /* .MuiTableCell-root {
+/* .MuiTableCell-root {
   min-width: 175px;
 }  */
 
@@ -276,7 +283,7 @@ a {
   font-weight: 900;
 }
 .Progress {
-  color: #2D9CDB;
+  color: #2d9cdb;
   font-size: x-large;
   font-weight: 900;
 }
@@ -513,10 +520,10 @@ a {
 } */
 
 /* gallry */
-.audioplayer{
-  padding:5px;
+.audioplayer {
+  padding: 5px;
 }
-.vdoplayer{
+.vdoplayer {
   margin: 5px;
   border-radius: 10px;
 }
@@ -544,18 +551,18 @@ a {
   background-color: #f17116;
   border-color: #f17116;
 }
-.complaints-btn{
+.complaints-btn {
   display: flex;
   justify-content: end;
   align-items: flex-end;
 }
-.addbtn{
+.addbtn {
   display: flex;
   justify-content: end;
-  align-items:center;
-  margin:5px;
+  align-items: center;
+  margin: 5px;
 }
-.complaintmodal{
+.complaintmodal {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   border-radius: 6px;
   background-color: white;
@@ -568,7 +575,7 @@ a {
   top: 20vh;
   left: calc(50% - 15rem);
 }
-.Newsmodal{
+.Newsmodal {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   border-radius: 6px;
   background-color: white;
@@ -581,7 +588,7 @@ a {
   top: 20vh;
   left: calc(50% - 15rem);
 }
-.Passwordmodal{
+.Passwordmodal {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   border-radius: 6px;
   background-color: white;
@@ -594,43 +601,43 @@ a {
   top: 20vh;
   left: calc(50% - 15rem);
 }
-.PasswordCancel{
+.PasswordCancel {
   display: flex;
   justify-content: end;
-  margin:5px
+  margin: 5px;
 }
-.Pass-inner{
-  width:220px;
+.Pass-inner {
+  width: 220px;
   margin: 10px;
 }
-.passwordtext{
+.passwordtext {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 }
 
-.cancelButton{
+.cancelButton {
   border-color: #f17116;
-  color:#f17116;
+  color: #f17116;
   padding: 7px;
   width: 100px;
 }
-.cancelButton:hover{
+.cancelButton:hover {
   border-color: #f17116;
-  color:#f17116
+  color: #f17116;
 }
-.navigateArrow{
+.navigateArrow {
   cursor: pointer;
 }
-.drpdwnBtn{
+.drpdwnBtn {
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
-.crossBtn{
+.crossBtn {
   /* border: 1px solid; */
   padding: 2px 4px;
-  cursor:pointer
+  cursor: pointer;
 }
 .loader-wrapper {
   position: fixed;
@@ -644,7 +651,7 @@ a {
   right: 0;
 }
 .loader-wrapper:before {
-  content: '';
+  content: "";
   display: block;
   position: fixed;
   top: 0;
@@ -1011,27 +1018,29 @@ a {
 }
 /* modal imge */
 
-.myImg {          
-   margin: 5px;
-   border-radius: 10px;
-   cursor: pointer;
+.myImg {
+  margin: 5px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
-.myImg:hover {opacity: 0.7;}
+.myImg:hover {
+  opacity: 0.7;
+}
 
 /* The Modal (background) */
 .Imagemodal {
   display: block; /* Hidden by default */
   position: fixed; /* Stay in place */
-  z-index: 10;; /* Sit on top */
+  z-index: 10; /* Sit on top */
   padding-top: 100px; /* Location of the box */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
 }
 
 /* Modal Content (image) */
@@ -1055,7 +1064,8 @@ a {
 } */
 
 /* Add Animation */
-.modal-content, #caption {  
+.modal-content,
+#caption {
   -webkit-animation-name: zoom;
   -webkit-animation-duration: 0.6s;
   animation-name: zoom;
@@ -1063,13 +1073,21 @@ a {
 }
 
 @-webkit-keyframes zoom {
-  from {-webkit-transform:scale(0)} 
-  to {-webkit-transform:scale(1)}
+  from {
+    -webkit-transform: scale(0);
+  }
+  to {
+    -webkit-transform: scale(1);
+  }
 }
 
 @keyframes zoom {
-  from {transform:scale(0)} 
-  to {transform:scale(1)}
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 /* The Close Button */
@@ -1090,7 +1108,7 @@ a {
   cursor: pointer;
 }
 /* TicketStatus */
-.ticketStatus{
+.ticketStatus {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -1098,7 +1116,7 @@ a {
 }
 
 /* 100% Image Width on Smaller Screens */
-@media only screen and (max-width: 700px){
+@media only screen and (max-width: 700px) {
   .modal-content {
     width: 100%;
   }
@@ -1213,21 +1231,18 @@ a {
   height: 75vh;
 } */
 
-.scroll{
+.scroll {
   overflow-y: scroll;
   overflow-x: hidden;
   max-height: 250px;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 .scroll::-webkit-scrollbar {
   display: none;
 }
-
-
-
 
 /*#######################
 ####responive for mobile screens#######
