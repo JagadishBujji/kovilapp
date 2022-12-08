@@ -67,9 +67,11 @@ const NewsModal = (props) => {
         await axios.post("https://fcm.googleapis.com/fcm/send", {
           "notification": {
             "title": "News",
-            "body": "Hey there, a new news is added.",
-            "click_action": "http://localhost:3000/",
-            "icon": "http://url-to-an-icon/icon.png"
+            "body": news,
+            "click_action": "FLUTTER_NOTIFICATION_CLICK",
+            // "click_action": "http://localhost:3000/",
+            "icon": "http://url-to-an-icon/icon.png",
+            "notification_type":"News"
           },
           "registration_ids": allUsers
         }, {
@@ -138,7 +140,7 @@ const NewsModal = (props) => {
       posted_on_timestamp: milliseconds,
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         props.setCount(props.count + 1)
         alert("updated successfully")
         props.onCancel()

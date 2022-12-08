@@ -84,8 +84,11 @@ const MiniModal = (props) => {
                         "notification": {
                             "title": "Feedback",
                             "body": "Hey buddy, a new feedback is added to your ticket",
-                            "click_action": "http://localhost:3000/",
-                            "icon": "http://url-to-an-icon/icon.png"
+                            // "click_action": "http://localhost:3000/",
+                            "click_action": "FLUTTER_NOTIFICATION_CLICK",
+                            "icon": "http://url-to-an-icon/icon.png",
+                            "notification_type":"Feedback"
+
                         },
                         "to":data.fcm_token
                     }, {

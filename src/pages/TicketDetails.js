@@ -202,6 +202,7 @@ const TicketsDetails = () => {
       border: "1px solid #f17116",
     },
   };
+  // console.log(data)
   return (
     <>
       <Stack>
@@ -270,23 +271,23 @@ const TicketsDetails = () => {
                   </p>
                 </div>
                 <div>
-                  <p>Assigned Date</p>
+                  <p>Due Date</p>
                   <p>
-                    <b>{data?.assinged_date}</b>
+                    <b>{data?.due_date}</b>
                   </p>
                 </div>
-                <div>
+               {data?.user_email && <div>
                   <p>Email Address</p>
                   <p>
                     <b>{data?.user_email}</b>
                   </p>
-                </div>
-                <div>
+                </div>}
+                {/* <div>
                   <p>Address</p>
                   <p>
                     <b>{data?.address}</b>
                   </p>
-                </div>
+                </div> */}
                 <div>
                   <p>State</p>
                   <p>
@@ -302,7 +303,7 @@ const TicketsDetails = () => {
                 <div>
                   <p>ZipCode</p>
                   <p>
-                    <b>632007</b>
+                    <b>{data?.pin_code}</b>
                   </p>
                 </div>
               </Card>

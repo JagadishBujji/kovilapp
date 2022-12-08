@@ -38,7 +38,7 @@ export default function BasicMenu({data,count,setCount}) {
     setIsPending(true)
     await deleteDoc(doc(db,"short_news",data.more.props.doc_id))
     .then((res)=>{
-      console.log(res)
+      // console.log(res)
       setCount(count+1)
       alert("deleted successfully")
       handleClose()
