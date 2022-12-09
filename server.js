@@ -48,12 +48,29 @@ app.post("/sendMail",async (req, res) => {
   var bytes  = CryptoJS.AES.decrypt(req.body.password, 'kovilapp');
   var originalText = bytes.toString(CryptoJS.enc.Utf8);
   // console.log(originalText)
+//   Dear <Username>,
+
+// Namaskaram!
+
+// Please use this temporary password to login to your account and change your password!
+
+// Thanks,
+// KovilApp Team
  await transporter
     .sendMail({
       from: "dummymail00197@gmail.com", // sender address
       to: req.body.email, // list of receivers
       subject: "Temporary password - KOVIL ✔", // Subject line
-      html: `<b>Hi ${req.body.name}, your temporary password for subadmin login is- ${originalText}</b>`, // html body
+      // html: `<b>Hi ${req.body.name}, your temporary password for subadmin login is- ${originalText}</b>`, // html body
+      html:` 
+      <b> 
+      Dear ${req.body.name}, 
+      Namaskaram! 
+      Please use this '${originalText}' temporary password to login to your account and change your password!
+      Thanks,
+      KovilApp Team
+      </b>
+      `
     })
     .then((result) => {
       console.log(result);

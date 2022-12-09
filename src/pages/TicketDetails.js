@@ -115,30 +115,17 @@ const TicketsDetails = () => {
         assinged_date: assignDate,
         sub_admin_name: subAdminName
       });
-      // if (selectedSubAdmin.current_ticket) {
-      //   const newSCT = [...selectedSubAdmin.current_ticket, data];
-      //   await updateDoc(docRef2, {
-      //     current_ticket: newSCT,
-      //   });
-      //   alert("Sub admin has been assigned successfully");
-      //   navigate("/kovil/tickets");
-      // } else {
-      //   const newSCT = [data];
-      //   await updateDoc(docRef2, {
-      //     current_ticket: newSCT,
-      //   });
-      const apikey = 'wJyfpBVDtbg-rnMp7JmQ23XtMqxpH9K2CPbbbgCP9V';
+     
+      const apikey = process.env.REACT_APP_SMS_API_KEY
+
                   const username = selectedSubAdmin.first_name;
                   const mobile = selectedSubAdmin.phone_number;
-                  const ticketId=data.doc_id;
+                  const ticketId=data.ticket_id? data.ticket_id:data.doc_id;
                   const otp=1232131
-                  console.log(mobile)
+                  console.log(mobile,username)
                   const sender = 'KVLAPP';
-                   var mss=`Dear ${username}, Ticket no ${ticketId} has been assigned to you. Please take necessary action and respond within 24 Hours – KovilApp Team`
-                  // var temp=`Dear ${username}, Ticket no ${ticketId} has been assigned to you. Please take necessary action and respond within 24 Hours – KovilApp Team`
-                  // const ms='Dear '+username+', Ticket no '+ticketId+' has been assigned to you. Please take necessary action and respond within 24 Hours - KovilApp Team'
-                  // var message = 'Dear '+username+' - Namaskaram! Please enter the OTP: '+otp+' in your Kovil App to create your account. Thank you!';
-                  var url = 'https://api.textlocal.in/send/?apikey='+apikey+'&numbers='+mobile+'&sender='+sender+'&message='+encodeURIComponent(mss);
+                  var mm=`Dear ${username}, Ticket no ${ticketId} has been assigned to you. Please take necessary action and respond within 24 Hours - KovilApp Team` 
+                   var url = 'https://api.textlocal.in/send/?apikey='+apikey+'&numbers='+mobile+'&sender='+sender+'&message='+encodeURIComponent(mm);
                   fetch (url).then(response => response.json())
                   .then(data =>{
                   console.log(data)
@@ -150,13 +137,7 @@ const TicketsDetails = () => {
                   alert(err);
                   console.log(err);
                 })
-       
-      // }
-      // await  updateDoc(docRef2,{
-      //   current_ticket:data.doc_id
-      // })
-      // alert("Sub admin has been assigned successfully")
-      // navigate('/kovil/tickets')
+        
     } catch (err) {
       setIsPending(false)
 

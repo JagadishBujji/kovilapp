@@ -70,7 +70,8 @@ const NewsModal = (props) => {
             "body": news,
             "click_action": "FLUTTER_NOTIFICATION_CLICK",
             // "click_action": "http://localhost:3000/",
-            "icon": "http://url-to-an-icon/icon.png",
+            // "icon": "http://url-to-an-icon/icon.png",
+            "click_action": "FLUTTER_NOTIFICATION_CLICK",
             "notification_type":"News"
           },
           "registration_ids": allUsers

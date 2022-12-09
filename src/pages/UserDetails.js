@@ -120,12 +120,12 @@ const UserDetails = () => {
                   <b>{data?.district}</b>
                 </p>
               </div>
-              <div>
+              {/* <div>
                 <p>ZipCode</p>
                 <p>
                   <b>{data?.pincode}</b>
                 </p>
-              </div>
+              </div> */}
             </Card>
           </div>
 

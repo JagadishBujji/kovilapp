@@ -62,20 +62,7 @@ const [isPending,setIsPending]=useState(false)
   // console.log(assignDate)
   const dm=new Date(assignDate)
   console.log(dm.getDate());
-  // if(assignDate)
-  // {
-  //   const dueDate=addDays(assignDate,3); 
-  //   const date=dueDate.getDate();
-  //   const year=dueDate.getFullYear();
-  //   const month=dueDate.getMonth();
-  //   const formattedDueDate=`${year}-${month+1}-${date}`
-  //   setDd(formattedDueDate)
-  // }
-  // function addDays(date, days) {
-  //   var result = new Date(date);
-  //   result.setDate(result.getDate() + days);
-  //   return result;
-  // }
+  
   const handleFormSubmit=async(e)=>{
     e.preventDefault();
     console.log(selectedSubAdmin.id,assignDate,data.doc_id)

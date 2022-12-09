@@ -61,10 +61,8 @@ const PasswordModal = (props) => {
               //         is_password_changed: true,
               //       })
               .then(() => {
-
-                // const apikey = 'wJyfpBVDtbg-rnMp7JmQ23XtMqxpH9K2CPbbbgCP9V';
-                const apikey= process.env.REACT_APP_SMS_API_KEY
-                // const mobile = '7639758020';
+ 
+                const apikey= process.env.REACT_APP_SMS_API_KEY 
                 const mobile=Number(props.data.phone_number )
                 const sender = 'KVLAPP'; 
                 // const name = "prabhu"
@@ -74,7 +72,7 @@ const PasswordModal = (props) => {
   // var message = 'Dear '+username+' - Namaskaram! Please enter the OTP: '+otp+' in your Kovil App to create your account. Thank you!';
                 var url = 'https://api.textlocal.in/send/?apikey=' + apikey + '&numbers=' + mobile + '&sender=' + sender + '&message=' + encodeURIComponent(m10);
                 fetch(url).then(response => response.json()).then(data => {
-                  props.setIsPasswordChanged("changed");
+                  props.setIsPasswordChanged("passwordChanged");
                   alert("password updated");
                   setIsPending(false);
                   console.log(data)

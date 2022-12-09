@@ -19,6 +19,7 @@ import ComplaintTypeTable from "./Reuseable/Table/ComplaintTypeTable";
 import ComplaintsField from "./pages/ComplaintsField";
 import EditUser from "./pages/EditUser";
 import Political from "./Reuseable/Table/Political";
+import SubHome from "./pages/SubAdminHome";
 // import EventPosts from "./components/EventPost/EventPosts";
 
 export default function App() {
@@ -37,19 +38,43 @@ export default function App() {
     <div className="App">
    <Routes>
         {/* //protected routes */}
-        <Route path="/" element={loggedId ? <Home /> : <Login />} />
+        <Route path="/" element={loggedId ? subAdmin?<SubHome/>: <Home /> : <Login />} />
 
         <Route path="/signup" element={<Signup />} />
 
-        {/* <Route path="welcome" element={ user?  <Welcome /> :<Navigate to="/login"/>} /> */}
-         <Route
+        
+        {subAdmin && <>
+
+          <Route
           path="/kovil"
-          element={user || subAdmin  ? <Home /> : <Navigate to="/" />}
+          element={subAdmin   ? <SubHome /> : <Navigate to="/" />}
+          // element={<Home />}
+        >
+
+          <Route
+          path="tickets"
+          element={ subAdmin ? <Tickets /> : <Navigate to="/" />}
+          // element={<Tickets />}
+        />
+        <Route
+          path="ticketsdetails/:id"
+          element={ subAdmin ? <TicketsDetails /> : <Navigate to="/" />}
+          // element={<TicketsDetails />}
+        />
+        <Route path="*"
+        element={subAdmin? <Tickets/>:<Navigate to="/"/>}/> 
+        </Route>
+        </>
+        }
+        {/* <Route path="welcome" element={ user?  <Welcome /> :<Navigate to="/login"/>} /> */}
+        {user && <Route
+          path="/kovil"
+          element={user   ? <Home /> : <Navigate to="/" />}
           // element={<Home />}
         >
           <Route
             path="home-post"
-            element={user || subAdmin  ? <HomePost /> : <Navigate to="/" />}
+            element={user   ? <HomePost /> : <Navigate to="/" />}
           />
           <Route
             path="user-post"
@@ -69,12 +94,12 @@ export default function App() {
           />
           <Route
             path="tickets"
-            element={user || subAdmin ? <Tickets /> : <Navigate to="/" />}
+            element={user  ? <Tickets /> : <Navigate to="/" />}
             // element={<Tickets />}
           />
           <Route
             path="ticketsdetails/:id"
-            element={user || subAdmin ? <TicketsDetails /> : <Navigate to="/" />}
+            element={user ? <TicketsDetails /> : <Navigate to="/" />}
             // element={<TicketsDetails />}
           />
           {/* <Route
@@ -95,7 +120,12 @@ export default function App() {
           />
         <Route path="*"
         element={user? <Tickets/>:<Navigate to="/"/>}/>
-        </Route> 
+        </Route> }
+
+
+        <Route path="*"
+        element={user? <Tickets/>:<Navigate to="/"/>}/> 
+
       </Routes> 
     </div>
   );

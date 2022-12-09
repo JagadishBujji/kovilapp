@@ -111,7 +111,7 @@ export default function ComplaintTypeTable() {
   let rows=[]
   allTypes?.map((as,index)=>{ 
     rows.push(createData(
-      index, 
+      index+1, 
       as.complaint_type,
       as.doc_id
     ))
