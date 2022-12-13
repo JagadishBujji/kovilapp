@@ -12,7 +12,7 @@ import EditPoliticalModal from "../Edit/EditPoliticalModal";
 export default function PoliticalDropDown(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openModal, setOpenModal] = useState(false);
-  const [isPending,setIsPending]=useState()
+  const [isPendings,setIsPendings]=useState()
   const open = Boolean(anchorEl);
   // console.log(props.data);
   const handleClick = (event) => {
@@ -30,12 +30,13 @@ export default function PoliticalDropDown(props) {
   // console.log(props.data)
 
   const deleteHandler = async (e) => {
+    if(window.confirm("Are you sure you want to delete?"))
+    {
     // setAnchorEl(null);
     // delete complaint type from db
-    setIsPending(true);
+    setIsPendings(true);
     await deleteDoc(doc(db, "political_districts", props.data.more))
-      .then((res) => {
-        console.log(res)
+      .then((res) => { 
         props.setCount(props.count + 1)
         alert("deleted successfully")
         handleClose()
@@ -47,9 +48,13 @@ export default function PoliticalDropDown(props) {
         handleClose()
         setAnchorEl(null);
       }).finally(()=>{
-    setIsPending(true);
+    setIsPendings(false);
 
       })
+    }
+    else{
+    setAnchorEl(null);
+    }
     // alert("Compliant type deleted");
   };
 
@@ -68,7 +73,7 @@ export default function PoliticalDropDown(props) {
         }}
       >
         <MenuItem data={props.data} onClick={editHandler}>Edit</MenuItem>
-        <MenuItem disabled={isPending} onClick={deleteHandler}>Delete</MenuItem>
+        <MenuItem disabled={isPendings} onClick={deleteHandler}>Delete</MenuItem>
       </Menu>
       {openModal && (
         <EditPoliticalModal

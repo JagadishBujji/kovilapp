@@ -10,7 +10,7 @@ import { deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../services/firebase';
 
 
-export default function UserDropDown({ row }) {
+export default function UserDropDown({ row,count,setCount }) { 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
   // console.log(row);
@@ -27,7 +27,7 @@ export default function UserDropDown({ row }) {
   const handleDelete = async () => { 
     // const auth = getAuth();
     // const user = auth.currentUser;
-    console.log(row.doc_id)
+  
     // setIsPending(true)
     // await deleteUser(row.id).then(async () => {
 
@@ -52,19 +52,27 @@ export default function UserDropDown({ row }) {
     //   setAnchorEl(null);
 
     // }); 
+    if(window.confirm("Are you sure you want to delete?"))
+    {
       setIsPending(true)
       await deleteDoc(doc(db, "admins", row.doc_id))
         .then(() => {
           setIsPending(false)
           alert("user deleted")
+          setCount(count+1)
           setAnchorEl(null);
-          navigate(`/kovil/home-post`)
+          // navigate(`/kovil/home-post`)
+
         }).catch((err) => {
           setIsPending(false) 
           alert(err)
           setAnchorEl(null);
 
         })
+      }
+      else{
+    setAnchorEl(null);
+      }
     } 
 
   return (

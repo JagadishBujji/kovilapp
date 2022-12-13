@@ -85,7 +85,7 @@ const AddUser = () => {
   const [isPending, setIsPending] = useState(false);
   const [stateClicked, setStateClicked] = useState();
   const [pdId,setPdId]=useState();
-  console.log(pdId);
+  // console.log(pdId);
   const handleClick = () => {
     setShowModal(true);
   };
@@ -98,7 +98,7 @@ const AddUser = () => {
    
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    // console.log(formData);
     if (
       formData.mobile.length === 10 &&
       formData.alternateNumber.length === 10
@@ -203,7 +203,7 @@ const AddUser = () => {
           .then((res) => {
             setIsPending(true);
             const userId = res.user.uid;
-            console.log(userId);
+            // console.log(userId);
             setDoc(doc(db, "admins", userId), {
               first_name: formData.firstName,
               last_name: formData.lastName,
@@ -235,7 +235,7 @@ const AddUser = () => {
                   name: formData.firstName
                 })
                   .then(async(res) => {
-                    console.log(res);
+                    // console.log(res);
                     const washingtonRef = doc(db, "political_districts", pdId);
                         await updateDoc(washingtonRef, {
                           sub_admin_uid: userId,
@@ -246,7 +246,7 @@ const AddUser = () => {
                             setIsPending(false);
                             alert("user created");
                             navigate("/kovil/user-post");
-                            console.log(res2);
+                            // console.log(res2);
                           }).catch((err)=>{
                             console.log(err)
                             alert(err)
@@ -315,7 +315,7 @@ const AddUser = () => {
           doc_id: document.id,
           ...document.data()
         }
-        console.log(obj)
+        // console.log(obj)
         arr.push(obj)
       })
       setDa(arr);
@@ -323,7 +323,7 @@ const AddUser = () => {
     getSuperAdmin();
 
   }, [formData.district])
-  console.log(pc)
+  // console.log(pc)
 
   
  React.useEffect(()=>{
@@ -339,7 +339,7 @@ const AddUser = () => {
               doc_id:document.id,
               ...document.data()
           }
-          console.log(obj) 
+          // console.log(obj) 
           setPc(obj); 
       })
   }

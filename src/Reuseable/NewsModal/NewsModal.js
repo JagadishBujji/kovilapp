@@ -69,8 +69,11 @@ const NewsModal = (props) => {
             "title": "News",
             "body": news,
             "click_action": "FLUTTER_NOTIFICATION_CLICK",
+            
             // "click_action": "http://localhost:3000/",
             // "icon": "http://url-to-an-icon/icon.png",
+            "icon":"https://kovilapp.s3.ap-south-1.amazonaws.com/notification_icon.png",
+
             "click_action": "FLUTTER_NOTIFICATION_CLICK",
             "notification_type":"News"
           },

@@ -58,7 +58,7 @@ getSubAdmin()
 
     }
   },[])
-console.log(tickets)
+// console.log(tickets)
   useEffect(() => {
     if (!subAdmin) {
       setIsPending(true)

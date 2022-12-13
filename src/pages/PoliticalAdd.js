@@ -129,22 +129,17 @@ const PoliticalAdd = (props) => {
           }
           return arr.indexOf(r) >= 0
         })
-        if (!found) {
-          setIsPending(true);
+        if (!found) { 
           addDoc(collection(db, "political_districts"), formData).then((res) => {
             // setCount(count+1)
             props.setCount(props.count + 1)
             alert("successfully added")
             props.onCancel();
             console.log(res);
-          }).catch((err) => {
-            setIsPending(false);
-
+          }).catch((err) => {  
             alert(err);
             console.log(err)
-          }).finally(() => {
-            setIsPending(false);
-          })
+          }) 
         }
       })
       .catch((e) => console.log(e)).finally(() => {

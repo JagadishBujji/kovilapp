@@ -35,6 +35,9 @@ export default function BasicMenu({data,count,setCount}) {
 
   const handleDelete=async()=>{
     // await deleteDoc(doc(db,"short_news",data.ID))
+    if(window.confirm("Are you sure you want to delete?"))
+    {
+
     setIsPending(true)
     await deleteDoc(doc(db,"short_news",data.more.props.doc_id))
     .then((res)=>{
@@ -54,6 +57,10 @@ export default function BasicMenu({data,count,setCount}) {
     }).finally(()=>{
       setIsPending(false)
     })
+  }else{
+    setAnchorEl(null);
+
+  }
   }
 
   return (
