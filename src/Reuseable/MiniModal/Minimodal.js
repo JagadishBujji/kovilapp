@@ -35,7 +35,7 @@ const MiniModal = (props) => {
                         await axios.post("https://fcm.googleapis.com/fcm/send", {
                             "notification": {
                                 "title": "Feedback",
-                                "body": "Hey buddy, a new feedback is added to your ticket",
+                                "body": "Namaskaram, a new feedback is added to your ticket",
                                 // "click_action": "http://localhost:3000/",
                             "click_action": "FLUTTER_NOTIFICATION_CLICK",
                                 // "icon": "http://url-to-an-icon/icon.png"
@@ -86,7 +86,7 @@ const MiniModal = (props) => {
                     await axios.post("https://fcm.googleapis.com/fcm/send", {
                         "notification": {
                             "title": "Feedback",
-                            "body": "Hey buddy, a new feedback is added to your ticket",
+                            "body": "Namaskaram, a new feedback is added to your ticket",
                             // "click_action": "http://localhost:3000/",
                             "click_action": "FLUTTER_NOTIFICATION_CLICK",
                             // "icon": "http://url-to-an-icon/icon.png",

@@ -14,14 +14,14 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export default function BasicSelect({ data, count, setCount }) {
-    const [status, setStatus] = React.useState('');
+    const [status, setStatus] = React.useState(data.status);
     const admin = JSON.parse(localStorage.getItem("user"));
     const navigate = useNavigate();
     // console.log(admin)
     const [ticUser, setTicUser] = React.useState();
     // console.log(ticUser)
     const [now, setNow] = React.useState()
-    // console.log(data)
+    console.log(data)
     const [superAdmin, setSuperAdmin] = React.useState()
     const subadmin = JSON.parse(localStorage.getItem("subadmin"));
     const handleChange = (event) => {
@@ -139,6 +139,9 @@ export default function BasicSelect({ data, count, setCount }) {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if(status!==data.status)
+        {
+     
         if (subadmin) {
 
             const docRef = doc(db, "Complaints", data.doc_id);
@@ -634,6 +637,10 @@ export default function BasicSelect({ data, count, setCount }) {
                     alert(err);
                 })
             }
+        }
+        }
+        else{
+            alert("Status can't be changed with same status")
         }
     }
 
