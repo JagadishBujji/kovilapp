@@ -102,12 +102,12 @@ const UserDetails = () => {
                   <b>{data?.dob}</b>
                 </p>
               </div>
-              <div>
+              {/* <div>
                 <p>Address</p>
                 <p>
                   <b>xxxx yyyyyyy xxxxxx yyyyyyyyyyy</b>
                 </p>
-              </div>
+              </div> */}
               <div>
                 <p>State</p>
                 <p>
@@ -120,12 +120,12 @@ const UserDetails = () => {
                   <b>{data?.district}</b>
                 </p>
               </div>
-              <div>
+              {/* <div>
                 <p>ZipCode</p>
                 <p>
-                  <b>{data?.zipcode}</b>
+                  <b>{data?.pincode}</b>
                 </p>
-              </div>
+              </div> */}
             </Card>
           </div>
 
@@ -152,10 +152,10 @@ const UserDetails = () => {
                   <p>Due Date</p>
                   <p><b>28-05-2022</b></p>
                 </div> */}
-                <div>
+                {/* <div>
                   <p>Admin</p>
                   <p>#KAU02 Srivatsav</p>
-                </div> 
+                </div>  */}
                 <div>
                   <p>Compalint Type</p>
                   <p><b>{cc.complaint_type}</b></p>
@@ -196,10 +196,10 @@ const UserDetails = () => {
                   <p>Due Date</p>
                   <p><b>28-05-2022</b></p>
                 </div> */}
-                <div>
+                {/* <div>
                   <p>Admin</p>
                   <p>#KAU02 Srivatsav</p>
-                </div> 
+                </div>  */}
                 <div>
                   <p>Compalint Type</p>
                   <p><b>{cc.complaint_type}</b></p>

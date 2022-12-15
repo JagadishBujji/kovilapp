@@ -85,7 +85,7 @@ const AddUser = () => {
   const [isPending, setIsPending] = useState(false);
   const [stateClicked, setStateClicked] = useState();
   const [pdId,setPdId]=useState();
-  console.log(pdId);
+  // console.log(pdId);
   const handleClick = () => {
     setShowModal(true);
   };
@@ -95,219 +95,10 @@ const AddUser = () => {
   const deleteHandle = () => {
     navigate("/kovil/user-post");
   };
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (formData.mobile.length === 10 && formData.alternateNumber.length === 10) {
-  //     if (uImage) {
-  //       setIsPending(true)
-  //       const imageRef = ref(storage, `images/${uImage.name + v4()}`);
-  //       await
-  //       uploadBytes(imageRef, uImage).then((snapshot) => {
-  //         getDownloadURL(snapshot.ref).then((url) => {
-  //           const imageURL = url
-  //           // setUserImage(imageURL)
-  //           // console.log(url);
-
-  //           addDoc(collection(db, "userProfile"),
-  //           {
-  //             first_name: formData.firstName,
-  //             last_name: formData.lastName,
-  //             role: formData.role,
-  //             state: formData.state,
-  //             district: formData.district,
-  //             phone_number: formData.mobile,
-  //             alternate_number: formData.alternateNumber,
-  //             email: formData.email,
-  //             aadhar: formData.aadhar,
-  //             dob: formData.dob,
-  //             zipcode: formData.zipcode,
-  //             profilePic: imageURL,
-  //             timestamp:serverTimestamp()
-  //           }
-  //         )
-  //         .then((res) => {
-  //           console.log(res);
-  //           setIsPending(false)
-  //           alert("user created")
-  //           navigate("/kovil/user-post")
-  //         }).catch((err) => {
-  //           setIsPending(false)
-  //           console.log(err);
-  //           alert("error occured")
-  //         })
-  //         });
-  //       }).catch((err)=>{
-  //         setIsPending(false)
-  //         console.log(err);
-  //         alert(err)
-  //         navigate("/kovil/user-post")
-
-  //       })
-
-  //     }
-
-  //     else {
-  //       alert("please select a image")
-  //     }
-
-  //   }
-  //   else {
-  //     alert("enter valid mobile number")
-  //   }
-
-  // }
-  // ******recent
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   console.log(formData)
-  //   if (formData.mobile.length === 10 && formData.alternateNumber.length === 10) {
-  //     if (uImage) {
-  //       setIsPending(true);
-  //       await createUserWithEmailAndPassword(auth, formData.email, formData.password)
-  //         .then((res) => {
-  //           setIsPending(true);
-
-  //           const userId = res.user.uid
-  //           console.log(userId)
-  //           const imageRef = ref(storage, `images/${uImage.name + v4()}`);
-  //           uploadBytes(imageRef, uImage).then((snapshot) => {
-  //             getDownloadURL(snapshot.ref)
-  //               .then((url) => {
-  //                 setIsPending(true);
-
-  //                 const imageURL = url
-  //                 setDoc(doc(db, "userProfile", userId),
-  //                   {
-  //                     first_name: formData.firstName,
-  //                     last_name: formData.lastName,
-  //                     role: formData.role,
-  //                     state: formData.state,
-  //                     district: formData.district,
-  //                     phone_number: formData.mobile,
-  //                     alternate_number: formData.alternateNumber,
-  //                     email: formData.email,
-  //                     aadhar: formData.aadhar,
-  //                     dob: formData.dob,
-  //                     uid: userId,
-  //                     password: formData.password,
-  //                     zipcode: formData.zipcode,
-  //                     profilePic: imageURL,
-  //                     bjp_id:formData.bjp_id,
-  //                     timestamp: serverTimestamp()
-  //                   }
-  //                 )
-  //                   .then((res) => {
-  //                     console.log(res);
-  //                     setIsPending(true)
-  //                     setDoc(doc(db, "admins", userId), {
-  //                       email: formData.email,
-  //                       password: formData.password,
-  //                       role: formData.role
-  //                     })
-  //                       .then(async(res) => {
-
-  //                         // setIsPending(true)
-  //                         // await axios.post("http://localhost:5000/sendMail", {
-  //                         //   email: formData.email,
-  //                         //   password: formData.password,
-  //                         //   name:formData.firstName
-  //                         // })
-  //                         //   .then((res) => {
-  //                             setIsPending(false)
-  //                             alert("user created")
-  //                             navigate("/kovil/user-post")
-  //                             console.log(res);
-  //                           }).catch((err) => {
-  //                             alert(err)
-  //                             console.log(err);
-  //                           })
-
-  //                       // })
-
-  //                   })
-  //               })
-  //           })
-  //         })
-  //         .catch((err) => {
-  //           alert(err);
-  //           setIsPending(false);
-  //           console.log(err.code);
-  //         });
-  //     }
-  //     else {
-  //       setIsPending(true);
-  //       await createUserWithEmailAndPassword(auth, formData.email, formData.password)
-  //         .then((res) => {
-  //           setIsPending(true);
-  //           const userId = res.user.uid
-  //           console.log(userId)
-  //           setDoc(doc(db, "userProfile", userId),
-  //             {
-  //               first_name: formData.firstName,
-  //               last_name: formData.lastName,
-  //               role: formData.role,
-  //               state: formData.state,
-  //               district: formData.district,
-  //               phone_number: formData.mobile,
-  //               alternate_number: formData.alternateNumber,
-  //               email: formData.email,
-  //               aadhar: formData.aadhar,
-  //               dob: formData.dob,
-  //               uid: userId,
-  //               password: formData.password,
-  //               zipcode: formData.zipcode,
-  //               profilePic: "",
-  //               bjp_id:formData.bjp_id,
-  //               timestamp: serverTimestamp()
-  //             }
-  //           )
-  //             .then((res) => {
-  //               console.log(res);
-  //               setIsPending(true)
-  //               setDoc(doc(db, "admins", userId), {
-  //                 email: formData.email,
-  //                 password: formData.password,
-  //                 role: formData.role
-  //               })
-  //                 .then((res) => {
-
-  //                   // setIsPending(true)
-  //                   // axios.post("http://localhost:5000/sendMail", {
-  //                   //   email: formData.email,
-  //                   //   password: formData.password,
-  //                   //   name:formData.firstName
-  //                   // })
-  //                   //   .then((res) => {
-  //                       setIsPending(false)
-  //                       alert("user created")
-  //                       navigate("/kovil/user-post")
-  //                       console.log(res);
-  //                     }).catch((err) => {
-  //                       alert(err)
-  //                       console.log(err);
-  //                     })
-
-  //                 // })
-
-  //             })
-  //         })
-  //         .catch((err) => {
-  //           alert(err);
-  //           setIsPending(false);
-  //           console.log(err.code);
-  //         });
-
-  //     }
-
-  //   }
-  //   else {
-  //     alert("enter valid mobile number")
-  //   }
-
-  // }
+   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    // console.log(formData);
     if (
       formData.mobile.length === 10 &&
       formData.alternateNumber.length === 10
@@ -365,7 +156,8 @@ const AddUser = () => {
                         const washingtonRef = doc(db, "political_districts", pdId);
                         await updateDoc(washingtonRef, {
                           sub_admin_uid: userId,
-                          sub_admin_name:formData.firstName
+                          sub_admin_name:formData.firstName,
+                          mobile_no:formData.mobile
                           }).then((res2)=>{
                             setIsPending(false);
                             alert("user created");
@@ -411,7 +203,7 @@ const AddUser = () => {
           .then((res) => {
             setIsPending(true);
             const userId = res.user.uid;
-            console.log(userId);
+            // console.log(userId);
             setDoc(doc(db, "admins", userId), {
               first_name: formData.firstName,
               last_name: formData.lastName,
@@ -443,16 +235,18 @@ const AddUser = () => {
                   name: formData.firstName
                 })
                   .then(async(res) => {
-                    console.log(res);
+                    // console.log(res);
                     const washingtonRef = doc(db, "political_districts", pdId);
                         await updateDoc(washingtonRef, {
                           sub_admin_uid: userId,
-                          sub_admin_name:formData.firstName
+                          sub_admin_name:formData.firstName,
+                          mobile_no:formData.mobile
+
                           }).then((res2)=>{
                             setIsPending(false);
                             alert("user created");
                             navigate("/kovil/user-post");
-                            console.log(res2);
+                            // console.log(res2);
                           }).catch((err)=>{
                             console.log(err)
                             alert(err)
@@ -521,7 +315,7 @@ const AddUser = () => {
           doc_id: document.id,
           ...document.data()
         }
-        console.log(obj)
+        // console.log(obj)
         arr.push(obj)
       })
       setDa(arr);
@@ -529,7 +323,7 @@ const AddUser = () => {
     getSuperAdmin();
 
   }, [formData.district])
-  console.log(pc)
+  // console.log(pc)
 
   
  React.useEffect(()=>{
@@ -545,7 +339,7 @@ const AddUser = () => {
               doc_id:document.id,
               ...document.data()
           }
-          console.log(obj) 
+          // console.log(obj) 
           setPc(obj); 
       })
   }
@@ -728,6 +522,7 @@ const AddUser = () => {
                     />
                   </div>
                   <div className="col-md-6 picture">
+                    <span>Date Of Birth</span>
                     <TextField
                       id="outlined-basic"
                       required
@@ -801,7 +596,7 @@ const AddUser = () => {
                   )}
                   </div>
                   <div className="col-md-6 picture">
-                  {pc ? ( 
+                  {/* {pc ? ( 
                       <FormControl fullWidth>
       <InputLabel id="demo-simple-select-label">Pincode</InputLabel>
 
@@ -823,7 +618,7 @@ const AddUser = () => {
                       </FormControl> 
                   ) : (
                     <p>Select a district to view political state</p>
-                  )}
+                  )} */}
                   </div>
                 </div>
 
@@ -850,12 +645,12 @@ const AddUser = () => {
                     />
                   </div>
                   <div className="col-md-6 picture1">
-                    <Button
+                    {/* <Button
                       variant="contained"
                       sx={{ backgroundColor: "#198754", color: "#fff", mt: 4 }}
                     >
                       + Add
-                    </Button>
+                    </Button> */}
                     {/* <TextField
                       id="outlined-basic"
                       label="ZipCode"

@@ -35,9 +35,12 @@ const MiniModal = (props) => {
                         await axios.post("https://fcm.googleapis.com/fcm/send", {
                             "notification": {
                                 "title": "Feedback",
-                                "body": "Hey buddy, a new feedback is added to your ticket",
-                                "click_action": "http://localhost:3000/",
-                                "icon": "http://url-to-an-icon/icon.png"
+                                "body": "Namaskaram, a new feedback is added to your ticket",
+                                // "click_action": "http://localhost:3000/",
+                            "click_action": "FLUTTER_NOTIFICATION_CLICK",
+                                // "icon": "http://url-to-an-icon/icon.png"
+                                "icon":"https://kovilapp.s3.ap-south-1.amazonaws.com/notification_icon.png",
+
                             },
                             "to": data.fcm_token
                         }, {
@@ -83,16 +86,20 @@ const MiniModal = (props) => {
                     await axios.post("https://fcm.googleapis.com/fcm/send", {
                         "notification": {
                             "title": "Feedback",
-                            "body": "Hey buddy, a new feedback is added to your ticket",
-                            "click_action": "http://localhost:3000/",
-                            "icon": "http://url-to-an-icon/icon.png"
+                            "body": "Namaskaram, a new feedback is added to your ticket",
+                            // "click_action": "http://localhost:3000/",
+                            "click_action": "FLUTTER_NOTIFICATION_CLICK",
+                            // "icon": "http://url-to-an-icon/icon.png",
+                            "icon":"https://kovilapp.s3.ap-south-1.amazonaws.com/notification_icon.png",
+
+                            "notification_type":"Feedback"
+
                         },
                         "to":data.fcm_token
                     }, {
                         headers: {
                             "Content-Type": "application/json",
-                            // "Authorization": "key=AAAAujeDNFk:APA91bFTPFchdLLWS_6Tp4LsLe14M8QX9pvLOMfUv9ILl-l3O7SGCRuVSbaOsqZvNrYRlxlRc22ygeOxHXN_85SxPsOKZG6l7H3l9WRbHJ3LWJHypuFM6kwPeZhcKTMlgnMx85tNHDt-"
-                            "Authorization": process.env.REACT_APP_MESSAGING_KEY
+                             "Authorization": process.env.REACT_APP_MESSAGING_KEY
                         }
                     }).then((res) => {
                         console.log(res);

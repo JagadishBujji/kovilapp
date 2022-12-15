@@ -48,7 +48,7 @@ const Navbar = () => {
             id="navbarSupportedContent"
           >
             <ul className="navbar-nav w-100 justify-content-start">
-              <NavLink
+         {user &&     <NavLink
                 className={({ isActive }) =>
                   isActive ? "activelink" : "nav-link"
                 }
@@ -57,7 +57,7 @@ const Navbar = () => {
                 {/* <i classNameName="fas fa-briefcase mr-3"></i> */}
                 <i className="fas fa-th-large mr-1"></i>
                 Dashboard
-              </NavLink>
+              </NavLink>}
 
               {user && (
                 <NavLink

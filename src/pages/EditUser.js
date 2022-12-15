@@ -158,7 +158,8 @@ const EditUser = () => {
                 const washingtonRef = doc(db, "political_districts", pdId);
                 await updateDoc(washingtonRef, {
                   sub_admin_uid: formData.uid,
-                  sub_admin_name:formData.firstName
+                  sub_admin_name:formData.firstName,
+                  mobile_no:formData.mobile
                   }).then((res2)=>{
                   
                 setIsPending(false)
@@ -213,7 +214,8 @@ const EditUser = () => {
             const washingtonRef = doc(db, "political_districts", pdId);
             await updateDoc(washingtonRef, {
               sub_admin_uid: formData.uid,
-              sub_admin_name:formData.firstName
+              sub_admin_name:formData.firstName,
+              mobile_no:formData.mobile
               }).then((res2)=>{
                 setIsPending(false)
             alert("user updated")
@@ -817,7 +819,7 @@ React.useEffect(()=>{
                        
                       </FormControl> 
                    </div>
-                  <div className="col-md-6 picture">
+                  {/* <div className="col-md-6 picture">
                   <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">{formData.pincode}</InputLabel>
 
@@ -838,7 +840,7 @@ React.useEffect(()=>{
                         }
                       </Select>
                       </FormControl> 
-                  </div>  
+                  </div>   */}
                  {/* {allStates && formData.state && <EditDistrict allStates={allStates} stateClicked={stateClicked} formData={formData} setFormData={setFormData}  />} */}
                 </div>
                 

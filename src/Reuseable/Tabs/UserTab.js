@@ -46,6 +46,7 @@ function a11yProps(index) {
 }
 
 export default function UserTab() {
+  const [count,setCount]=useState(0)
   const [value, setValue] = React.useState(0);
   const [allData, setAllData] = React.useState();
   const [adminData, setAdminData] = React.useState();
@@ -88,8 +89,8 @@ export default function UserTab() {
       setIsLoading(false);
     };
     fetchData();
-    // console.log(allData);
-  }, []);
+  }, [count]);
+  // console.log("usertab ",allData);
   // console.log(subAdmin)
   // console.log(adminData);
   const handleChange = (event, newValue) => {
@@ -168,13 +169,13 @@ export default function UserTab() {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          {allData && <UserTable allData={allData} />}
+          {allData && <UserTable count={count} setCount={setCount} allData={allData} />}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {adminData && <UserTable allData={adminData} />}
+          {adminData && <UserTable count={count} setCount={setCount}  allData={adminData} />}
         </TabPanel>
         <TabPanel value={value} index={2}>
-          {subAdmin && <UserTable allData={subAdmin} />}
+          {subAdmin && <UserTable count={count} setCount={setCount}  allData={subAdmin} />}
         </TabPanel>
         <TabPanel value={value} index={3}>
           {endUser && <EndUserTable allData={endUser} />}

@@ -180,7 +180,7 @@ const PoliticalAdd = (props) => {
           )}
           {/* <DistrictName selectState={selectState}/> */}
           <br />
-          {districtClicked ? (
+          {/* {districtClicked ? (
             <Pincode
               getPin={getPin}
               pincode={pincode}
@@ -192,10 +192,10 @@ const PoliticalAdd = (props) => {
             <p style={{ marginTop: "20px", marginRight: "4px" }}>
               Select a district to view pincodes
             </p>
-          )}
-
+          )} */}
+<AutoCompleted/>
           <br />
-          <AutoCompleted/>
+
           <TextField
             id="outlined-basic"
             required

@@ -141,9 +141,9 @@ function createData(
 //   ),
 // ];
 
-export default function UserTable({allData}) {
+export default function UserTable({allData,count,setCount}) {
   const [tic,setTic]=React.useState();
-  // console.log(allData)
+  // console.log("user table",allData)
   const navigate = useNavigate();
   // allData?.map((ad)=>{
   //   console.log(ad?.assigned?.length);
@@ -229,7 +229,8 @@ export default function UserTable({allData}) {
  
    
 
-  const [rows, setRows] = React.useState(allData);
+  // const [rows, setRows] = React.useState(allData);
+  const rows=allData
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -304,7 +305,8 @@ export default function UserTable({allData}) {
                 return (
                   <TableRow
                   
-                  hover role="checkbox" tabIndex={-1} key={row.code}>
+                  hover role="checkbox" tabIndex={-1} key={row.id}>
+                     
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
@@ -312,7 +314,7 @@ export default function UserTable({allData}) {
                         key={column.id} align={column.align}  sx={tablebody}
                         >
                           {column.id === "more" ? (
-                            <UserDropDown row={row} />
+                            <UserDropDown count={count} setCount={setCount}  row={row} />
                           ) : column.format && typeof value === "number" ? (
                             column.format(value)
                           ) : (

@@ -67,26 +67,6 @@ const PoliticalModal = (props) => {
   // });
   const [complaintType, setCompliantType] = useState(props.data?.complaints);
   var milliseconds = new Date().getTime();
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (props.forWhat === "createType") {
-  //     try {
-  //       const docRef = await addDoc(collection(db, "complaint_types"), {
-  //         complaint_type: complaintType,
-  //         posted_on: milliseconds,
-  //       });
-  //       console.log("Document written with ID: ", docRef.id);
-  //       props.setCount(props.count + 1);
-  //       alert("type added successfully");
-  //       props.onCancel();
-  //     } catch (err) {
-  //       props.setCount(props.count + 1);
-  //       console.log(err);
-  //       alert(err);
-  //       props.onCancel();
-  //     }
-  //   } else if (props.forWhat === "editType") {
-  //     const docRef = doc(db, "complaint_types", props.data.more);
 
   //     await updateDoc(docRef, {
   //       complaint_type: complaintType,
@@ -126,6 +106,25 @@ const PoliticalModal = (props) => {
         setIsPending(false);
       });
   };
+// const handleSubmit=async(e)=>{
+//   e.preventDefault() 
+//   console.log(formData);
+//   // console.log(formData)
+//   setIsPending(true);
+//   await addDoc(collection(db, "political_districts"),formData).then((res)=>{
+//     // setCount(count+1)
+//     props.setCount(props.count+1)
+//     alert("successfully added")
+//     props.onCancel();
+//     console.log(res);
+//   }).catch((err)=>{
+//     alert(err);
+//     console.log(err)
+//   }).finally(()=>{
+//   setIsPending(false);
+//   })
+
+// }
   // const getDist=(pc)=>{
 
   //   let arr=[]

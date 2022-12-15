@@ -28,9 +28,10 @@ export default function ComplaintDropDown(props) {
   const deleteHandler = async (e) => {
     // setAnchorEl(null);
     // delete complaint type from db
+    if(window.confirm("Are you sure you want to delete?"))
+    {
     await deleteDoc(doc(db, "complaint_types", props.data.more))
-      .then((res) => {
-        console.log(res)
+      .then((res) => { 
         props.setCount(props.count + 1)
         alert("deleted successfully")
         handleClose()
@@ -42,6 +43,11 @@ export default function ComplaintDropDown(props) {
         handleClose()
         setAnchorEl(null);
       })
+    }
+    else{
+      setAnchorEl(null);
+
+    }
     // alert("Compliant type deleted");
   };
 
