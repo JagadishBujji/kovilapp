@@ -9,6 +9,7 @@ import { db } from "../../services/firebase";
 import { setDoc, doc, deleteDoc } from "firebase/firestore";
 import PoliticalModal from "../../pages/PoliticalModal";
 import EditPoliticalModal from "../Edit/EditPoliticalModal";
+
 export default function PoliticalDropDown(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openModal, setOpenModal] = useState(false);
