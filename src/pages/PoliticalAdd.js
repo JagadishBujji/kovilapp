@@ -193,7 +193,7 @@ const PoliticalAdd = (props) => {
               Select a district to view pincodes
             </p>
           )} */}
-<AutoCompleted/>
+          <AutoCompleted />
           <br />
 
           <TextField
