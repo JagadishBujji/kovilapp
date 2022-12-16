@@ -2,7 +2,7 @@ import { Card } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useEffect, useState } from "react";
-import { collection, addDoc, setDoc, doc, updateDoc } from "firebase/firestore";
+import { collection, addDoc, setDoc, doc, updateDoc, getDocs } from "firebase/firestore";
 import { db } from "../services/firebase";
 import country_state_district from "country_state_district";
 
@@ -104,27 +104,27 @@ const PoliticalAdd = (props) => {
   //       });
   //   }
   // };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(formData);
-    // console.log(formData)
-    setIsPending(true);
-    await addDoc(collection(db, "political_districts"), formData)
-      .then((res) => {
-        // setCount(count+1)
-        props.setCount(props.count + 1);
-        alert("successfully added");
-        props.onCancel();
-        console.log(res);
-      })
-      .catch((err) => {
-        alert(err);
-        console.log(err);
-      })
-      .finally(() => {
-        setIsPending(false);
-      });
-  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   console.log(formData);
+  //   // console.log(formData)
+  //   // setIsPending(true);
+  //   // await addDoc(collection(db, "political_districts"), formData)
+  //   //   .then((res) => {
+  //   //     // setCount(count+1)
+  //   //     props.setCount(props.count + 1);
+  //   //     alert("successfully added");
+  //   //     props.onCancel();
+  //   //     console.log(res);
+  //   //   })
+  //   //   .catch((err) => {
+  //   //     alert(err);
+  //   //     console.log(err);
+  //   //   })
+  //   //   .finally(() => {
+  //   //     setIsPending(false);
+  //   //   });
+  // };
   // const getDist=(pc)=>{
 
   //   let arr=[]
@@ -136,10 +136,62 @@ const PoliticalAdd = (props) => {
   //     pincode:arr
   //   })
   // }
+
+  const handleSubmit=async(e)=>{
+    e.preventDefault()
+    // console.log(formData);
+    setIsPending(true);
+    await getDocs(collection(db, "political_districts"))
+      .then((querySnapshot) => {
+        let arr = []
+        querySnapshot.forEach((doc) => {
+          let arr2 = doc.data().pincode;
+          arr2.forEach((a) => {
+            arr.push(a);
+          })
+
+        });
+        // console.log(arr);
+        let arr1 = formData.pincode
+        const found = arr1.some(r => {
+          // console.log(arr.indexOf(r))
+          if (arr.indexOf(r) >= 0) {
+            alert(`${arr[arr.indexOf(r)]} already tagged please select another pinocde`)
+            setIsPending(false)
+
+          }
+          return arr.indexOf(r) >= 0
+        })
+        if (!found) {
+          setIsPending(true);
+          addDoc(collection(db, "political_districts"), formData).then((res) => {
+            // setCount(count+1)
+            props.setCount(props.count + 1)
+            alert("successfully added")
+            props.onCancel();
+            // console.log(res);
+          }).catch((err) => {
+            setIsPending(false);
+
+            alert(err);
+            console.log(err)
+          }).finally(() => {
+            setIsPending(false);
+          })
+        }
+      })
+      .catch((e) =>{
+
+      console.log(e)
+      setIsPending(false)
+    
+    }) 
+
+  }
   const getPin = (arr) => {
     let arr2 = [];
     arr.map((ar) => {
-      arr2.push(ar.Pincode);
+      arr2.push(ar);
     });
     setFormData({
       ...formData,
@@ -180,21 +232,7 @@ const PoliticalAdd = (props) => {
           )}
           {/* <DistrictName selectState={selectState}/> */}
           <br />
-          {/* {districtClicked ? (
-            <Pincode
-              getPin={getPin}
-              pincode={pincode}
-              setPincode={setPincode}
-              setPoliticalDistrict={setPoliticalDistrict}
-              districtClicked={districtClicked}
-            />
-          ) : (
-            <p style={{ marginTop: "20px", marginRight: "4px" }}>
-              Select a district to view pincodes
-            </p>
-          )} */}
-          <AutoCompleted />
-          <br />
+          <br/>
 
           <TextField
             id="outlined-basic"
@@ -208,7 +246,24 @@ const PoliticalAdd = (props) => {
               setFormData({ ...formData, politicalDistrict: e.target.value });
             }}
             type="text"
-          />
+          /><br/>
+          {/* {districtClicked ? (
+            <Pincode
+              getPin={getPin}
+              pincode={pincode}
+              setPincode={setPincode}
+              setPoliticalDistrict={setPoliticalDistrict}
+              districtClicked={districtClicked}
+            />
+          ) : (
+            <p style={{ marginTop: "20px", marginRight: "4px" }}>
+              Select a district to view pincodes
+            </p>
+          )} */}
+          <AutoCompleted getPin={getPin} />
+          <br />
+
+         
         </div>
         <div className="row complaints-btn ">
           <Button

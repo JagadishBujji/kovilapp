@@ -10,6 +10,8 @@ import country_state_district from 'country_state_district'
 export default function EditPDistrict({ allStates, formData, setFormData, stateClicked }) {
       const [age, setAge] = React.useState(""); 
   const [allDistricts, setAllDistricts] = React.useState() 
+  // console.log(formData)
+  const [d,setD]=React.useState(formData?.district);
   const handleChange = (event) => {
     setAge(event.target.value);
     setFormData({
@@ -35,7 +37,7 @@ export default function EditPDistrict({ allStates, formData, setFormData, stateC
   // console.log(allDistricts)
   return (
     <>
-      <InputLabel id="demo-simple-select-label">Already selected district {formData.district}</InputLabel>
+      {/* <InputLabel id="demo-simple-select-label">Previous selected district {d}</InputLabel> */}
     <FormControl fullWidth>
       <InputLabel id="demo-simple-select-label">District</InputLabel>
 

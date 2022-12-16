@@ -2,7 +2,7 @@ import { Card, InputLabel } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useEffect, useState } from "react";
-import { collection, addDoc, setDoc, doc, updateDoc } from "firebase/firestore";
+import { collection, addDoc, setDoc, doc, updateDoc, getDocs } from "firebase/firestore";
 import { db } from "../../services/firebase";
 import country_state_district from "country_state_district";
 
@@ -21,8 +21,7 @@ import AutoCompleted from "../AutoComplete/AutoCompleted";
 
 // Add a new document with a generated id.
 
-const EditPoliticalModal = (props) => {
-  // console.log(props.data);
+const EditPoliticalModal = (props) => { 
   //   const navigate = useNavigate();
   const [allStates, setAllStates] = useState();
   const [stateClicked, setStateClicked] = useState();
@@ -33,6 +32,7 @@ const EditPoliticalModal = (props) => {
   const [pincode, setPincode] = useState();
   const [politicalDistrict, setPoliticalDistrict] = useState();
   var milliseconds = new Date().getTime();
+  const [prev,setPrev]=useState(props?.data?.pincode)
   const [formData, setFormData] = useState({
     state: props.data.state,
     district: props.data.district,
@@ -40,7 +40,7 @@ const EditPoliticalModal = (props) => {
     pincode: props.data.pincode,
     posted_on_timestamp: milliseconds,
   });
-
+  // console.log(props)
   useEffect(() => {
     const states = country_state_district.getAllStates();
     setAllStates(states);
@@ -113,112 +113,139 @@ const EditPoliticalModal = (props) => {
   // };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    if (
-      formData.state &&
-      formData.district &&
-      formData.pincode &&
-      formData.politicalDistrict
-    ) {
-      const typ = typeof formData.pincode;
-      // console.log(typeof(formData.pincode))
-      if (typ === "string") {
-        // alert("string")
-        const arr = formData.pincode.split(" ");
-        const fs = arr.slice(1);
-        formData.pincode = fs;
-        console.log(formData);
-        const docRef = doc(db, "political_districts", props.data.more);
+    // console.log(formData);
+     
+    if(formData.state && formData.district && formData.pincode && formData.politicalDistrict)
+  {
+    const typ=typeof(formData.pincode)
+    // console.log(typeof(formData.pincode))
+  if(typ==="string")
+  {
+    // alert("string")
+    const arr=formData.pincode.split(" ") 
+        const fs=arr.slice(1) 
+        formData.pincode=fs
+        // console.log(formData)
+        const docRef = doc(db, "political_districts", props.data.more)
 
-        setIsPending(true);
-        await updateDoc(docRef, formData)
-          .then((res) => {
-            console.log(res);
-            props.setCount(props.count + 1);
-            alert("updated successfully");
-            props.onCancel();
+      setIsPending(true);
+      await getDocs(collection(db, "political_districts"))
+      .then((querySnapshot) => {
+        let arr = []
+        querySnapshot.forEach((doc) => {
+          if(doc.id!==props.data.more)
+          {
+          let arr2 = doc.data().pincode;
+          arr2.forEach((a) => {
+            arr.push(a);
           })
-          .catch((err) => {
+        }
+        // console.log("Arrrrrrrrrr",arr);
+
+        });
+        // console.log(arr);
+        let arr1 = formData.pincode
+        const found = arr1.some(r => {
+          // console.log(arr.indexOf(r))
+          if (arr.indexOf(r) >= 0) {
+            alert(`${arr[arr.indexOf(r)]} already tagged please select another pinocde`)
+            setIsPending(false)
+
+          }
+          return arr.indexOf(r) >= 0
+        })
+        if (!found) {
+          setIsPending(true);
+           updateDoc(docRef, formData)
+          .then((res) => {
+            // console.log(res);
+            props.setCount(props.count + 1)
+            alert("updated successfully")
+            props.onCancel()
+  
+          }).catch((err) => {
             console.log(err);
             alert(err);
-            props.onCancel();
-          })
-          .finally(() => {
+            props.onCancel()
+          }).finally(()=>{
             setIsPending(false);
-          });
-      } else {
-        const docRef = doc(db, "political_districts", props.data.more);
-
-        setIsPending(true);
-        await updateDoc(docRef, formData)
-          .then((res) => {
-            console.log(res);
-            props.setCount(props.count + 1);
-            alert("updated successfully");
-            props.onCancel();
           })
-          .catch((err) => {
+        }
+      })
+      .catch((e) =>{
+        setIsPending(false)
+       console.log(e)
+      }) 
+    
+  }
+  else{
+    const docRef = doc(db, "political_districts", props.data.more)
+
+    setIsPending(true);
+    await getDocs(collection(db, "political_districts"))
+      .then((querySnapshot) => {
+        let arr = []
+        querySnapshot.forEach((doc) => {
+          
+          if(doc.id!==props.data.more)
+          {
+          let arr2 = doc.data().pincode;
+          arr2.forEach((a) => {
+            arr.push(a);
+          })
+        }
+
+        });
+        // console.log(arr);
+        // console.log(arr);
+        let arr1 = formData.pincode
+        const found = arr1.some(r => {
+          // console.log(r)
+          if (arr.indexOf(r) >= 0  ) {
+            alert(`${arr[arr.indexOf(r)]} already tagged please select another pinocde`)
+            setIsPending(false)
+          }
+          return arr.indexOf(r) >= 0
+        })
+        if (!found) {
+          setIsPending(true);
+           updateDoc(docRef, formData)
+          .then((res) => {
+            // console.log(res);
+            props.setCount(props.count + 1)
+            alert("updated successfully")
+            props.onCancel()
+    
+          }).catch((err) => {
             console.log(err);
             alert(err);
-            props.onCancel();
-          })
-          .finally(() => {
+            props.onCancel()
+          }).finally(()=>{
             setIsPending(false);
-          });
-      }
-      // if(typeof(formData.pincode=="string"))
-      //   {
-      //     const arr=formData.pincode.split(" ")
-      //     const fs=arr.slice(1)
-      //     formData.pincode=fs
-      //     console.log(formData)
-      //     const docRef = doc(db, "political_districts", props.data.more)
+          })
+        }
+      })
+      .catch((e) => {
+        setIsPending(false)
+       
+        console.log(e)
+      }) 
+   
+  }
+  
+  }
+  else{
+    alert("select all values")
+  }
 
-      //   setIsPending(true);
-      //   await updateDoc(docRef, formData)
-      //     .then((res) => {
-      //       console.log(res);
-      //       props.setCount(props.count + 1)
-      //       alert("updated successfully")
-      //       props.onCancel()
 
-      //     }).catch((err) => {
-      //       console.log(err);
-      //       alert(err);
-      //       props.onCancel()
-      //     }).finally(()=>{
-      //       setIsPending(false);
-      //     })
-      //   }
-      //   else if(typeof(formData.pincode=="object")){
-
-      //   const docRef = doc(db, "political_districts", props.data.more)
-
-      //   setIsPending(true);
-      //   await updateDoc(docRef, formData)
-      //     .then((res) => {
-      //       console.log(res);
-      //       props.setCount(props.count + 1)
-      //       alert("updated successfully")
-      //       props.onCancel()
-
-      //     }).catch((err) => {
-      //       console.log(err);
-      //       alert(err);
-      //       props.onCancel()
-      //     }).finally(()=>{
-      //       setIsPending(false);
-      //     })
-      //   }
-    } else {
-      alert("select all values");
-    }
   };
 
   const getPin = (arr) => {
     let arr2 = [];
     arr.map((ar) => {
-      arr2.push(ar.Pincode);
+      // ar.title
+      arr2.push(ar);
     });
     setFormData({
       ...formData,
@@ -229,7 +256,7 @@ const EditPoliticalModal = (props) => {
     <form onSubmit={handleSubmit}>
       <Card sx={{ p: 3, height: "75vh" }} className="complaintmodal">
         <div className="row user-tabs">
-          <h4>Add Political District</h4>
+          <h4>Edit Political District</h4>
           <span className="crossBtn" onClick={props.onCancel}>
             <b>X</b>
           </span>
@@ -267,12 +294,11 @@ const EditPoliticalModal = (props) => {
               districtClicked={districtClicked}
             />
           )} */}
-          <AutoCompleted/>
+<br/>
 
-          <br />
-          {/* <InputLabel id="demo-simple-select-label">{formData?.pincode}</InputLabel> */}
+<TextField
+        label="Political District"
 
-          <TextField
             id="outlined-basic"
             required
             // label="Political District"
@@ -285,6 +311,15 @@ const EditPoliticalModal = (props) => {
             }}
             type="text"
           />
+<br/>
+<br/>
+          <InputLabel id="demo-simple-select-label">Previous selected pincode {prev}</InputLabel>
+
+          <AutoCompleted getPin={getPin} />
+
+          <br />
+          {/* <InputLabel id="demo-simple-select-label">{formData?.pincode}</InputLabel> */}
+
         </div>
         <div className="row complaints-btn ">
           <Button

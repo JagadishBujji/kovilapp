@@ -2,22 +2,47 @@ import * as React from "react";
 import Chip from "@mui/material/Chip";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import Stack from "@mui/material/Stack";
+import Stack from "@mui/material/Stack"; 
 
-export default function AutoCompleted() {
+export default function AutoCompleted({getPin,FormData}) {
+  const [pins,setPins]=React.useState([])
+  // console.log(pins)
+  const [pincode,setPincode]=React.useState()
+  // console.log(pincode)
   return (
     <Stack spacing={3} fullWidth sx={{ mt: 3, mb: 2 }}>
       <Autocomplete
-        multiple
+        multiple 
         id="tags-outlined"
-        options={top100Films}
-        getOptionLabel={(option) => option.title}
-        defaultValue={[top100Films[13]]}
+        options={pins}
+        onChange={(_event, newTeam) => {  
+          setPincode(newTeam) 
+          getPin(newTeam)
+
+        }} 
+        // getOptionLabel={(option) => option.title}
+        getOptionLabel={(option) => option} 
         renderInput={(params) => (
           <TextField
             {...params}
             variant="outlined"
-            label="Multiple values"
+            type="number"
+            label="Add pincodes"
+            // onChange={(e)=>{
+            //   const val=e.target.value;
+            //   if(val.length===6)
+            //   {
+            //     setPins((prev)=>[...prev,{title:val}])
+            //   }
+            // }}
+            
+            onChange={(e)=>{
+              const val=e.target.value;
+              if(val.length===6)
+              {
+                setPins((prev)=>[...prev,val])
+              }
+            }}
             placeholder="Favorites"
           />
         )}
@@ -26,6 +51,7 @@ export default function AutoCompleted() {
   );
 }
 
+const arr=[12344,12344]
 // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
 const top100Films = [
   { title: "The Shawshank Redemption", year: 1994 },

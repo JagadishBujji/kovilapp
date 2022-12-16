@@ -46,7 +46,7 @@ export default function EditDistrict({ allStates, formData, setFormData, stateCl
   React.useEffect(() => {
     let districts = country_state_district.getDistrictsByStateId(ds[0].id);
     setAllDistricts(districts)
-    console.log(districts)
+    // console.log(districts)
    
   }, [formData.state])
 
