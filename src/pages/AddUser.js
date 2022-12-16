@@ -305,7 +305,9 @@ const AddUser = () => {
   React.useEffect(() => {
     const getSuperAdmin = async () => {
       const docRef = collection(db, "political_districts");
-      const q = query(docRef, where("district", "==", formData.district));
+    const q = query(docRef, where("district", "==", formData.district.toLowerCase()));
+
+      // const q = query(docRef, where("district", "==", formData.district));
       const querySnapshot = await getDocs(q);
       let arr = []
       querySnapshot.forEach((doc) => {

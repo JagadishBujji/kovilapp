@@ -31,7 +31,7 @@ export default function DistrictSelect({setDistrictClicked, allStates, formData,
   const handleChange = (event) => {
     setAge(event.target.value);
     let fm=event.target.value
-    // fm=fm.toLowerCase();
+    fm=fm.toLowerCase();
     // setFormData({
     //   ...formData,
     //   district: event.target.value

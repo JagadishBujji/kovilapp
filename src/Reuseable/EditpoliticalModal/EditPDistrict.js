@@ -37,7 +37,7 @@ export default function EditPDistrict({ allStates, formData, setFormData, stateC
   // console.log(allDistricts)
   return (
     <>
-      {/* <InputLabel id="demo-simple-select-label">Previous selected district {d}</InputLabel> */}
+      <InputLabel id="demo-simple-select-label">Previous selected district {d}</InputLabel>
     <FormControl fullWidth>
       <InputLabel id="demo-simple-select-label">District</InputLabel>
 
