@@ -3,6 +3,7 @@ import Chip from "@mui/material/Chip";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack"; 
+import './Auto.css'
 
 export default function AutoCompleted({getPin,FormData}) {
   const [pins,setPins]=React.useState([])
@@ -43,7 +44,8 @@ export default function AutoCompleted({getPin,FormData}) {
                 setPins((prev)=>[...prev,val])
               }
             }}
-            placeholder="Favorites"
+            onWheel={(e) => e.target.blur()} 
+            placeholder="Pincode"
           />
         )}
       />
