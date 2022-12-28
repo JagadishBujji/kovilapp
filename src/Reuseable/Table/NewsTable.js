@@ -15,6 +15,8 @@ import TicketsBack from "../TicketsBack";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../../services/firebase";
 import Loader from "../Loader/Loader";
+import Linkify from 'react-linkify'
+import { ExtractLink } from "../Stepper/ExtractLink";
 
 const columns = [
   // { id: "ID", label: "ID", minWidth: 170 },
@@ -85,11 +87,12 @@ export default function NewsTable() {
   };
   let rows=[] 
   allNews?.map((as)=>{ 
+    const nm= ExtractLink(as.news)
       rows.push(createData(
         // as.doc_id,
         as.posted_on,
         as.published_by,
-        as.news,
+        <div dangerouslySetInnerHTML={{__html:nm }} />,
         <DropDownIcon doc_id={as.doc_id} />
       ))
   })

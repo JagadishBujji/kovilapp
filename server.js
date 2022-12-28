@@ -4,6 +4,9 @@ const cors = require("cors");
 const nodemailer = require("nodemailer");
 const bodyParser = require("body-parser");
 var CryptoJS = require("crypto-js"); 
+const dotenv =require("dotenv")
+
+
 // var http = require('http');
 
 // var urlencode = require('urlencode');
@@ -13,6 +16,7 @@ var CryptoJS = require("crypto-js");
 
 
 const app = express();
+dotenv.config();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "build")));
@@ -27,13 +31,15 @@ let transporter = nodemailer.createTransport({
   },
 });
 
+
+
 // let transporter = nodemailer.createTransport({
 //   host: "email-smtp.ap-south-1.amazonaws.com",
 //   service: "amazonaws.com",
 //   secure: true, // true for 465, false for other ports
 //   auth: {
-//     user: "AKIA5HE2R77PRXSWSEXK", // generated ethereal user
-//     pass: "BGD8k2+XBmyCyiv9vTDoy/ez8Gx/JeZpdEOwTSb1XaHe", // generated ethereal password
+//     user: process.env.USER, // generated ethereal user
+//     pass: process.env.PASSWORD, // generated ethereal password
 //   },
 // });
 
@@ -44,9 +50,10 @@ app.get("/test", (req, res) => {
 
 
 app.post("/sendMail",async (req, res) => {
-  console.log(req.body)
+  console.log(req.body) 
   var bytes  = CryptoJS.AES.decrypt(req.body.password, 'kovilapp');
   var originalText = bytes.toString(CryptoJS.enc.Utf8);
+  // const temp="acs"
   // console.log(originalText)
 //   Dear <Username>,
 
@@ -73,7 +80,7 @@ app.post("/sendMail",async (req, res) => {
       `
     })
     .then((result) => {
-      console.log(result);
+      // console.log(result);
       res.status(200).send("success");
     })
     .catch((err) => {
