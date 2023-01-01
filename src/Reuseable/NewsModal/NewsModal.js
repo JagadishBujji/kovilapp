@@ -5,15 +5,26 @@ import { useState, useEffect } from "react";
 import { collection, updateDoc, doc, addDoc, serverTimestamp, getDocs, setDoc } from "firebase/firestore";
 import { db } from "../../services/firebase";
 import axios from 'axios'
+import { ExtractText } from "../Stepper/ExtractLink";
 
 const NewsModal = (props) => {
-  // console.log(props.editData)
+  // console.log(props)
   const user = JSON.parse(localStorage.getItem("user"));
   const userEmail = user.email
   const [isPending, setIsPending] = useState(false)
   const userId = user.uid
   const [allUsers, setAllUsers] = useState();
-  const [news, setNews] = useState(props.editData?.article)
+  const [news,setNews]=useState();
+  // const [news, setNews] = useState(props.editData?.article)
+  useEffect(()=>{
+    const extraction=()=>{
+      setIsPending(true)
+      const mm=ExtractText(props.editData?.article)
+      setNews(mm)
+      setIsPending(false);
+    }    
+    extraction();
+  },[])
   const date = new Date();
   // console.log(date)
   const day = date.getDate();
